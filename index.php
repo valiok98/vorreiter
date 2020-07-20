@@ -83,7 +83,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                 </main>
             </div>
         </div>
-        <div id="canvas" class="gradient"></div>
+        <!-- <div id="canvas" class="gradient"></div> -->
 
     </section>
 
