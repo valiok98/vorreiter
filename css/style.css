@@ -1,0 +1,53 @@
+body {
+    background-color: #fff;
+    margin: 0px;
+    overflow: hidden;
+    font-family: arial;
+    color: #fff;
+}
+
+main {
+    max-width: 30vw;
+    max-height: 30vh;
+    position: relative;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 25px;
+}
+
+h1 {
+    margin: 0;
+}
+
+a {
+    color: #0078ff;
+}
+
+.canvas-content {
+    position: relative;
+    top: 250px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#canvas {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1a1724;
+}
+
+.canvas-wrap {
+    position: relative;
+}
+
+div.canvas-content {
+    position: relative;
+    z-index: 2000;
+    color: #fff;
+    text-align: center;
+    padding-top: 30px;
+}
