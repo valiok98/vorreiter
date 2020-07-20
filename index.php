@@ -29,6 +29,10 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- Bootstrap end -->
 
+    <!-- Fonts start -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <!-- Fonts end -->
+
     <!-- Eigenes CSS start -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Eigenes CSS end -->
@@ -40,63 +44,83 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     <title>
         <?= $title ?>
     </title>
-
-  
 </head>
 
 <body>
-
-
-
-    <section class="canvas-wrap">
-        <div class="canvas-content">
-            <div>
-                <img src="vorreiter/images/vorreiter_logo.png"><br>
-                <a href="http://www.weiter-germany.com">
-                    <small style="font-size:8px;color:#ffffff">Impressum</small>
-                </a>
+    <div class="container main-container">
+        <div class="row mh-100">
+            <div class="col-sm-3">
+                <!-- Empty column. Do not delete. -->
             </div>
-            <div>
-
-                <main>
-                    <br>
-                    <ul class="nav nav-pills" data-tabs="tabs">
-                        <li class="nav-item"><a class="nav-link active" href="#div-login-form" data-toggle="tab">Login</a></li>
-                    </ul>
-                    <br>
-
-                    <div id="my-tab-content" class="tab-content">
-                        <div class="tab-pane active" id="div-login-form">
-                            <form id="login-form" action="login.php" method="POST">
-                                <div class="form-group">
-                                    <label for="loginEmailOrUsername">Email address/Username</label>
-                                    <input type="text" class="form-control" id="loginEmailOrUsername" name="loginEmailOrUsername" placeholder="Enter email or username">
-                                </div>
-                                <div class="form-group">
-                                    <label for="loginPassword">Password</label>
-                                    <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
+            <div class="col-sm-6">
+                <div>
+                    <div id="div_vorreiter-logo">
+                        <img src="images/vorreiter_logo.png" alt="vorreiter">
+                        <!-- <a href="http://www.weiter-germany.com">
+                            <small style="font-size:8px;color:#ffffff">Impressum</small>
+                        </a> -->
                     </div>
-                </main>
+                    <div id="div_main-content">
+                        <div id="div_zug-logo">
+                            <img src="images/zug_logo.png" alt="zug">
+                        </div>
+                        <div id="div_login-form">
+                            <h1><b>Login</b></h1>
+                            <p>Sie sind registrierter Benutzer der neuesten Generation<br>
+                                von optimierter Logistik und Service eines neuen Levels?
+                                <br>
+                                <br>
+                                Herzlich Willkommen und Loggen Sie sich ein: <br>
+                            </p>
+                            <div>
+                                <form id="login-form" action="login.php" method="POST">
+                                    <div class="container">
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label for="loginEmailOrUsername">E-Mail/Benutzer:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="loginEmailOrUsername" name="loginEmailOrUsername" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-4">
+                                                <label for="loginPassword">Passwort:</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Passwort">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <!-- Empty column. Do not delete. -->
+                                            </div>
+                                            <div class="form-check col-sm-5 div_erinnere-dich">
+                                                <input type="checkbox" class="form-check-input" id="erinnereDich" name="erinnereDich">
+                                                <label class="form-check-label" for="erinnereDich">Erinnere dich</label>
+                                            </div>
+                                            <div class="col-sm-5 div_pass-vergessen">
+                                                <p>Passwort vergessen?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button id="button_submit" type="submit" class="btn btn-primary">Submit</button>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="overlay">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <!-- Empty column. Do not delete. -->
             </div>
         </div>
-        <!-- <div id="canvas" class="gradient"></div> -->
-
-    </section>
-
-    <!-- <script src="vorreiter/js/three.min.js"></script>
-
-    <script src="vorreiter/js/projector.js"></script>
-    <script src="vorreiter/js/canvas-renderer.js"></script>
-
-    <script src="vorreiter/js/3d-lines-animation.js"></script>
-
-    <script src="vorreiter/js/color.js"></script> -->
-
-
+    </div>
 </body>
 
 </html>
