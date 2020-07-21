@@ -44,6 +44,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     <title>
         <?= $title ?>
     </title>
+
 </head>
 
 <body>
@@ -55,14 +56,14 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
             <div class="col-sm-6">
                 <div>
                     <div id="div_vorreiter-logo">
-                        <img src="images/vorreiter_logo.png" alt="vorreiter">
+                        <img src="images/index/vorreiter_logo.png" alt="vorreiter">
                         <!-- <a href="http://www.weiter-germany.com">
                             <small style="font-size:8px;color:#ffffff">Impressum</small>
                         </a> -->
                     </div>
                     <div id="div_main-content">
                         <div id="div_zug-logo">
-                            <img src="images/zug_logo.png" alt="zug">
+                            <img src="images/index/zug_logo.png" alt="zug">
                         </div>
                         <div id="div_login-form">
                             <h1><b>Login</b></h1>
@@ -104,7 +105,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                                             </div>
                                         </div>
                                     </div>
-                                    <button id="button_submit" type="submit" class="btn btn-primary">Submit</button>
+                                    <button id="button_submit" type="submit" class="btn btn-primary">LOGIN</button>
                                     <br>
                                 </form>
                             </div>

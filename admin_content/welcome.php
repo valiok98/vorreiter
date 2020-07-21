@@ -56,11 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
+    <!-- Eigenes CSS start -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Eigenes CSS end -->
+
     <style>
-        .nav {
-            width: 100vw;
-            font-weight: 900;
-        }
+        
 
         .nav.main-nav li:last-of-type {
             position: absolute;
@@ -262,221 +263,246 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
 
 <body>
 
-    <ul class="nav nav-tabs main-nav" data-tabs="tabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="#anfragen" data-toggle="tab">Anfragen</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#benutzerverwaltung" data-toggle="tab">Benutzerverwaltung</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#auftraege" data-toggle="tab">Aufträge</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#systemeinstellung" data-toggle="tab">Systemeinstellung</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sprache</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Deutsch</a>
-                <a class="dropdown-item" href="#">Englisch</a>
-                <a class="dropdown-item" href="#">Spanisch</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= URL . 'logout.php' ?>">Ausloggen</a>
-        </li>
-    </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="div_sidenav" class="col-sm-1">
+                <ul class="nav flex-column" data-tabs="tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home" data-toggle="tab">
+                            <img src="../images/navbar/vorreiter_logo.png" alt="vorreiter">
+                        </a>
+                    </li>
+                    <br>
+                    <br>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#kunden" data-toggle="tab">
+                            <img src="../images/navbar/kunden_b_w.png" alt="kunden">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/an_auf_b_w.png" alt="anfragen&aufträge">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/an_auf_b_w.png" alt="tracking">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/flotte_b_w.png" alt="flotte">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/support_b_w.png" alt="support">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/stats_b_w.png" alt="stats">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                            <img src="../images/navbar/settings_b_w.png" alt="settings">
+                        </a>
+                    </li>
 
-    <div class="tab-content">
-        <div class="tab-pane active table-responsive" id="anfragen">
-            <br><br>
-            <table id="anfragen_table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">KundenID</th>
-                        <th scope="col">Anfragezeit</th>
-                        <th scope="col">PLZ Start</th>
-                        <th scope="col">PLZ Ziel</th>
-                        <th scope="col">Zeitfenster</th>
-                        <th scope="col">Zustelltag</th>
-                        <th scope="col">Volumengewicht</th>
-                        <th scope="col">Gewünschte Serviceleistungen</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">E-Mail</th>
-                        <th scope="col">Telefon</th>
-                        <th scope="col">Kontaktwunsch</th>
-                        <th scope="col">Aktionen</th>
-                        <th scope="col">X</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Get the user package requests.
-                    $sql = "SELECT id, zeit, plz_start, plz_ziel, zeit_fenster,
+                </ul>
+
+            </div>
+            <div class="col-sm-11">
+                <div class="tab-content">
+                    <div class="tab-pane active table-responsive" id="anfragen">
+                        <br><br>
+                        <table id="anfragen_table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">KundenID</th>
+                                    <th scope="col">Anfragezeit</th>
+                                    <th scope="col">PLZ Start</th>
+                                    <th scope="col">PLZ Ziel</th>
+                                    <th scope="col">Zeitfenster</th>
+                                    <th scope="col">Zustelltag</th>
+                                    <th scope="col">Volumengewicht</th>
+                                    <th scope="col">Gewünschte Serviceleistungen</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">E-Mail</th>
+                                    <th scope="col">Telefon</th>
+                                    <th scope="col">Kontaktwunsch</th>
+                                    <th scope="col">Aktionen</th>
+                                    <th scope="col">X</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Get the user package requests.
+                                $sql = "SELECT id, zeit, plz_start, plz_ziel, zeit_fenster,
                                 zustelltag, volumengewicht, service_leistung, kunden_name,
                                 email , telefon, kontakt_wunsch, aktionen, completed, ist_auftrag, kunden_id
                                 FROM anfragen";
 
-                    if ($stmt = $mysqli->prepare($sql)) {
-                        if ($stmt->execute()) {
-                            $result = $stmt->get_result();
-                            $zeit = '';
-                            while ($row = $result->fetch_assoc()) {
-                                if ($row["service_leistung"] == '{}') {
-                                    $row["service_leistung"] = '';
+                                if ($stmt = $mysqli->prepare($sql)) {
+                                    if ($stmt->execute()) {
+                                        $result = $stmt->get_result();
+                                        $zeit = '';
+                                        while ($row = $result->fetch_assoc()) {
+                                            if ($row["service_leistung"] == '{}') {
+                                                $row["service_leistung"] = '';
+                                            }
+                                            $eye_img_url = '';
+
+                                            $action_img_auftrag = URL . 'images/customer_profile.gif';
+                                            $action_span_auftrag = 'Daten zur Anfrage anzeigen';
+                                            $action_img_nonauftrag = URL . 'images/customer_request.gif';
+                                            $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
+
+                                            $action_img_url = '';
+                                            $action_span_text = '';
+
+                                            if ($row['completed']) {
+                                                $eye_img_url = URL . 'images/orange_eye.gif';
+                                            } else {
+                                                $eye_img_url = URL . 'images/grey_eye.gif';
+                                            }
+
+                                            if ($row['ist_auftrag']) {
+                                                $action_img_url = URL . 'images/customer_profile.gif';
+                                                $action_span_text = 'Daten zur Anfrage anzeigen';
+                                            } else {
+                                                $action_img_url = URL . 'images/customer_request.gif';
+                                                $action_span_text = 'In Auftrag umwandeln';
+                                            }
+                                            // Initialize the dialog.
+                                            require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                            echo anfragen_table(
+                                                $row,
+                                                $action_img_url,
+                                                $action_span_text,
+                                                $eye_img_url,
+                                                $action_img_auftrag,
+                                                $action_span_auftrag
+                                            );
+                                        }
+                                    }
                                 }
-                                $eye_img_url = '';
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="benutzerverwaltung">
+                        <br>
+                        <h5 class="text-muted heading">Hier können Sie einen neuen Benutzer anlegen.</b></h5>
+                        <br>
+                        <form id="create_benutzer" method="POST">
+                            <div>
+                                <div class="form-group">
+                                    <label for="bv_firmenname">Firmenname</label>
+                                    <input required type="text" class="form-control" id="bv_firmenname" name="bv_firmenname" placeholder="Firmenname ...">
+                                </div>
+                                <br>
+                                <div class="form-group input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="bv_anrede">Anrede</label>
+                                    </div>
+                                    <select class="custom-select" id="bv_anrede" name="bv_anrede">
+                                        <option value="Herr">Herr</option>
+                                        <option value="Frau">Frau</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bv_ansprechpartner">Ansprechpartner</label>
+                                    <input required type="text" class="form-control" id="bv_ansprechpartner" name="bv_ansprechpartner" placeholder="Ansprechpartner ...">
+                                </div>
 
-                                $action_img_auftrag = URL . 'images/customer_profile.gif';
-                                $action_span_auftrag = 'Daten zur Anfrage anzeigen';
-                                $action_img_nonauftrag = URL . 'images/customer_request.gif';
-                                $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
+                                <div class="form-group">
+                                    <label for="bv_email">Email</label>
+                                    <input required type="email" class="form-control" id="bv_email" name="bv_email" placeholder="Email Adresse ...">
+                                </div>
 
-                                $action_img_url = '';
-                                $action_span_text = '';
-
-                                if ($row['completed']) {
-                                    $eye_img_url = URL . 'images/orange_eye.gif';
-                                } else {
-                                    $eye_img_url = URL . 'images/grey_eye.gif';
-                                }
-
-                                if ($row['ist_auftrag']) {
-                                    $action_img_url = URL . 'images/customer_profile.gif';
-                                    $action_span_text = 'Daten zur Anfrage anzeigen';
-                                } else {
-                                    $action_img_url = URL . 'images/customer_request.gif';
-                                    $action_span_text = 'In Auftrag umwandeln';
-                                }
-                                // Initialize the dialog.
-                                require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                echo anfragen_table(
-                                    $row,
-                                    $action_img_url,
-                                    $action_span_text,
-                                    $eye_img_url,
-                                    $action_img_auftrag,
-                                    $action_span_auftrag
-                                );
-                            }
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="tab-pane" id="benutzerverwaltung">
-            <br>
-            <h5 class="text-muted heading">Hier können Sie einen neuen Benutzer anlegen.</b></h5>
-            <br>
-            <form id="create_benutzer" method="POST">
-                <div>
-                    <div class="form-group">
-                        <label for="bv_firmenname">Firmenname</label>
-                        <input required type="text" class="form-control" id="bv_firmenname" name="bv_firmenname" placeholder="Firmenname ...">
-                    </div>
-                    <br>
-                    <div class="form-group input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="bv_anrede">Anrede</label>
-                        </div>
-                        <select class="custom-select" id="bv_anrede" name="bv_anrede">
-                            <option value="Herr">Herr</option>
-                            <option value="Frau">Frau</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="bv_ansprechpartner">Ansprechpartner</label>
-                        <input required type="text" class="form-control" id="bv_ansprechpartner" name="bv_ansprechpartner" placeholder="Ansprechpartner ...">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bv_email">Email</label>
-                        <input required type="email" class="form-control" id="bv_email" name="bv_email" placeholder="Email Adresse ...">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bv_telefon">Telefon</label>
-                        <input required type="tel" class="form-control" id="bv_telefon" name="bv_telefon" placeholder="Telefon ...">
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label for="bv_strasse">Straße</label>
-                        <input required type="text" class="form-control" id="bv_strasse" name="bv_strasse" placeholder="Straße ...">
-                    </div>
-                    <div class="form-group">
-                        <label for="bv_hausnummer">Hausnummer</label>
-                        <input required type="text" class="form-control" id="bv_hausnummer" name="bv_hausnummer" placeholder="Hausnummer ...">
-                    </div>
-                    <div class="form-group">
-                        <label for="bv_plz">PLZ</label>
-                        <input required type="number" class="form-control" id="bv_plz" name="bv_plz" placeholder="PLZ ...">
-                    </div>
-                    <div class="form-group">
-                        <label for="bv_ort">Ort</label>
-                        <input required type="text" class="form-control" id="bv_ort" name="bv_ort" placeholder="Ort ...">
-                    </div>
-                    <div class="form-group">
-                        <label for="bv_land">Land</label>
-                        <input required type="text" class="form-control" id="bv_land" name="bv_land" placeholder="Land ...">
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label for="bv_ztelefon">Zentrale Telefonnummer</label>
-                        <input required type="tel" class="form-control" id="bv_ztelefon" name="bv_ztelefon" placeholder="Zentrale Telefonnummer ...">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" id="bv_freitext" name="bv_freitext" rows="10" placeholder="Freitext ..."></textarea>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="bv_kunden_informieren" id="bv_kunden_informieren">
-                        <label class="form-check-label" for="bv_kunden_informieren">Kunden über Accounterstellung via E-Mail informieren</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Anlegen</button>
-                </div>
-            </form>
-            <!-- Tabelle mit den Nutzern -->
-            <br>
-            <br>
-            <div class="tab-pane" id="kunden">
-                <br>
-                <h5 class="text-muted heading">Hier können Sie die Kunden durchsuchen.</h5>
-                <h5 class="text-muted heading">Sie können auch direkt einen Auftrag erstellen.</h5>
-                <br><br>
-                <div class="table-responsive">
-                    <table id="kunden_table_1" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">Firmenname</th>
-                                <th scope="col">Anrede</th>
-                                <th scope="col">Ansprechpartner</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Telefon</th>
-                                <th scope="col">Straße</th>
-                                <th scope="col">Hausnummer</th>
-                                <th scope="col">PLZ</th>
-                                <th scope="col">Ort</th>
-                                <th scope="col">Land</th>
-                                <th scope="col">Telefon(Zentrale)</th>
-                                <th scope="col">Notizen</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Get the user package requests.
-                            $sql = "SELECT id, firmenname, anrede, ansprechpartner, email, telefon, strasse,
+                                <div class="form-group">
+                                    <label for="bv_telefon">Telefon</label>
+                                    <input required type="tel" class="form-control" id="bv_telefon" name="bv_telefon" placeholder="Telefon ...">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label for="bv_strasse">Straße</label>
+                                    <input required type="text" class="form-control" id="bv_strasse" name="bv_strasse" placeholder="Straße ...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bv_hausnummer">Hausnummer</label>
+                                    <input required type="text" class="form-control" id="bv_hausnummer" name="bv_hausnummer" placeholder="Hausnummer ...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bv_plz">PLZ</label>
+                                    <input required type="number" class="form-control" id="bv_plz" name="bv_plz" placeholder="PLZ ...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bv_ort">Ort</label>
+                                    <input required type="text" class="form-control" id="bv_ort" name="bv_ort" placeholder="Ort ...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bv_land">Land</label>
+                                    <input required type="text" class="form-control" id="bv_land" name="bv_land" placeholder="Land ...">
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label for="bv_ztelefon">Zentrale Telefonnummer</label>
+                                    <input required type="tel" class="form-control" id="bv_ztelefon" name="bv_ztelefon" placeholder="Zentrale Telefonnummer ...">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="bv_freitext" name="bv_freitext" rows="10" placeholder="Freitext ..."></textarea>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="bv_kunden_informieren" id="bv_kunden_informieren">
+                                    <label class="form-check-label" for="bv_kunden_informieren">Kunden über Accounterstellung via E-Mail informieren</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Anlegen</button>
+                            </div>
+                        </form>
+                        <!-- Tabelle mit den Nutzern -->
+                        <br>
+                        <br>
+                        <div class="tab-pane" id="kunden">
+                            <br>
+                            <h5 class="text-muted heading">Hier können Sie die Kunden durchsuchen.</h5>
+                            <h5 class="text-muted heading">Sie können auch direkt einen Auftrag erstellen.</h5>
+                            <br><br>
+                            <div class="table-responsive">
+                                <table id="kunden_table_1" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Firmenname</th>
+                                            <th scope="col">Anrede</th>
+                                            <th scope="col">Ansprechpartner</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Telefon</th>
+                                            <th scope="col">Straße</th>
+                                            <th scope="col">Hausnummer</th>
+                                            <th scope="col">PLZ</th>
+                                            <th scope="col">Ort</th>
+                                            <th scope="col">Land</th>
+                                            <th scope="col">Telefon(Zentrale)</th>
+                                            <th scope="col">Notizen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Get the user package requests.
+                                        $sql = "SELECT id, firmenname, anrede, ansprechpartner, email, telefon, strasse,
                         hausnummer, plz, ort, land, telefon_zentrale, freitext
                      FROM kunden";
 
-                            if ($stmt = $mysqli->prepare($sql)) {
-                                if ($stmt->execute()) {
-                                    $result = $stmt->get_result();
-                                    $zeit = '';
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo '<tr>
+                                        if ($stmt = $mysqli->prepare($sql)) {
+                                            if ($stmt->execute()) {
+                                                $result = $stmt->get_result();
+                                                $zeit = '';
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo '<tr>
                                     <td>' . $row['firmenname'] . '</td>
                                     <td>' . $row['anrede'] . '</td>
                                     <td>' . $row['ansprechpartner'] . '</td>
@@ -490,66 +516,66 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     <td>' . $row['telefon_zentrale'] . '</td>
                                     <td>' . $row['freitext'] . '</td>
                                     </tr>';
-                                    }
-                                }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <br>
-                </div>
-            </div>
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                                <br>
+                            </div>
+                        </div>
 
-        </div>
-        <div class="tab-pane" id="auftraege">
-            <ul class="nav nav-tabs" data-tabs="tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#auftraege_erstellen" data-toggle="tab">Auftrag erstellen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#auftraege_durchsuchen" data-toggle="tab">Durchsuchen</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="auftraege_erstellen">
-                    <br>
-                    <h5 class="text-muted heading">Hier können Sie die Kunden durchsuchen.</h5>
-                    <h5 class="text-muted heading">Sie können auch direkt einen Auftrag erstellen.</h5>
-                    <br><br>
-                    <div class="table-responsive">
-                        <table id="kunden_table_2" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Auftrag</th>
-                                    <th scope="col">KundenID</th>
-                                    <th scope="col">Firmenname</th>
-                                    <th scope="col">Anrede</th>
-                                    <th scope="col">Ansprechpartner</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Telefon</th>
-                                    <th scope="col">Straße</th>
-                                    <th scope="col">Hausnummer</th>
-                                    <th scope="col">PLZ</th>
-                                    <th scope="col">Ort</th>
-                                    <th scope="col">Land</th>
-                                    <th scope="col">Telefon(Zentrale)</th>
-                                    <th scope="col">Notizen</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Get the user package requests.
-                                $sql = "SELECT id, firmenname, anrede, ansprechpartner, email, telefon, strasse,
+                    </div>
+                    <div class="tab-pane" id="auftraege">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#auftraege_erstellen" data-toggle="tab">Auftrag erstellen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#auftraege_durchsuchen" data-toggle="tab">Durchsuchen</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="auftraege_erstellen">
+                                <br>
+                                <h5 class="text-muted heading">Hier können Sie die Kunden durchsuchen.</h5>
+                                <h5 class="text-muted heading">Sie können auch direkt einen Auftrag erstellen.</h5>
+                                <br><br>
+                                <div class="table-responsive">
+                                    <table id="kunden_table_2" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Auftrag</th>
+                                                <th scope="col">KundenID</th>
+                                                <th scope="col">Firmenname</th>
+                                                <th scope="col">Anrede</th>
+                                                <th scope="col">Ansprechpartner</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Telefon</th>
+                                                <th scope="col">Straße</th>
+                                                <th scope="col">Hausnummer</th>
+                                                <th scope="col">PLZ</th>
+                                                <th scope="col">Ort</th>
+                                                <th scope="col">Land</th>
+                                                <th scope="col">Telefon(Zentrale)</th>
+                                                <th scope="col">Notizen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Get the user package requests.
+                                            $sql = "SELECT id, firmenname, anrede, ansprechpartner, email, telefon, strasse,
                         hausnummer, plz, ort, land, telefon_zentrale, freitext
                      FROM kunden";
 
-                                if ($stmt = $mysqli->prepare($sql)) {
-                                    if ($stmt->execute()) {
-                                        $result = $stmt->get_result();
-                                        $zeit = '';
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo
-                                                '<tr>
+                                            if ($stmt = $mysqli->prepare($sql)) {
+                                                if ($stmt->execute()) {
+                                                    $result = $stmt->get_result();
+                                                    $zeit = '';
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo
+                                                            '<tr>
                                     <td>
                                         <img id="client_nr_' . $row['id'] . '" style="cursor: pointer;" src="' . URL . 'images/customer_request.gif">
                                     </td>
@@ -575,168 +601,201 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     </script>
                                     </tr>
                                     ';
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div class="auftrag_erstellen_div">
+                                        <form class="auftrag_erstellen" id="auftrag_erstellen2" method="POST">
+                                            <div>
+                                                <div class="form-group">
+                                                    <input value="" required type="hidden" class="form-control" id="ae_kundenid" name="ae_kundenid">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_firmenname">Firmenname</label>
+                                                    <input required type="text" class="form-control" id="ae_firmenname" name="ae_firmenname" placeholder="Firmenname ...">
+                                                </div>
+                                                <br>
+                                                <div class="form-group input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text" for="ae_anrede">Anrede</label>
+                                                    </div>
+                                                    <select class="custom-select" id="ae_anrede" name="ae_anrede">
+                                                        <option value="Herr">Herr</option>
+                                                        <option value="Frau">Frau</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_ansprechpartner">Ansprechpartner</label>
+                                                    <input required type="text" class="form-control" id="ae_ansprechpartner" name="ae_ansprechpartner" placeholder="Ansprechpartner ...">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="ae_email">Email</label>
+                                                    <input required type="email" class="form-control" id="ae_email" name="ae_email" placeholder="Email Adresse ...">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="ae_telefon">Telefon</label>
+                                                    <input required type="tel" class="form-control" id="ae_telefon" name="ae_telefon" placeholder="Telefon ...">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="form-group">
+                                                    <label for="ae_strasse">Straße</label>
+                                                    <input required type="text" class="form-control" id="ae_strasse" name="ae_strasse" placeholder="Straße ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_hausnummer">Hausnummer</label>
+                                                    <input required type="text" class="form-control" id="ae_hausnummer" name="ae_hausnummer" placeholder="Hausnummer ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_plz">PLZ</label>
+                                                    <input required type="number" class="form-control" id="ae_plz" name="ae_plz" placeholder="PLZ ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_ort">Ort</label>
+                                                    <input required type="text" class="form-control" id="ae_ort" name="ae_ort" placeholder="Ort ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_land">Land</label>
+                                                    <input required type="text" class="form-control" id="ae_land" name="ae_land" placeholder="Land ...">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="form-group">
+                                                    <label for="ae_ztelefon">Zentrale Telefonnummer</label>
+                                                    <input required type="tel" class="form-control" id="ae_ztelefon" name="ae_ztelefon" placeholder="Zentrale Telefonnummer ...">
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" id="ae_freitext" name="ae_freitext" rows="10" placeholder="Freitext ..."></textarea>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" name="chk_ae_abholadresse" id="chk_ae_abholadresse">
+                                                    <label class="form-check-label" for="chk_ae_abholadresse">Die Adresse der Abholung unterscheidet sich von der des Auttraggebers</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ae_abholadresse">Abholadresse</label>
+                                                    <input type="text" class="form-control" id="ae_abholadresse" name="ae_abholadresse" placeholder="Abholadresse ...">
+                                                </div>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary">Auftrag erstellen</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="auftraege_durchsuchen">
+                                <table id="auftraege_table" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">KundenID</th>
+                                            <th scope="col">Firmenname</th>
+                                            <th scope="col">Anrede</th>
+                                            <th scope="col">Ansprechpartner</th>
+                                            <th scope="col">E-Mail</th>
+                                            <th scope="col">Telefon</th>
+                                            <th scope="col">Strasse</th>
+                                            <th scope="col">Hausnummer</th>
+                                            <th scope="col">PLZ</th>
+                                            <th scope="col">Ort</th>
+                                            <th scope="col">Land</th>
+                                            <th scope="col">Telfon zentrale</th>
+                                            <th scope="col">Freitext</th>
+                                            <th scope="col">Abholadresse</th>
+                                            <th scope="col">Trackingnummer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Get the user package requests.
+                                        $sql = "SELECT * FROM auftraege";
+                                        if ($stmt = $mysqli->prepare($sql)) {
+                                            if ($stmt->execute()) {
+                                                $result = $stmt->get_result();
+                                                while ($row = $result->fetch_assoc()) {
+                                                    // Initialize the dialog.
+                                                    require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                    echo auftraege_table($row);
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                        <br>
-                        <div class="auftrag_erstellen_div">
-                            <form class="auftrag_erstellen" id="auftrag_erstellen2" method="POST">
-                                <div>
-                                    <div class="form-group">
-                                        <input value="" required type="hidden" class="form-control" id="ae_kundenid" name="ae_kundenid">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_firmenname">Firmenname</label>
-                                        <input required type="text" class="form-control" id="ae_firmenname" name="ae_firmenname" placeholder="Firmenname ...">
-                                    </div>
-                                    <br>
-                                    <div class="form-group input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text" for="ae_anrede">Anrede</label>
-                                        </div>
-                                        <select class="custom-select" id="ae_anrede" name="ae_anrede">
-                                            <option value="Herr">Herr</option>
-                                            <option value="Frau">Frau</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_ansprechpartner">Ansprechpartner</label>
-                                        <input required type="text" class="form-control" id="ae_ansprechpartner" name="ae_ansprechpartner" placeholder="Ansprechpartner ...">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="ae_email">Email</label>
-                                        <input required type="email" class="form-control" id="ae_email" name="ae_email" placeholder="Email Adresse ...">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="ae_telefon">Telefon</label>
-                                        <input required type="tel" class="form-control" id="ae_telefon" name="ae_telefon" placeholder="Telefon ...">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="form-group">
-                                        <label for="ae_strasse">Straße</label>
-                                        <input required type="text" class="form-control" id="ae_strasse" name="ae_strasse" placeholder="Straße ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_hausnummer">Hausnummer</label>
-                                        <input required type="text" class="form-control" id="ae_hausnummer" name="ae_hausnummer" placeholder="Hausnummer ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_plz">PLZ</label>
-                                        <input required type="number" class="form-control" id="ae_plz" name="ae_plz" placeholder="PLZ ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_ort">Ort</label>
-                                        <input required type="text" class="form-control" id="ae_ort" name="ae_ort" placeholder="Ort ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_land">Land</label>
-                                        <input required type="text" class="form-control" id="ae_land" name="ae_land" placeholder="Land ...">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="form-group">
-                                        <label for="ae_ztelefon">Zentrale Telefonnummer</label>
-                                        <input required type="tel" class="form-control" id="ae_ztelefon" name="ae_ztelefon" placeholder="Zentrale Telefonnummer ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="ae_freitext" name="ae_freitext" rows="10" placeholder="Freitext ..."></textarea>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="chk_ae_abholadresse" id="chk_ae_abholadresse">
-                                        <label class="form-check-label" for="chk_ae_abholadresse">Die Adresse der Abholung unterscheidet sich von der des Auttraggebers</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ae_abholadresse">Abholadresse</label>
-                                        <input type="text" class="form-control" id="ae_abholadresse" name="ae_abholadresse" placeholder="Abholadresse ...">
-                                    </div>
-                                    <br>
-                                    <button type="submit" class="btn btn-primary">Auftrag erstellen</button>
-                                </div>
-                            </form>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="auftraege_durchsuchen">
-                    <table id="auftraege_table" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">Status</th>
-                                <th scope="col">KundenID</th>
-                                <th scope="col">Firmenname</th>
-                                <th scope="col">Anrede</th>
-                                <th scope="col">Ansprechpartner</th>
-                                <th scope="col">E-Mail</th>
-                                <th scope="col">Telefon</th>
-                                <th scope="col">Strasse</th>
-                                <th scope="col">Hausnummer</th>
-                                <th scope="col">PLZ</th>
-                                <th scope="col">Ort</th>
-                                <th scope="col">Land</th>
-                                <th scope="col">Telfon zentrale</th>
-                                <th scope="col">Freitext</th>
-                                <th scope="col">Abholadresse</th>
-                                <th scope="col">Trackingnummer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Get the user package requests.
-                            $sql = "SELECT * FROM auftraege";
-                            if ($stmt = $mysqli->prepare($sql)) {
-                                if ($stmt->execute()) {
-                                    $result = $stmt->get_result();
-                                    while ($row = $result->fetch_assoc()) {
-                                        // Initialize the dialog.
-                                        require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                        echo auftraege_table($row);
-                                    }
-                                }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="systemeinstellung">
-            <ul class="nav nav-tabs" data-tabs="tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#sysestlg_rechnung" data-toggle="tab">Rechnungslayout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#sysestlg_steuersatz" data-toggle="tab">Steuersatz</a>
-                </li>
-            </ul>
-            <br>
-            <div class="tab-content">
-                <div class="tab-pane active" id="sysestlg_rechnung">
-                    <form id="rechnungslayout" action="create_rechnung.php" method="POST" enctype="multipart/form-data">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="rl_logo" id="rl_logo" accept="image/*">
-                            <label class="custom-file-label" for="rl_logo">Logo wählen</label>
+                    <div class="tab-pane" id="systemeinstellung">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#sysestlg_rechnung" data-toggle="tab">Rechnungslayout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sysestlg_steuersatz" data-toggle="tab">Steuersatz</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="sysestlg_rechnung">
+                                <form id="rechnungslayout" action="create_rechnung.php" method="POST" enctype="multipart/form-data">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="rl_logo" id="rl_logo" accept="image/*">
+                                        <label class="custom-file-label" for="rl_logo">Logo wählen</label>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div>
+                                        <label for="edit_firmenname">Firmenname: </label>
+                                        <a href="#" id="edit_firmenname" data-type="text" data-pk="1" data-title="Firmenname">Firmenname</a>
+                                    </div>
+                                    <br>
+                                    <button disabled type="submit" class="btn btn-primary">Angaben speichern</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="sysestlg_steuersatz">
+                                <h5 class="text-muted heading">Hier kommt der Steuersatz.</b></h5>
+                            </div>
                         </div>
-                        <br>
-                        <br>
-                        <div>
-                            <label for="edit_firmenname">Firmenname: </label>
-                            <a href="#" id="edit_firmenname" data-type="text" data-pk="1" data-title="Firmenname">Firmenname</a>
-                        </div>
-                        <br>
-                        <button disabled type="submit" class="btn btn-primary">Angaben speichern</button>
-                    </form>
-                </div>
-                <div class="tab-pane" id="sysestlg_steuersatz">
-                    <h5 class="text-muted heading">Hier kommt der Steuersatz.</b></h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    <!-- <ul class="nav nav-tabs main-nav" data-tabs="tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#anfragen" data-toggle="tab">Anfragen</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#benutzerverwaltung" data-toggle="tab">Benutzerverwaltung</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#auftraege" data-toggle="tab">Aufträge</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#systemeinstellung" data-toggle="tab">Systemeinstellung</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sprache</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Deutsch</a>
+                <a class="dropdown-item" href="#">Englisch</a>
+                <a class="dropdown-item" href="#">Spanisch</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?= URL . 'logout.php' ?>">Ausloggen</a>
+        </li>
+    </ul> -->
+
+
 
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 15px; right: 15px;">
         <div class="toast-header">
