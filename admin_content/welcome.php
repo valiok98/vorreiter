@@ -263,39 +263,9 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                         if ($row["service_leistung"] == '{}') {
                                                             $row["service_leistung"] = '';
                                                         }
-                                                        $eye_img_url = '';
-
-                                                        $action_img_auftrag = URL . 'images/customer_profile.gif';
-                                                        $action_span_auftrag = 'Daten zur Anfrage anzeigen';
-                                                        $action_img_nonauftrag = URL . 'images/customer_request.gif';
-                                                        $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
-
-                                                        $action_img_url = '';
-                                                        $action_span_text = '';
-
-                                                        if ($row['completed']) {
-                                                            $eye_img_url = URL . 'images/orange_eye.gif';
-                                                        } else {
-                                                            $eye_img_url = URL . 'images/grey_eye.gif';
-                                                        }
-
-                                                        if ($row['ist_auftrag']) {
-                                                            $action_img_url = URL . 'images/customer_profile.gif';
-                                                            $action_span_text = 'Daten zur Anfrage anzeigen';
-                                                        } else {
-                                                            $action_img_url = URL . 'images/customer_request.gif';
-                                                            $action_span_text = 'In Auftrag umwandeln';
-                                                        }
                                                         // Initialize the dialog.
                                                         require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo anfragen_table(
-                                                            $row,
-                                                            $action_img_url,
-                                                            $action_span_text,
-                                                            $eye_img_url,
-                                                            $action_img_auftrag,
-                                                            $action_span_auftrag
-                                                        );
+                                                        echo anfragen_table($row);
                                                     }
                                                 }
                                             }
@@ -337,39 +307,9 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                         if ($row["service_leistung"] == '{}') {
                                                             $row["service_leistung"] = '';
                                                         }
-                                                        $eye_img_url = '';
-
-                                                        $action_img_auftrag = URL . 'images/customer_profile.gif';
-                                                        $action_span_auftrag = 'Daten zur Anfrage anzeigen';
-                                                        $action_img_nonauftrag = URL . 'images/customer_request.gif';
-                                                        $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
-
-                                                        $action_img_url = '';
-                                                        $action_span_text = '';
-
-                                                        if ($row['completed']) {
-                                                            $eye_img_url = URL . 'images/orange_eye.gif';
-                                                        } else {
-                                                            $eye_img_url = URL . 'images/grey_eye.gif';
-                                                        }
-
-                                                        if ($row['ist_auftrag']) {
-                                                            $action_img_url = URL . 'images/customer_profile.gif';
-                                                            $action_span_text = 'Daten zur Anfrage anzeigen';
-                                                        } else {
-                                                            $action_img_url = URL . 'images/customer_request.gif';
-                                                            $action_span_text = 'In Auftrag umwandeln';
-                                                        }
                                                         // Initialize the dialog.
                                                         require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo anfragen_table(
-                                                            $row,
-                                                            $action_img_url,
-                                                            $action_span_text,
-                                                            $eye_img_url,
-                                                            $action_img_auftrag,
-                                                            $action_span_auftrag
-                                                        );
+                                                        echo anfragen_table($row);
                                                     }
                                                 }
                                             }
@@ -381,82 +321,89 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                         </div>
                     </div>
 
-                    <div class="tab-pane table-responsive" id="an_auf_data">
-                        <br><br>
-                        <table id="anfragen_table1" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">KundenID</th>
-                                    <th scope="col">Anfragezeit</th>
-                                    <th scope="col">PLZ Start</th>
-                                    <th scope="col">PLZ Ziel</th>
-                                    <th scope="col">Zeitfenster</th>
-                                    <th scope="col">Zustelltag</th>
-                                    <th scope="col">Volumengewicht</th>
-                                    <th scope="col">Gewünschte Serviceleistungen</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">E-Mail</th>
-                                    <th scope="col">Telefon</th>
-                                    <th scope="col">Kontaktwunsch</th>
-                                    <th scope="col">Aktionen</th>
-                                    <th scope="col">X</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // Get the user package requests.
-                                $sql = "SELECT id, zeit, plz_start, plz_ziel, zeit_fenster,
-                                zustelltag, volumengewicht, service_leistung, kunden_name,
-                                email , telefon, kontakt_wunsch, aktionen, completed, ist_auftrag, kunden_id
-                                FROM anfragen";
+                    <div class="tab-pane table-responsive" id="an_auf_data" data-tabs="tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#anfragen" data-toggle="tab">Anfragen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#auftraege" data-toggle="tab">Aufträge</a>
+                            </li>
+                            <li class="nav-item">
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="anfragen" class="tab-pane">
+                                <table id="anfragen_table_full" class="compact">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Kunde</th>
+                                            <th scope="col">Eingegangen</th>
+                                            <th scope="col">Von</th>
+                                            <th scope="col">Nach</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Aktionen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Get the user package requests.
+                                        $sql = "SELECT * FROM anfragen";
 
-                                if ($stmt = $mysqli->prepare($sql)) {
-                                    if ($stmt->execute()) {
-                                        $result = $stmt->get_result();
-                                        $zeit = '';
-                                        while ($row = $result->fetch_assoc()) {
-                                            if ($row["service_leistung"] == '{}') {
-                                                $row["service_leistung"] = '';
+                                        if ($stmt = $mysqli->prepare($sql)) {
+                                            if ($stmt->execute()) {
+                                                $result = $stmt->get_result();
+                                                $zeit = '';
+                                                while ($row = $result->fetch_assoc()) {
+                                                    if ($row["service_leistung"] == '{}') {
+                                                        $row["service_leistung"] = '';
+                                                    }
+                                                    // Initialize the dialog.
+                                                    require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                    echo anfragen_table($row);
+                                                }
                                             }
-                                            $eye_img_url = '';
-
-                                            $action_img_auftrag = URL . 'images/customer_profile.gif';
-                                            $action_span_auftrag = 'Daten zur Anfrage anzeigen';
-                                            $action_img_nonauftrag = URL . 'images/customer_request.gif';
-                                            $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
-
-                                            $action_img_url = '';
-                                            $action_span_text = '';
-
-                                            if ($row['completed']) {
-                                                $eye_img_url = URL . 'images/orange_eye.gif';
-                                            } else {
-                                                $eye_img_url = URL . 'images/grey_eye.gif';
-                                            }
-
-                                            if ($row['ist_auftrag']) {
-                                                $action_img_url = URL . 'images/customer_profile.gif';
-                                                $action_span_text = 'Daten zur Anfrage anzeigen';
-                                            } else {
-                                                $action_img_url = URL . 'images/customer_request.gif';
-                                                $action_span_text = 'In Auftrag umwandeln';
-                                            }
-                                            // Initialize the dialog.
-                                            require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                            echo anfragen_table(
-                                                $row,
-                                                $action_img_url,
-                                                $action_span_text,
-                                                $eye_img_url,
-                                                $action_img_auftrag,
-                                                $action_span_auftrag
-                                            );
                                         }
-                                    }
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="auftraege" class="tab-pane">
+                                <table id="auftraege_table_full" class="compact">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Kunde</th>
+                                            <th scope="col">Eingegangen</th>
+                                            <th scope="col">Von</th>
+                                            <th scope="col">Nach</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Aktionen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Get the user package requests.
+                                        $sql = "SELECT * FROM anfragen";
+
+                                        if ($stmt = $mysqli->prepare($sql)) {
+                                            if ($stmt->execute()) {
+                                                $result = $stmt->get_result();
+                                                $zeit = '';
+                                                while ($row = $result->fetch_assoc()) {
+                                                    if ($row["service_leistung"] == '{}') {
+                                                        $row["service_leistung"] = '';
+                                                    }
+                                                    // Initialize the dialog.
+                                                    require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                    echo anfragen_table($row);
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="tab-pane" id="benutzerverwaltung">

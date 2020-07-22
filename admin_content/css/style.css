@@ -179,6 +179,26 @@ a {
 }
 
 
+/* Anfragen & Auftäge pane. */
+
+#an_auf_data {
+    background-color: #f2f2f2;
+}
+
+#an_auf_data .nav-link {
+    font-weight: 900;
+    color: black;
+}
+
+#an_auf_data .nav-item:last-child {
+    background-color: white;
+}
+
+#an_auf_data .nav-link.active {
+    background-color: #00cf65;
+}
+
+
 /* PREVIOUS CSS ... NEED TO CLEAN UP */
 
 .heading {

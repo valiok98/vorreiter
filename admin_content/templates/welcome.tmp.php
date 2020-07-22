@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../../definitions.php';
 
-function anfragen_table($row, $action_img_url, $action_span_text, $eye_img_url, $action_img_auftrag, $action_span_auftrag)
+function anfragen_table($row)
 {
     return '<tr>
     <td>
