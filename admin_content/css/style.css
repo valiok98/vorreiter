@@ -1,13 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Open Sans";
 }
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.container-fluid,
+.row {
+    width: 100%;
+}
+
+
+/* Side nav section */
 
 #div_sidenav {
     border-right: 1px solid black;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#div_sidenav nav {
+    height: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+#div_sidenav-collapsed {
+    max-height: 100%;
+    height: 100%;
 }
 
 #div_sidenav a.nav-link {
@@ -24,4 +53,176 @@
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+#div_sidenav ul {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#div_sidenav li:first-of-type,
+li:last-of-type {
+    flex: 1 1 0;
+}
+
+#div_sidenav li:last-of-type {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+/* Main nav section */
+
+.main-nav ul.navbar-nav {
+    position: absolute;
+    right: 0;
+}
+
+#li_angemeldet-als {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#li_angemeldet-als a {
+    all: unset;
+}
+
+#span_logout {
+    margin-left: -15%;
+}
+
+#img_suchen {
+    cursor: pointer;
+}
+
+
+/* Vorreiter tab pane. */
+
+.dataTable>thead>tr>th[class*="sort"]:before,
+.dataTable>thead>tr>th[class*="sort"]:after {
+    content: "" !important;
+}
+
+#vorreiter img {
+    height: 100%;
+}
+
+#vorreiter .div_table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#vorreiter .div_table-header h3 {
+    margin: 0;
+}
+
+.div_an-auf-table-data {
+    padding: 0;
+}
+
+.div_an-auf-table-data table {
+    width: 100%;
+}
+
+.div_an-auf-table-data thead,
+tbody {
+    background: #f2f2f2;
+}
+
+.div_an-auf-table-data tbody:before {
+    content: "-";
+    display: block;
+    line-height: 0.5em;
+    color: transparent;
+    background: white;
+}
+
+.div_an-auf-table-data .col-sm-2 {
+    text-align: center;
+}
+
+#anfragen_table_wrapper {
+    width: 100%;
+}
+
+#anfragen_table_wrapper .row {
+    margin: 0;
+}
+
+#anfragen_table_wrapper .row .col-sm-12 {
+    padding: 0;
+}
+
+.pagination li,
+a {
+    all: unset;
+    cursor: pointer;
+}
+
+.page-item.active .page-link {
+    background-color: #bbbbbb !important;
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.2;
+}
+
+.page-item .page-link {
+    color: black !important;
+    background-color: #f2f2f2 !important;
+    border-color: black !important;
+}
+
+
+/* PREVIOUS CSS ... NEED TO CLEAN UP */
+
+.heading {
+    margin-left: 50px;
+}
+
+#create_benutzer {
+    position: relative;
+    top: 50px;
+    left: 50px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+#create_benutzer>div {
+    margin-right: 25px;
+}
+
+.dataTables_filter,
+.dataTables_length {
+    display: none;
+}
+
+.auftrag_erstellen_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+#dialog_auftrag {
+    display: none;
+}
+
+#auftrag_erstellen2 {
+    display: none;
+}
+
+.ui-widget-overlay {
+    opacity: 0.8;
+}
+
+#rechnungslayout {
+    max-width: 50%;
+    margin: 0 auto;
 }

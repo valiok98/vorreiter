@@ -50,125 +50,32 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Data tables end -->
+
+    <!-- jQuery UI start -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
+    <!-- jQuery UI end -->
+
+    <!-- Editable start -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <!-- Editable end -->
+
+    <!-- Moment.js start -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <!-- Moment.js end -->
 
     <!-- Eigenes CSS start -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Eigenes CSS end -->
 
-    <style>
-        
-
-        .nav.main-nav li:last-of-type {
-            position: absolute;
-            right: 0;
-            z-index: 200;
-        }
-
-        .heading {
-            margin-left: 50px;
-        }
-
-        #create_benutzer {
-            position: relative;
-            top: 50px;
-            left: 50px;
-            display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
-        }
-
-        #create_benutzer>div {
-            margin-right: 25px;
-        }
-
-        .dataTables_filter,
-        .dataTables_length {
-            text-align: center !important;
-        }
-
-        .auftrag_erstellen_div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-        }
-
-        #dialog_auftrag {
-            display: none;
-        }
-
-        #auftrag_erstellen2 {
-            display: none;
-        }
-
-        .ui-widget-overlay {
-            opacity: 0.8;
-        }
-
-        #rechnungslayout {
-            max-width: 50%;
-            margin: 0 auto;
-        }
-    </style>
-
+    <!-- Eigenes JS start -->
+    <script src="js/script.js"></script>
+    <!-- Eigenes JS end -->
 
     <script>
         jQuery(document).ready(function($) {
-
-            $.fn.editable.defaults.mode = 'inline';
-
-            $.fn.editableform.buttons = '<button type="submit" class="btn btn-primary btn-sm editable-submit">OK</button><button type="button" class="btn btn-default btn-sm editable-cancel">X</button>';
-
-            $('#edit_firmenname').editable();
-
-            $('.toast').toast({
-                delay: 3500
-            });
-
-            $('#anfragen_table').DataTable({
-                pageLength: 10,
-                lengthMenu: [10, 50, 100],
-                language: {
-                    lengthMenu: "_MENU_ Einträge anzeigen"
-                },
-                order: [
-                    [0, "desc"]
-                ]
-            });
-
-
-            $('#kunden_table_1').DataTable({
-                pageLength: 10,
-                lengthMenu: [10, 50, 100],
-                language: {
-                    lengthMenu: "_MENU_ Einträge anzeigen"
-                }
-            });
-
-            $('#kunden_table_2').DataTable({
-                pageLength: 10,
-                lengthMenu: [10, 50, 100],
-                language: {
-                    lengthMenu: "_MENU_ Einträge anzeigen"
-                }
-            });
-
-
-            $('#bv_hausnummer').on('keyup', function(e) {
-                let numReg = new RegExp("\d+");
-                let inputVal = e.target.value;
-                let matchObj = inputVal.match(/\d+/);
-                if (!matchObj) {
-                    e.target.value = '';
-                } else if (matchObj && matchObj[0] !== inputVal) {
-                    e.target.value = matchObj[0];
-                }
-            });
 
             $('form#create_benutzer').on('submit', function(e) {
                 e.preventDefault();
@@ -224,39 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                 });
             });
 
-            // Show/hide the abholadresse field.
-
-            $('#ae_abholadresse').hide();
-            $('label[for="ae_abholadresse"]').hide();
-            $('#ae_dg_abholadresse').hide();
-            $('label[for="ae_dg_abholadresse"]').hide();
-
-            $('#chk_ae_abholadresse').on('change', function() {
-                if (this.checked) {
-                    $('#ae_abholadresse').show();
-                    $('label[for="ae_abholadresse"]').show();
-                    $('#ae_abholadresse').prop('required', true);
-                } else {
-                    $('#ae_abholadresse').hide();
-                    $('label[for="ae_abholadresse"]').hide();
-                    $('#ae_abholadresse').removeAttr('required');
-                }
-            });
-
-            $('#chk_ae_dg_abholadresse').on('change', function() {
-                if (this.checked) {
-                    $('#ae_dg_abholadresse').show();
-                    $('label[for="ae_dg_abholadresse"]').show();
-                    $('#ae_dg_abholadresse').prop('required', true);
-                } else {
-                    $('#ae_dg_abholadresse').hide();
-                    $('label[for="ae_dg_abholadresse"]').hide();
-                    $('#ae_dg_abholadresse').removeAttr('required');
-                }
-            });
-
-            $('[data-toggle="tooltip"]').tooltip();
-
         });
     </script>
 </head>
@@ -266,58 +140,250 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     <div class="container-fluid">
         <div class="row">
             <div id="div_sidenav" class="col-sm-1">
-                <ul class="nav flex-column" data-tabs="tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#home" data-toggle="tab">
-                            <img src="../images/navbar/vorreiter_logo.png" alt="vorreiter">
-                        </a>
-                    </li>
-                    <br>
-                    <br>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#kunden" data-toggle="tab">
-                            <img src="../images/navbar/kunden_b_w.png" alt="kunden">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/an_auf_b_w.png" alt="anfragen&aufträge">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/an_auf_b_w.png" alt="tracking">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/flotte_b_w.png" alt="flotte">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/support_b_w.png" alt="support">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/stats_b_w.png" alt="stats">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#an_auf_data" data-toggle="tab">
-                            <img src="../images/navbar/settings_b_w.png" alt="settings">
-                        </a>
-                    </li>
-
-                </ul>
-
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#div_sidenav-collapsed" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="div_sidenav-collapsed" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav mr-auto flex-column" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#vorreiter" data-toggle="tab">
+                                    <img id="vorreiter_img" src="../images/navbar/vorreiter_logo.png" alt="vorreiter">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#kunden" data-toggle="tab">
+                                    <img id="img_kunden" src="../images/navbar/kunden_b_w.png" alt="kunden">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#an_auf_data" data-toggle="tab">
+                                    <img id="img_an-auf" src="../images/navbar/an_auf_b_w.png" alt="anfragen&aufträge">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#tracking" data-toggle="tab">
+                                    <img id="img_tracking" src="../images/navbar/tracking_b_w.png" alt="tracking">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#flotte" data-toggle="tab">
+                                    <img id="img_flotte" src="../images/navbar/flotte_b_w.png" alt="flotte">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#support" data-toggle="tab">
+                                    <img id="img_support" src="../images/navbar/support_b_w.png" alt="support">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#stats" data-toggle="tab">
+                                    <img id="img_stats" src="../images/navbar/stats_b_w.png" alt="stats">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#settings" data-toggle="tab">
+                                    <img id="img_settings" src="../images/navbar/settings_b_w.png" alt="settings">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            <div class="col-sm-11">
+            <div id="div_main-content" class="col-sm-11">
+                <nav class="navbar navbar-expand-lg navbar-light main-nav">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Suche..." aria-label="Search">
+                            <img id="img_suchen" src="../images/navbar/suchen.png" alt="suchen">
+                        </form>
+                        <ul class="navbar-nav mr-auto">
+                            <li id="li_angemeldet-als" class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <span>Angemeldet als:&nbsp;
+                                        <?= $_SESSION["username"] ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <img src="../images/navbar/notifications.png" alt="notifications">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= URL . 'logout.php' ?>">
+                                    <img src="../images/navbar/logout.png" alt="logout">
+                                    <span id="span_logout">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
                 <div class="tab-content">
-                    <div class="tab-pane active table-responsive" id="anfragen">
+                    <div id="kunden" class="tab-pane">
+                        <h1>kunden</h1>
+                    </div>
+                    <div class="tab-pane active container-fluid" id="vorreiter">
+                        <div class="row">
+                            <div class="col-sm-6 container-fluid">
+                                <div class="row div_table-header">
+                                    <h3>Anfragen</h3>
+                                    <div>
+                                        <img src="../images/an_auf_table/eye.png" alt="">
+                                        <img src="../images/an_auf_table/anfrage_erstellen.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="row div_an-auf-table-data">
+                                    <table id="anfragen_table" class="compact">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Kunde</th>
+                                                <th scope="col">Eingegangen</th>
+                                                <th scope="col">Von</th>
+                                                <th scope="col">Nach</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Aktionen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Get the user package requests.
+                                            $sql = "SELECT * FROM anfragen";
+
+                                            if ($stmt = $mysqli->prepare($sql)) {
+                                                if ($stmt->execute()) {
+                                                    $result = $stmt->get_result();
+                                                    $zeit = '';
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        if ($row["service_leistung"] == '{}') {
+                                                            $row["service_leistung"] = '';
+                                                        }
+                                                        $eye_img_url = '';
+
+                                                        $action_img_auftrag = URL . 'images/customer_profile.gif';
+                                                        $action_span_auftrag = 'Daten zur Anfrage anzeigen';
+                                                        $action_img_nonauftrag = URL . 'images/customer_request.gif';
+                                                        $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
+
+                                                        $action_img_url = '';
+                                                        $action_span_text = '';
+
+                                                        if ($row['completed']) {
+                                                            $eye_img_url = URL . 'images/orange_eye.gif';
+                                                        } else {
+                                                            $eye_img_url = URL . 'images/grey_eye.gif';
+                                                        }
+
+                                                        if ($row['ist_auftrag']) {
+                                                            $action_img_url = URL . 'images/customer_profile.gif';
+                                                            $action_span_text = 'Daten zur Anfrage anzeigen';
+                                                        } else {
+                                                            $action_img_url = URL . 'images/customer_request.gif';
+                                                            $action_span_text = 'In Auftrag umwandeln';
+                                                        }
+                                                        // Initialize the dialog.
+                                                        require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                        echo anfragen_table(
+                                                            $row,
+                                                            $action_img_url,
+                                                            $action_span_text,
+                                                            $eye_img_url,
+                                                            $action_img_auftrag,
+                                                            $action_span_auftrag
+                                                        );
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 container-fluid">
+                                <div class="row div_table-header">
+                                    <h3>Aufträge</h3>
+                                    <div>
+                                        <img src="../images/an_auf_table/eye.png" alt="">
+                                        <img src="../images/an_auf_table/auftrag_erstellen.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="row div_an-auf-table-data">
+                                    <table id="auftraege_table" class="compact">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Kunde</th>
+                                                <th scope="col">Eingegangen</th>
+                                                <th scope="col">Von</th>
+                                                <th scope="col">Nach</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Aktionen</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Get the user package requests.
+                                            $sql = "SELECT * FROM auftraege";
+
+                                            if ($stmt = $mysqli->prepare($sql)) {
+                                                if ($stmt->execute()) {
+                                                    $result = $stmt->get_result();
+                                                    $zeit = '';
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        if ($row["service_leistung"] == '{}') {
+                                                            $row["service_leistung"] = '';
+                                                        }
+                                                        $eye_img_url = '';
+
+                                                        $action_img_auftrag = URL . 'images/customer_profile.gif';
+                                                        $action_span_auftrag = 'Daten zur Anfrage anzeigen';
+                                                        $action_img_nonauftrag = URL . 'images/customer_request.gif';
+                                                        $action_span_nonauftrag = 'In Kunde und Auftrag umwandeln';
+
+                                                        $action_img_url = '';
+                                                        $action_span_text = '';
+
+                                                        if ($row['completed']) {
+                                                            $eye_img_url = URL . 'images/orange_eye.gif';
+                                                        } else {
+                                                            $eye_img_url = URL . 'images/grey_eye.gif';
+                                                        }
+
+                                                        if ($row['ist_auftrag']) {
+                                                            $action_img_url = URL . 'images/customer_profile.gif';
+                                                            $action_span_text = 'Daten zur Anfrage anzeigen';
+                                                        } else {
+                                                            $action_img_url = URL . 'images/customer_request.gif';
+                                                            $action_span_text = 'In Auftrag umwandeln';
+                                                        }
+                                                        // Initialize the dialog.
+                                                        require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                        echo anfragen_table(
+                                                            $row,
+                                                            $action_img_url,
+                                                            $action_span_text,
+                                                            $eye_img_url,
+                                                            $action_img_auftrag,
+                                                            $action_span_auftrag
+                                                        );
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane table-responsive" id="an_auf_data">
                         <br><br>
-                        <table id="anfragen_table" class="table table-bordered">
+                        <table id="anfragen_table1" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">KundenID</th>
@@ -392,6 +458,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                             </tbody>
                         </table>
                     </div>
+
                     <div class="tab-pane" id="benutzerverwaltung">
                         <br>
                         <h5 class="text-muted heading">Hier können Sie einen neuen Benutzer anlegen.</b></h5>
@@ -766,36 +833,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
             </div>
         </div>
     </div>
-
-
-
-    <!-- <ul class="nav nav-tabs main-nav" data-tabs="tabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="#anfragen" data-toggle="tab">Anfragen</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#benutzerverwaltung" data-toggle="tab">Benutzerverwaltung</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#auftraege" data-toggle="tab">Aufträge</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#systemeinstellung" data-toggle="tab">Systemeinstellung</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sprache</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Deutsch</a>
-                <a class="dropdown-item" href="#">Englisch</a>
-                <a class="dropdown-item" href="#">Spanisch</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?= URL . 'logout.php' ?>">Ausloggen</a>
-        </li>
-    </ul> -->
-
-
 
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 15px; right: 15px;">
         <div class="toast-header">
