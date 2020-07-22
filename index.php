@@ -81,7 +81,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                                                 <label for="loginEmailOrUsername">E-Mail/Benutzer:</label>
                                             </div>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="loginEmailOrUsername" name="loginEmailOrUsername" placeholder="Email">
+                                                <input type="text" class="form-control" id="loginEmailOrUsername" name="loginEmailOrUsername" placeholder="Email/Benutzer">
                                             </div>
                                         </div>
                                         <div class="form-group row">

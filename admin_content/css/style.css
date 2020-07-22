@@ -146,15 +146,18 @@ tbody {
     text-align: center;
 }
 
-#anfragen_table_wrapper {
+#anfragen_table_wrapper,
+#auftraege_table_wrapper {
     width: 100%;
 }
 
-#anfragen_table_wrapper .row {
+#anfragen_table_wrapper .row,
+#auftraege_table_wrapper .row {
     margin: 0;
 }
 
-#anfragen_table_wrapper .row .col-sm-12 {
+#anfragen_table_wrapper .row .col-sm-12,
+#auftraege_table_wrapper .row .col-sm-12 {
     padding: 0;
 }
 
@@ -178,6 +181,11 @@ a {
     border-color: black !important;
 }
 
+.img_anfrage-erstellen,
+.img_auftrag-erstellen {
+    cursor: pointer;
+}
+
 
 /* Anfragen & Auftäge pane. */
 
@@ -188,6 +196,24 @@ a {
 #an_auf_data .nav-link {
     font-weight: 900;
     color: black;
+    border: none;
+    border-radius: 0;
+}
+
+#an_auf_data .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 0;
+}
+
+#an_auf_data .nav-item h4 {
+    margin: 0;
+    padding: 0;
+}
+
+#an_auf_data .span_white-space {
+    background-color: white;
 }
 
 #an_auf_data .nav-item:last-child {
@@ -196,6 +222,68 @@ a {
 
 #an_auf_data .nav-link.active {
     background-color: #00cf65;
+}
+
+#an_auf_data table {
+    width: 100%;
+}
+
+#an_auf_data thead {
+    background-color: #00cf65;
+    text-align: center;
+}
+
+#an_auf_data tbody {
+    text-align: center;
+}
+
+
+/* Dialog section. */
+
+.ui-dialog {
+    border-radius: 0;
+    padding: 0;
+}
+
+.ui-dialog-titlebar {
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.ui-dialog-content {
+    background-color: #f2f2f2 !important;
+}
+
+.ui-widget-overlay {
+    opacity: 0.2;
+}
+
+
+/* Anfrage dialog. */
+
+#dialog_anfrage-erstellen {}
+
+#form_suche-kunden {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#div_suche-ergebnisse {
+    display: none;
+    margin-top: 5px;
+    margin-left: 5px;
+    background-color: white;
+    width: 50%;
+}
+
+.div_kunden-ergebnis:first-of-type {
+    color: blue;
+    font-weight: 900;
+}
+
+.div_kunden-ergebnis {
+    padding: 6px;
+    cursor: pointer;
 }
 
 
@@ -228,18 +316,6 @@ a {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-}
-
-#dialog_auftrag {
-    display: none;
-}
-
-#auftrag_erstellen2 {
-    display: none;
-}
-
-.ui-widget-overlay {
-    opacity: 0.8;
 }
 
 #rechnungslayout {

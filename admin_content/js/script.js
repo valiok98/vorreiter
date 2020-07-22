@@ -29,6 +29,49 @@ jQuery(document).ready(function($) {
             emptyTable: "Es gibt keine Daten in der Tabelle."
         }
     });
+    $('#auftraege_table').DataTable({
+        pageLength: 10,
+        lengthMenu: [10, 50, 100],
+        language: {
+            lengthMenu: "_MENU_ Einträge anzeigen"
+        },
+        order: [
+            [0, "desc"]
+        ],
+        info: false,
+        pagingType: "first_last_numbers",
+        language: {
+            paginate: {
+                first: "Erste",
+                last: "Letzte"
+            },
+            emptyTable: "Es gibt keine Daten in der Tabelle."
+        }
+    });
+    // Initialize the create "Anfrage" dialog.
+    $('#dialog_anfrage-erstellen').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 800,
+        height: 600
+    });
+    // Initialize the create "Auftrag" dialog.
+    $('#dialog_auftrag-erstellen').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 800,
+        height: 600
+    });
+    // Create an "Anfrage".
+    $('.img_anfrage-erstellen').on('click', function() {
+        console.log('Anfrage erstellen.');
+        $('#dialog_anfrage-erstellen').dialog('open');
+    });
+    // Create an "Auftrag".
+    $('.img_auftrag-erstellen').on('click', function() {
+        console.log('Auftrag erstellen.');
+        $('#dialog_auftrag-erstellen').dialog('open');
+    });
 
 
     $('#kunden_table_1').DataTable({

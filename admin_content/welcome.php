@@ -131,6 +131,45 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                 });
             });
 
+            // Ajax for searching the "kunden".
+            $('#form_suche-kunden input').on('keyup', function(e) {
+                let input = $(this).val().trim();
+                $.ajax({
+                    url: '<?= URL . 'admin_content/find_client.php' ?>',
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "client_data": input
+                    },
+                    success: function(data) {
+                        if (data['success']) {
+                            console.log(data);
+                            let clientData = data['client_data'];
+                            // Only display the results if theere is client data.
+                            if (clientData.length) {
+
+                                $('#div_suche-ergebnisse').show();
+                                $('#div_suche-ergebnisse').empty();
+
+                                $('#div_suche-ergebnisse').append('<div class="div_kunden-ergebnis"><span>Neukunden erstellen</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
+
+                                clientData.forEach(function(client) {
+                                    $('#div_suche-ergebnisse').append('<div class="div_kunden-ergebnis"><span>' +
+                                        client["firmenname"] + '&nbsp;[' +
+                                        client["plz"] + '&nbsp;-&nbsp;' +
+                                        client["ort"] + ']</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
+                                });
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        $('.toast .toast-body').html('Ein Fehler is aufgetretten.');
+                        $('.toast').toast('show');
+                    }
+                });
+
+            });
+
         });
     </script>
 </head>
@@ -235,7 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     <h3>Anfragen</h3>
                                     <div>
                                         <img src="../images/an_auf_table/eye.png" alt="">
-                                        <img src="../images/an_auf_table/anfrage_erstellen.png" alt="">
+                                        <img class="img_anfrage-erstellen" src="../images/an_auf_table/anfrage_erstellen.png" alt="">
                                     </div>
                                 </div>
                                 <div class="row div_an-auf-table-data">
@@ -279,7 +318,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     <h3>Aufträge</h3>
                                     <div>
                                         <img src="../images/an_auf_table/eye.png" alt="">
-                                        <img src="../images/an_auf_table/auftrag_erstellen.png" alt="">
+                                        <img class="img_auftrag-erstellen" src="../images/an_auf_table/auftrag_erstellen.png" alt="">
                                     </div>
                                 </div>
                                 <div class="row div_an-auf-table-data">
@@ -309,7 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                         }
                                                         // Initialize the dialog.
                                                         require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo anfragen_table($row);
+                                                        echo auftraege_table($row);
                                                     }
                                                 }
                                             }
@@ -324,16 +363,25 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                     <div class="tab-pane table-responsive" id="an_auf_data" data-tabs="tabs">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#anfragen" data-toggle="tab">Anfragen</a>
+                                <a class="nav-link active" href="#anfragen" data-toggle="tab">
+                                    <h4>Anfragen</h4>
+                                    <span>&nbsp;&nbsp;</span>
+                                    <img class="img_anfrage-erstellen" src="../images/an_auf_table/anfrage_erstellen.png" alt="">
+                                </a>
                             </li>
+                            <span class="span_white-space">&nbsp;</span>
                             <li class="nav-item">
-                                <a class="nav-link" href="#auftraege" data-toggle="tab">Aufträge</a>
+                                <a class="nav-link" href="#auftraege" data-toggle="tab">
+                                    <h4>Aufträge</h4>
+                                    <span>&nbsp;&nbsp;</span>
+                                    <img class="img_auftrag-erstellen" src="../images/an_auf_table/auftrag_erstellen.png" alt="">
+                                </a>
                             </li>
                             <li class="nav-item">
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div id="anfragen" class="tab-pane">
+                            <div id="anfragen" class="tab-pane active">
                                 <table id="anfragen_table_full" class="compact">
                                     <thead>
                                         <tr>
@@ -372,7 +420,10 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                 <table id="auftraege_table_full" class="compact">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Nummer</th>
                                             <th scope="col">Kunde</th>
+                                            <th scope="col">Ansprechpartner</th>
+                                            <th scope="col">Telefon</th>
                                             <th scope="col">Eingegangen</th>
                                             <th scope="col">Von</th>
                                             <th scope="col">Nach</th>
@@ -383,7 +434,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     <tbody>
                                         <?php
                                         // Get the user package requests.
-                                        $sql = "SELECT * FROM anfragen";
+                                        $sql = "SELECT * FROM auftraege";
 
                                         if ($stmt = $mysqli->prepare($sql)) {
                                             if ($stmt->execute()) {
@@ -395,7 +446,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                     }
                                                     // Initialize the dialog.
                                                     require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                    echo anfragen_table($row);
+                                                    echo auftraege_table($row);
                                                 }
                                             }
                                         }
@@ -541,7 +592,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                         </div>
 
                     </div>
-                    <div class="tab-pane" id="auftraege">
+                    <!-- <div class="tab-pane" id="auftraege1">
                         <ul class="nav nav-tabs" data-tabs="tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" href="#auftraege_erstellen" data-toggle="tab">Auftrag erstellen</a>
@@ -775,7 +826,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                 <h5 class="text-muted heading">Hier kommt der Steuersatz.</b></h5>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                 </div>
             </div>
         </div>
@@ -790,89 +842,17 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
         <div class="toast-body"></div>
     </div>
 
-    <div id="dialog_auftrag" title="Erstellung vom Auftrag">
-        <p>Machen Sie die Anfrage zu einem Auftrag.</p>
-        <div class="auftrag_erstellen_div">
-            <form class="auftrag_erstellen" id="dg_auftrag_erstellen" method="POST">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input value="" required type="hidden" class="form-control" id="ae_dg_kundenid" name="ae_dg_kundenid">
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_firmenname">Firmenname</label>
-                                <input required type="text" class="form-control" id="ae_dg_firmenname" name="ae_dg_firmenname" placeholder="Firmenname ...">
-                            </div>
-                            <br>
-                            <div class="form-group input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="ae_dg_anrede">Anrede</label>
-                                </div>
-                                <select class="custom-select" id="ae_dg_anrede" name="ae_dg_anrede">
-                                    <option value="Herr">Herr</option>
-                                    <option value="Frau">Frau</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_ansprechpartner">Ansprechpartner</label>
-                                <input required type="text" class="form-control" id="ae_dg_ansprechpartner" name="ae_dg_ansprechpartner" placeholder="Ansprechpartner ...">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ae_dg_email">Email</label>
-                                <input required type="email" class="form-control" id="ae_dg_email" name="ae_dg_email" placeholder="Email Adresse ...">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ae_dg_telefon">Telefon</label>
-                                <input required type="tel" class="form-control" id="ae_dg_telefon" name="ae_dg_telefon" placeholder="Telefon ...">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="ae_dg_strasse">Straße</label>
-                                <input required type="text" class="form-control" id="ae_dg_strasse" name="ae_dg_strasse" placeholder="Straße ...">
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_hausnummer">Hausnummer</label>
-                                <input required type="text" class="form-control" id="ae_dg_hausnummer" name="ae_dg_hausnummer" placeholder="Hausnummer ...">
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_plz">PLZ</label>
-                                <input required type="number" class="form-control" id="ae_dg_plz" name="ae_dg_plz" placeholder="PLZ ...">
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_ort">Ort</label>
-                                <input required type="text" class="form-control" id="ae_dg_ort" name="ae_dg_ort" placeholder="Ort ...">
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_land">Land</label>
-                                <input required type="text" class="form-control" id="ae_dg_land" name="ae_dg_land" placeholder="Land ...">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="ae_dg_ztelefon">Zentrale Telefonnummer</label>
-                                <input required type="tel" class="form-control" id="ae_dg_ztelefon" name="ae_dg_ztelefon" placeholder="Zentrale Telefonnummer ...">
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id="ae_dg_freitext" name="ae_dg_freitext" rows="10" placeholder="Freitext ..."></textarea>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="chk_ae_dg_abholadresse" id="chk_ae_dg_abholadresse">
-                                <label class="form-check-label" for="chk_ae_dg_abholadresse">Die Adresse der Abholung unterscheidet sich von der des Auttraggebers</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="ae_dg_abholadresse">Abholadresse</label>
-                                <input type="text" class="form-control" id="ae_dg_abholadresse" name="ae_dg_abholadresse" placeholder="Abholadresse ...">
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
+    <div id="dialog_anfrage-erstellen" title="Anfrage erstellen">
+        <form id="form_suche-kunden" class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Suche Kunden..." aria-label="Search">
+        </form>
+        <div id="div_suche-ergebnisse">
         </div>
+    </div>
+
+
+    <div id="dialog_auftrag-erstellen" title="Auftrag erstellen">
+        <h1>Auftrag erstellen.</h1>
     </div>
 
 </body>
