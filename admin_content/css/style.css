@@ -259,16 +259,16 @@ a {
 }
 
 
-/* Anfrage dialog. */
+/* Auftrag dialog. */
 
-#dialog_anfrage-erstellen {}
+#dialog_auftrag-erstellen {}
 
 #form_suche-kunden {
     margin-top: 5px;
     margin-left: 5px;
 }
 
-#div_suche-ergebnisse {
+#div_suche-auftrag-ergebnisse {
     display: none;
     margin-top: 5px;
     margin-left: 5px;
@@ -284,6 +284,18 @@ a {
 .div_kunden-ergebnis {
     padding: 6px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#div_auftrag-erstellen-content {
+    display: none;
+}
+
+#dialog_auftrag-erstellen>.row {
+    height: 50%;
+    width: 100%;
 }
 
 

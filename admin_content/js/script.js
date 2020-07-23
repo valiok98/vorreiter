@@ -186,3 +186,15 @@ jQuery(document).ready(function($) {
         });
     }
 });
+
+function create_client() {
+    $('#dialog_auftrag-erstellen').empty();
+
+}
+
+function create_auftrag(id) {
+    $('#dialog_auftrag-erstellen').empty();
+
+    $('#dialog_auftrag-erstellen').append($('#div_auftrag-erstellen-content').html());
+
+}

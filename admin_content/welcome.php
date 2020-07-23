@@ -132,42 +132,57 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
             });
 
             // Ajax for searching the "kunden".
-            $('#form_suche-kunden input').on('keyup', function(e) {
+            $('#form_suche-auftrag-kunden input').on('keyup', function(e) {
                 let input = $(this).val().trim();
-                $.ajax({
-                    url: '<?= URL . 'admin_content/find_client.php' ?>',
-                    type: "post",
-                    dataType: "json",
-                    data: {
-                        "client_data": input
-                    },
-                    success: function(data) {
-                        if (data['success']) {
-                            console.log(data);
-                            let clientData = data['client_data'];
-                            // Only display the results if theere is client data.
-                            if (clientData.length) {
+                // Empty the table if the input is empty.
+                if (!input) {
+                    $('#div_suche-auftrag-ergebnisse').empty();
+                    $('#div_suche-auftrag-ergebnisse').hide();
+                } else {
+                    $.ajax({
+                        url: '<?= URL . 'admin_content/find_client.php' ?>',
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            "client_data": input
+                        },
+                        success: function(data) {
+                            if (data['success']) {
+                                let clientData = data['client_data'];
+                                // Only display the results if theere is client data.
+                                if (clientData.length) {
 
-                                $('#div_suche-ergebnisse').show();
-                                $('#div_suche-ergebnisse').empty();
+                                    $('#div_suche-auftrag-ergebnisse').show();
+                                    $('#div_suche-auftrag-ergebnisse').empty();
 
-                                $('#div_suche-ergebnisse').append('<div class="div_kunden-ergebnis"><span>Neukunden erstellen</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
+                                    $('#div_suche-auftrag-ergebnisse').append('<div class="div_kunden-ergebnis"><input readonly type="hidden" value="-1"><span>Neukunden erstellen</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
 
-                                clientData.forEach(function(client) {
-                                    $('#div_suche-ergebnisse').append('<div class="div_kunden-ergebnis"><span>' +
-                                        client["firmenname"] + '&nbsp;[' +
-                                        client["plz"] + '&nbsp;-&nbsp;' +
-                                        client["ort"] + ']</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
-                                });
+                                    clientData.forEach(function(client) {
+                                        $('#div_suche-auftrag-ergebnisse').append('<div class="div_kunden-ergebnis"><input readonly type="hidden" value="' + client["id"] + '"><span>' +
+                                            client["firmenname"] + '&nbsp;[' +
+                                            client["plz"] + '&nbsp;-&nbsp;' +
+                                            client["ort"] + ']</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
+                                    });
+                                    
+                                    $('.div_kunden-ergebnis').on('click', function() {
+                                        let auftragID = parseInt($(this).find('input').val().trim());
+                                        // Create a new client.
+                                        if (auftragID === -1) {
+                                            create_client();
+                                        } else {
+                                            // Load data for an existing client.
+                                            create_auftrag(auftragID);
+                                        }
+                                    });
+                                }
                             }
+                        },
+                        error: function(data) {
+                            $('.toast .toast-body').html('Ein Fehler is aufgetretten.');
+                            $('.toast').toast('show');
                         }
-                    },
-                    error: function(data) {
-                        $('.toast .toast-body').html('Ein Fehler is aufgetretten.');
-                        $('.toast').toast('show');
-                    }
-                });
-
+                    });
+                }
             });
 
         });
@@ -843,16 +858,55 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     </div>
 
     <div id="dialog_anfrage-erstellen" title="Anfrage erstellen">
-        <form id="form_suche-kunden" class="form-inline">
+        <form id="form_suche-anfrage-kunden" class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Suche Kunden..." aria-label="Search">
         </form>
-        <div id="div_suche-ergebnisse">
+        <div id="div_suche-anfrage-ergebnisse">
         </div>
     </div>
 
 
     <div id="dialog_auftrag-erstellen" title="Auftrag erstellen">
-        <h1>Auftrag erstellen.</h1>
+        <form id="form_suche-auftrag-kunden" class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Suche Kunden..." aria-label="Search">
+        </form>
+        <div id="div_suche-auftrag-ergebnisse">
+        </div>
+    </div>
+
+    <div id="div_auftrag-erstellen-content" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Auftraggeber</h5>
+                        <span>Firmenname</span><br>
+                        <span>echo name</span><br>
+                        <span>Ansprechpartner</span><br>
+                        <span>echo name</span><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <span>Kundennummer</span>
+                        <span>echo name</span>
+                        <span>Telefon</span>
+                        <span>echo name</span>
+                        <span>E-Mail-Adresse</span>
+                        <span>echo name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h1>2</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>3</h1>
+            </div>
+            <div class="col-sm-6">
+                <h1>4</h1>
+            </div>
+        </div>
     </div>
 
 </body>

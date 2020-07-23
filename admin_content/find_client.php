@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . '/../definitions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['client_data']) && !empty($_POST['client_data'])) {
     $client_data = $_POST['client_data'];
-    $sql = "SELECT firmenname, plz, ort FROM kunden WHERE firmenname LIKE '%" . $client_data . "%'";
+    $sql = "SELECT id, firmenname, plz, ort FROM kunden WHERE firmenname LIKE '%" . $client_data . "%'";
 
     if ($stmt = $mysqli->prepare($sql)) {
         if ($stmt->execute()) {
