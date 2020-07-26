@@ -48,15 +48,40 @@ jQuery(document).ready(function($) {
             emptyTable: "Es gibt keine Daten in der Tabelle."
         }
     });
-    // Initialize the create "Anfrage" dialog.
-    $('#dialog_anfrage-erstellen').dialog({
+    // Initialize the create "Anfrage 1" dialog.
+    $('#dialog_anfrage-erstellen-1').dialog({
         autoOpen: false,
         modal: true,
         width: 800,
         height: 600
     });
-    // Initialize the create "Auftrag" dialog.
-    $('#dialog_auftrag-erstellen').dialog({
+    // Initialize the create "Anfrage 2" dialog.
+    $('#dialog_anfrage-erstellen-2').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 800,
+        height: 600
+    });
+    // Initialize the create "Auftrag 1" dialog.
+    $('#dialog_auftrag-erstellen-1').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 800,
+        height: 600,
+        close: function() {
+            $('#div_suche-auftrag-ergebnisse').empty();
+            $('#form_suche-auftrag-kunden input').val("");
+        }
+    });
+    // Initialize the create "Auftrag 2" dialog.
+    $('#dialog_auftrag-erstellen-2').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 800,
+        height: 600
+    });
+    // Initialize the create "Auftrag 2" dialog.
+    $('#dialog_auftrag-erstellen-3').dialog({
         autoOpen: false,
         modal: true,
         width: 800,
@@ -64,13 +89,12 @@ jQuery(document).ready(function($) {
     });
     // Create an "Anfrage".
     $('.img_anfrage-erstellen').on('click', function() {
-        console.log('Anfrage erstellen.');
-        $('#dialog_anfrage-erstellen').dialog('open');
+        $('#dialog_anfrage-erstellen-1').dialog('open');
     });
     // Create an "Auftrag".
     $('.img_auftrag-erstellen').on('click', function() {
         console.log('Auftrag erstellen.');
-        $('#dialog_auftrag-erstellen').dialog('open');
+        $('#dialog_auftrag-erstellen-1').dialog('open');
     });
 
 
@@ -187,14 +211,56 @@ jQuery(document).ready(function($) {
     }
 });
 
-function create_client() {
-    $('#dialog_auftrag-erstellen').empty();
+function create_client(url) {
+    $('#dialog_auftrag-erstellen-1').dialog('close');
+    $('#dialog_auftrag-erstellen-2').dialog('open');
+
+    $('#kunden_anlegen').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: url,
+            type: "post",
+            dataType: "json",
+            data: $(this).serialize(),
+            success: function(data) {
+                if (data['success']) {
+                    $('.toast .toast-body').html('Benutzer erfolgreich angelegt.');
+                    $('.toast').toast('show');
+                    $('#dialog_auftrag-erstellen-2').dialog('close');
+                    $('#dialog_auftrag-erstellen-3').dialog('open');
+
+                    let kunden_daten = data['client_data'];
+                    let firmenname = kunden_daten['firmenname'];
+                    let ansprechpartner = kunden_daten['ansprechpartner'];
+                    let kundennummer = kunden_daten['kundennummer'];
+                    let telefon = kunden_daten['telefon'];
+                    let email = kunden_daten['email'];
+
+                    $('#span_firmenname').html(firmenname);
+                    $('#span_ansprechpartner').html(ansprechpartner);
+                    $('#span_kundennummer').html(kundennummer);
+                    $('#span_telefon').html(telefon);
+                    $('#span_email').html(email);
+
+                    console.log(data);
+
+                } else {
+                    $('.toast .toast-body').html(data['message']);
+                    $('.toast').toast('show');
+                }
+                $('form#create_benutzer').trigger('reset');
+            },
+            error: function(data) {
+                console.log(data);
+                $('.toast .toast-body').html('Ein Fehler is aufgetretten.');
+                $('.toast').toast('show');
+            }
+        });
+    });
 
 }
 
-function create_auftrag(id) {
-    $('#dialog_auftrag-erstellen').empty();
-
-    $('#dialog_auftrag-erstellen').append($('#div_auftrag-erstellen-content').html());
-
+function create_auftrag(auftragID) {
+    $('#dialog_auftrag-erstellen-1').dialog('close');
+    $('#dialog_auftrag-erstellen-3').dialog('open');
 }

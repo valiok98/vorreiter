@@ -238,6 +238,18 @@ a {
 }
 
 
+/* Kunden pane */
+
+#kunden_table {
+    width: 100%;
+}
+
+#kunden thead {
+    background-color: #00cf65;
+    text-align: center;
+}
+
+
 /* Dialog section. */
 
 .ui-dialog {
@@ -263,17 +275,22 @@ a {
 
 #dialog_auftrag-erstellen {}
 
-#form_suche-kunden {
+#form_suche-anfrage-kunden,
+#form_suche-auftrag-kunden {
     margin-top: 5px;
     margin-left: 5px;
 }
 
 #div_suche-auftrag-ergebnisse {
-    display: none;
     margin-top: 5px;
     margin-left: 5px;
     background-color: white;
     width: 50%;
+    position: static !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
 }
 
 .div_kunden-ergebnis:first-of-type {
@@ -289,34 +306,83 @@ a {
     justify-content: space-between;
 }
 
-#div_auftrag-erstellen-content {
-    display: none;
-}
-
-#dialog_auftrag-erstellen>.row {
+#div_auftrag-erstellen-content>.row {
     height: 50%;
     width: 100%;
+    min-height: 50%;
+}
+
+#img_auftrag-anlegen {
+    height: 75%;
+    float: right;
+    cursor: pointer;
+}
+
+#kunden_anlegen {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#kunden_anlegen>div {
+    display: grid;
+    grid-gap: 10px;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(1),
+#kunden_anlegen .kunden_input:nth-of-type(4),
+#kunden_anlegen .kunden_input:nth-of-type(6),
+#kunden_anlegen .kunden_input:nth-of-type(8),
+#kunden_anlegen .kunden_input:nth-of-type(10),
+#kunden_anlegen .kunden_input:nth-of-type(12) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(2),
+#kunden_anlegen .kunden_input:nth-of-type(5),
+#kunden_anlegen .kunden_input:nth-of-type(7),
+#kunden_anlegen .kunden_input:nth-of-type(9),
+#kunden_anlegen .kunden_input:nth-of-type(11) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(3) {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 6;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(3) textarea {
+    height: 100%;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(13) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 30px;
+}
+
+#kunden_anlegen .kunden_input:nth-of-type(14) {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 /* PREVIOUS CSS ... NEED TO CLEAN UP */
-
-.heading {
-    margin-left: 50px;
-}
-
-#create_benutzer {
-    position: relative;
-    top: 50px;
-    left: 50px;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-}
-
-#create_benutzer>div {
-    margin-right: 25px;
-}
 
 .dataTables_filter,
 .dataTables_length {

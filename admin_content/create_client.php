@@ -126,30 +126,26 @@ class CreateClient
                 $rand_password_hashed
             );
 
-
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
-                $this->result_json = json_encode(array("success" => true));
+                $this->id = $this->mysqli->insert_id;
+                $client_data = [
+                    "kundennummer" => $this->id,
+                    "firmenname" => $this->name,
+                    "ansprechpartner" => $this->contact,
+                    "telefon" => $this->phone,
+                    "email" => $this->email
+                ];
+
+                $this->result_json = json_encode(array("success" => true, "client_data" => $client_data));
                 // Should we email the client ?
                 if ($this->inform_client) {
                     // Get the client ID.
-                    $sql = "SELECT id FROM kunden WHERE username = ?";
-                    if ($stmt = $this->mysqli->prepare($sql)) {
-                        $stmt->bind_param("s", $this->rand_username);
-                        if ($stmt->execute()) {
-                            $stmt->store_result();
-                            if ($stmt->num_rows == 1) {
-                                $stmt->bind_result($this->id);
-                                if (!$stmt->fetch()) {
-                                    $this->id = -1;
-                                }
-                            }
-                        }
-                    }
                     $this->email_client();
                 }
             } else {
-                $this->result_json = json_encode(array("success" => false, "message" => "A database error occured."));
+                $this->result_json = json_encode(array("success" => false, "message" => $this->mysqli->error));
+                // $this->result_json = json_encode(array("success" => false, "message" => "A database error occured."));
             }
 
             // Close statement
