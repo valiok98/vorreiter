@@ -84,8 +84,8 @@ jQuery(document).ready(function($) {
     $('#dialog_auftrag-erstellen-3').dialog({
         autoOpen: false,
         modal: true,
-        width: 800,
-        height: 600
+        width: 1000,
+        height: 800
     });
     // Create an "Anfrage".
     $('.img_anfrage-erstellen').on('click', function() {
@@ -211,7 +211,8 @@ jQuery(document).ready(function($) {
     }
 });
 
-function create_client(url) {
+function create_client(main_url) {
+    let url = main_url + 'admin_content/create_client.php';
     $('#dialog_auftrag-erstellen-1').dialog('close');
     $('#dialog_auftrag-erstellen-2').dialog('open');
 
@@ -260,7 +261,12 @@ function create_client(url) {
 
 }
 
-function create_auftrag(auftragID) {
+function create_auftrag(clientID) {
     $('#dialog_auftrag-erstellen-1').dialog('close');
     $('#dialog_auftrag-erstellen-3').dialog('open');
+}
+
+function create_anfrage(clientID) {
+    $('#dialog_anfrage-erstellen-1').dialog('close');
+    $('#dialog_anfrage-erstellen-3').dialog('open');
 }

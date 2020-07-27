@@ -1,0 +1,533 @@
+button#btnversandrechner_calc {
+    padding: 10px 55px;
+    border-color: #28B298;
+    background-color: #28B298;
+    font-size: 2.4em;
+    width: 100%;
+    border: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.lstblau {
+    color: #28B298;
+}
+
+button.versandrechnerbtn {
+    color: white;
+    background-color: gray;
+    border: gray;
+    padding: 1px 3px 1px 3px;
+    font-size: 0.8em;
+    margin: 2px 2px 2px 2px;
+    vertical-align: baseline;
+}
+
+span.versandrechner-g {
+    color: green;
+}
+
+span.versandrechner-b {
+    color: blue;
+}
+
+form#versandrechner h4 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    font-weight: 500;
+    line-height: 1.1em;
+}
+
+form#versandrechner input {
+    padding: 5px;
+}
+
+form#versandrechner input.grge {
+    width: 100px;
+}
+
+form#versandrechner input:valid {
+    border-color: lightgreen;
+}
+
+.form-group {
+    margin-bottom: 1.25em;
+}
+
+#preis {
+    left: 0;
+    right: 0;
+    background-color: #E6E6E6;
+    padding: 5px 15px 5px 15px;
+    display: block;
+    text-align: center;
+}
+
+#preis #warnung {
+    color: red;
+    font-style: italic;
+    font-size: 1.15em;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+#ergebnis table,
+#ergebnis td,
+#ergebnis tr {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#preis #ergebnis {
+    color: gray;
+    font-style: italic;
+    font-size: 1.15em;
+    text-align: center;
+    display: none;
+}
+
+#ergebnis #netto {
+    color: #28B298;
+}
+
+#ergebnis #brutto {}
+
+#ergebnis #steuer {}
+
+#ergebnnis #zuschlag {}
+
+#versandrechnerkontakt {
+    display: none;
+}
+
+#shipmentscol {
+    display: none;
+}
+
+#shipmentslist {
+    margin: 0;
+}
+
+#shipmentslist .new_shipment {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    background: #E6E6E6;
+    margin-bottom: 5px;
+    color: #28B298;
+    vertical-align: middle;
+    padding: 0;
+    border: none !important;
+}
+
+#shipmentslist .new_shipment div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#shipmentslist .new_shipment span {
+    display: block;
+}
+
+#shipmentslist .delete_shipment:hover {
+    opacity: 0.5;
+}
+
+#dialog_delete_shipment {
+    display: none;
+}
+
+.ui-dialog-titlebar-close {
+    visibility: hidden !important;
+}
+
+span.spaced {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.smaller {
+    font-size: 0.9em;
+}
+
+
+/* Bootsptrapersatz */
+
+@media (min-width: 576px) {
+    .col-sm-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.col-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-md-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 576px) {
+    .row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    .col-sm-5 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 41.666667%;
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+}
+
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+#servicelink {
+    cursor: pointer;
+    color: #28B298;
+}
+
+#servicelink:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+#serviceauswahl {
+    width: 100%;
+    background-color: #28B298;
+    color: white;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    position: relative;
+    padding-top: 10px;
+    display: none;
+}
+
+#serviceauswahl input[type="checkbox"] {
+    background-color: white;
+    vertical-align: middle;
+}
+
+.tbl {
+    display: inline-table;
+    padding: 5px;
+    width: 100%;
+}
+
+.tblrow {
+    display: table-row;
+    width: 100%;
+}
+
+.tblcell {
+    display: table-cell;
+    text-align: right;
+    padding-left: 4px;
+    padding-top: 5px;
+}
+
+.tblcell:first-of-type {
+    text-align: left;
+    padding-left: 0;
+}
+
+.btn-close {
+    background-color: white;
+    border-radius: 5px;
+    width: 24px;
+    height: 24px;
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: -12px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.btn-close:hover {
+    background-color: lightgray;
+}
+
+.btn-close-x {
+    width: 20px;
+    left: 2px;
+    top: 10px;
+    height: 3px;
+    border-radius: 2px;
+    background-color: #28B298;
+    transform: rotate(45deg);
+    position: absolute;
+}
+
+.btn-close-x:first-of-type {
+    transform: rotate(135deg);
+}
+
+#serviceauswahl input[type="checkbox"] {
+    display: none;
+}
+
+#serviceauswahl input[type="checkbox"]+label::before {
+    border: 1px solid #28B298;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    content: " ";
+    display: inline-block;
+    color: #28B298;
+    vertical-align: bottom;
+    line-height: 15px;
+}
+
+#serviceauswahl input[type="checkbox"]:checked+label::before {
+    content: "✔";
+}
+
+#span_gewicht {
+    position: relative;
+    right: -15px;
+}
+
+#neworder {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    border: none;
+}
+
+#neworder_headline {
+    background: #E6E6E6;
+    padding: 15px 15px 15px 45px;
+    margin: 0 !important;
+    text-align: center;
+    color: #28B298;
+    position: relative;
+    left: -35px;
+}
+
+#neworder_img {
+    z-index: 1;
+    content: url(../../images/auftrag/icon_add.png);
+}
+
+#serviceheadline {
+    background: url(../../images/auftrag/serviceleistungen.png);
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-left: 42px;
+}
+
+input#username {
+    /* bottrap */
+    display: none;
+}
+
+.error {
+    color: red;
+    display: none;
+}
+
+#ajaxerror {
+    background-color: lightcoral;
+    color: darkred;
+    display: none;
+    padding: 15px;
+    text-align: center;
+}
+
+#ajaxdone {
+    background-color: lightgreen;
+    color: darkgreen;
+    display: none;
+    padding: 15px;
+    text-align: center;
+}
+
+#versandrechner_legende .kartentext {
+    background: url(../../images/auftrag/karte_siegen.png) no-repeat left top;
+    padding-left: 183px;
+    width: 100%;
+    margin-left: -57px;
+    margin-top: 50px;
+}
+
+#versandrechner_legende .kartentext p {
+    font-size: 0.9em;
+}
+
+#versandrechner_legende h3 {
+    color: #28B298;
+}
+
+#versandrechner_legende li {
+    list-style-type: none;
+    margin-left: 30px;
+}
+
+#versandrechner_legende li:before {
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    width: 45px;
+    height: 56px;
+    position: relative;
+    /* border: 1px solid red; */
+    content: "";
+    /* left: -5px; */
+    /* border: none; */
+    top: 0.6em;
+    margin-left: -54px;
+    /* min-width: 2em; */
+    float: left;
+    display: inline-block;
+}
+
+#versandrechner_legende li#lkw:before {
+    background-image: url("../img/icon_lkw.png");
+}
+
+#versandrechner_legende li#erde:before {
+    background-image: url("../img/icon_erde.png");
+}
+
+#versandrechner_legende li#ziel:before {
+    background-image: url("../img/icon_ziel.png");
+}
+
+#versandrechner_legende li#transport:before {
+    background-image: url("../img/icon_transport.png");
+}
+
+#versandrechner_legende li#doku:before {
+    background-image: url("../img/icon_doku.png");
+}
+
+#versandrechner_legende li#stadt:before {
+    background-image: url("../img/icon_stadt.png");
+}
+
+#versandrechner_legende .h3 {
+    display: block;
+    color: #28B298;
+    font-weight: bold;
+}
+
+#versandrechner_legende .p {
+    font-size: 0.7em;
+}
+
+#versandrechner_legende ul {
+    margin: 1em -0.5em 1em 1em;
+}
+
+#versandrechner_legende ul:first-of-type {
+    margin: 1em 0 1em -0.5em;
+}
+
+#mwst {
+    display: none;
+}
