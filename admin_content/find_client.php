@@ -3,9 +3,19 @@ require_once dirname(__FILE__) . '/../config.php';
 require_once dirname(__FILE__) . '/../definitions.php';
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['client_data']) && !empty($_POST['client_data'])) {
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST' && (
+        (isset($_POST['client_data']) && !empty($_POST['client_data'])) ||
+        (isset($_POST['client_id']) && !empty($_POST['client_id'])))
+) {
+
     $client_data = $_POST['client_data'];
-    $sql = "SELECT id, firmenname, plz, ort FROM kunden WHERE firmenname LIKE '%" . $client_data . "%'";
+    $client_id = intval($_POST['client_id']);
+    if ($client_data) {
+        $sql = "SELECT * FROM kunden WHERE firmenname LIKE '%" . $client_data . "%'";
+    } else if ($client_id) {
+        $sql = "SELECT * FROM kunden WHERE id = " . $client_id;
+    }
 
     if ($stmt = $mysqli->prepare($sql)) {
         if ($stmt->execute()) {

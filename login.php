@@ -2,7 +2,7 @@
 require_once dirname(__FILE__) . "/config.php";
 require_once dirname(__FILE__) . "/definitions.php";
 
-// Processing form data when form is submitted
+// Processing form data when form is submitted.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once dirname(__FILE__) . '/admin_content/login.php';
     $admin = new AdminLogin($mysqli, $_POST['loginEmailOrUsername'], $_POST['loginPassword']);

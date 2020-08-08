@@ -1,12 +1,13 @@
 <?php
 
-require_once dirname(__FILE__) . '../../config.php';
+require_once dirname(__FILE__) . '/../../config.php';
 
 // The response we get on successful execution.
 $success_msg = '';
 $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 
     // Takes raw data from the request
     $json = file_get_contents('php://input');
@@ -19,12 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         http_response_code(403);
         die('Spambot erkannt.');
     }
-
-
-    if (!validate_token($data->token)) {
-        http_response_code(403);
-        die('Token ungültig. Bitte Seite neu laden und erneut versuchen.');
-    };
 
     if (!$data->{'email'}) {
         set_failure("Die eingegebene Email ist leer oder nicht korrekt.");
@@ -55,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Größe:</td><td>          " . $data->{'groesse-x'} . " x " . $data->{'groesse-y'} . " x " . $data->{'groesse-z'} . " cm <br/></td></tr><tr><td>
     Zustellzeit-Zone:</td><td>  $data->zeitfenster <br/></td></tr><tr><td>
     Zustellung:</td><td> ";
+
+
 
     switch ($data->zustelltag) {
         case 1:
@@ -114,11 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check connection
     $user_id = $data->{'kundennr'} === '' ? -1 : intval($data->{'kundennr'});
     if (user_exists($mysqli, $user_id)) {
-        $data->{'kundennr'} = $user_id;
-        create_package_request($mysqli, $data);
-    } else if ($user_id == -1) {
-        // // Neuen Kunden anlegen.
-        $user_id = create_user($mysqli, $data);
         $data->{'kundennr'} = $user_id;
         create_package_request($mysqli, $data);
     } else {

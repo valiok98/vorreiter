@@ -1,8 +1,8 @@
-button#btnversandrechner_calc {
+button#an_btnversandrechner_abs,
+button#auf_btnversandrechner_abs {
     padding: 10px 55px;
     border-color: #28B298;
     background-color: #28B298;
-    font-size: 2.4em;
     width: 100%;
     border: none;
     display: block;
@@ -31,22 +31,28 @@ span.versandrechner-b {
     color: blue;
 }
 
-form#versandrechner h4 {
+form#versandrechner_anfrage h4,
+form#versandrechner_auftrag h4 {
     font-size: 1.1em;
     margin-bottom: 10px;
     font-weight: 500;
     line-height: 1.1em;
 }
 
-form#versandrechner input {
+form#versandrechner_anfrage input,
+form#versandrechner_auftrag input {
     padding: 5px;
 }
 
-form#versandrechner input.grge {
+input#an_plz-start,
+input#an_plz-ziel,
+form#versandrechner_anfrage input.grge,
+form#versandrechner_auftrag input.grge {
     width: 100px;
 }
 
-form#versandrechner input:valid {
+form#an_versandrechner input:valid,
+form#auf_versandrechner input:valid {
     border-color: lightgreen;
 }
 
@@ -54,7 +60,8 @@ form#versandrechner input:valid {
     margin-bottom: 1.25em;
 }
 
-#preis {
+#an_preis,
+#auf_preis {
     left: 0;
     right: 0;
     background-color: #E6E6E6;
@@ -63,7 +70,8 @@ form#versandrechner input:valid {
     text-align: center;
 }
 
-#preis #warnung {
+#an_preis #an_warnung,
+#auf_preis #auf_warnung {
     color: red;
     font-style: italic;
     font-size: 1.15em;
@@ -71,15 +79,19 @@ form#versandrechner input:valid {
     margin: 20px 0 20px 0;
 }
 
-#ergebnis table,
-#ergebnis td,
-#ergebnis tr {
+#an_ergebnis table,
+#auf_ergebnis table,
+#an_ergebnis td,
+#auf_ergebnis td,
+#an_ergebnis tr,
+#auf_ergebnis tr {
     border: 0;
     margin: 0;
     padding: 0;
 }
 
-#preis #ergebnis {
+#an_preis #an_ergebnis,
+#auf_preis #auf_ergebnis {
     color: gray;
     font-style: italic;
     font-size: 1.15em;
@@ -87,29 +99,27 @@ form#versandrechner input:valid {
     display: none;
 }
 
-#ergebnis #netto {
+#an_ergebnis #an_netto,
+#auf_ergebnis #auf_netto {
     color: #28B298;
 }
 
-#ergebnis #brutto {}
-
-#ergebnis #steuer {}
-
-#ergebnnis #zuschlag {}
-
-#versandrechnerkontakt {
+#an_versandrechnerkontakt,
+#auf_versandrechnerkontakt {
     display: none;
 }
 
-#shipmentscol {
+#an_shipmentscol,
+#auf_shipmentscol {
     display: none;
 }
 
-#shipmentslist {
+#an_shipmentslist,
+#auf_shipmentslist {
     margin: 0;
 }
 
-#shipmentslist .new_shipment {
+.new_shipment {
     display: flex;
     flex-flow: column wrap;
     align-items: flex-start;
@@ -121,27 +131,39 @@ form#versandrechner input:valid {
     border: none !important;
 }
 
-#shipmentslist .new_shipment div {
+#an_shipmentslist .new_shipment div,
+#auf_shipmentslist .new_shipment div {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-#shipmentslist .new_shipment span {
+#an_shipmentslist .new_shipment span,
+#auf_shipmentslist .new_shipment span {
     display: block;
 }
 
-#shipmentslist .delete_shipment:hover {
+#an_shipmentslist .delete_shipment:hover,
+#auf_shipmentslist .delete_shipment:hover {
     opacity: 0.5;
 }
 
-#dialog_delete_shipment {
+#an_dialog_delete_shipment,
+#auf_dialog_delete_shipment {
     display: none;
 }
 
 .ui-dialog-titlebar-close {
     visibility: hidden !important;
+}
+
+.ui-accordion-header-icon {
+    position: absolute;
+    top: 50%;
+    display: block;
+    left: 5%;
+    transform: translate(-50%, -50%);
 }
 
 span.spaced {
@@ -280,17 +302,20 @@ span.spaced {
     padding-left: 15px;
 }
 
-#servicelink {
+#an_servicelink,
+#auf_servicelink {
     cursor: pointer;
     color: #28B298;
 }
 
-#servicelink:hover {
+#an_servicelink:hover,
+#auf_servicelink:hover {
     text-decoration: underline;
     color: #000;
 }
 
-#serviceauswahl {
+#an_serviceauswahl,
+#auf_serviceauswahl {
     width: 100%;
     background-color: #28B298;
     color: white;
@@ -301,7 +326,8 @@ span.spaced {
     display: none;
 }
 
-#serviceauswahl input[type="checkbox"] {
+#an_serviceauswahl input[type="checkbox"],
+#auf_serviceauswahl input[type="checkbox"] {
     background-color: white;
     vertical-align: middle;
 }
@@ -364,11 +390,13 @@ span.spaced {
     transform: rotate(135deg);
 }
 
-#serviceauswahl input[type="checkbox"] {
+#an_serviceauswahl input[type="checkbox"],
+#auf_serviceauswahl input[type="checkbox"] {
     display: none;
 }
 
-#serviceauswahl input[type="checkbox"]+label::before {
+#an_serviceauswahl input[type="checkbox"]+label::before,
+#auf_serviceauswahl input[type="checkbox"]+label::before {
     border: 1px solid #28B298;
     width: 15px;
     height: 15px;
@@ -380,16 +408,19 @@ span.spaced {
     line-height: 15px;
 }
 
-#serviceauswahl input[type="checkbox"]:checked+label::before {
+#an_serviceauswahl input[type="checkbox"]:checked+label::before,
+#auf_serviceauswahl input[type="checkbox"]:checked+label::before {
     content: "✔";
 }
 
-#span_gewicht {
+#an_span_gewicht,
+#auf_span_gewicht {
     position: relative;
     right: -15px;
 }
 
-#neworder {
+#an_neworder,
+#auf_neworder {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -399,7 +430,8 @@ span.spaced {
     border: none;
 }
 
-#neworder_headline {
+#an_neworder_headline,
+#auf_neworder_headline {
     background: #E6E6E6;
     padding: 15px 15px 15px 45px;
     margin: 0 !important;
@@ -409,19 +441,22 @@ span.spaced {
     left: -35px;
 }
 
-#neworder_img {
+#an_neworder_img,
+#auf_neworder_img {
     z-index: 1;
     content: url(../../images/auftrag/icon_add.png);
 }
 
-#serviceheadline {
+#an_serviceheadline,
+#auf_serviceheadline {
     background: url(../../images/auftrag/serviceleistungen.png);
     background-repeat: no-repeat;
     background-position: left top;
     padding-left: 42px;
 }
 
-input#username {
+input#an_username,
+input#auf_username {
     /* bottrap */
     display: none;
 }
@@ -431,7 +466,8 @@ input#username {
     display: none;
 }
 
-#ajaxerror {
+#an_ajaxerror,
+#auf_ajaxerror {
     background-color: lightcoral;
     color: darkred;
     display: none;
@@ -439,7 +475,8 @@ input#username {
     text-align: center;
 }
 
-#ajaxdone {
+#an_ajaxdone,
+#auf_ajaxdone {
     background-color: lightgreen;
     color: darkgreen;
     display: none;
@@ -447,87 +484,7 @@ input#username {
     text-align: center;
 }
 
-#versandrechner_legende .kartentext {
-    background: url(../../images/auftrag/karte_siegen.png) no-repeat left top;
-    padding-left: 183px;
-    width: 100%;
-    margin-left: -57px;
-    margin-top: 50px;
-}
-
-#versandrechner_legende .kartentext p {
-    font-size: 0.9em;
-}
-
-#versandrechner_legende h3 {
-    color: #28B298;
-}
-
-#versandrechner_legende li {
-    list-style-type: none;
-    margin-left: 30px;
-}
-
-#versandrechner_legende li:before {
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: auto auto;
-    width: 45px;
-    height: 56px;
-    position: relative;
-    /* border: 1px solid red; */
-    content: "";
-    /* left: -5px; */
-    /* border: none; */
-    top: 0.6em;
-    margin-left: -54px;
-    /* min-width: 2em; */
-    float: left;
-    display: inline-block;
-}
-
-#versandrechner_legende li#lkw:before {
-    background-image: url("../img/icon_lkw.png");
-}
-
-#versandrechner_legende li#erde:before {
-    background-image: url("../img/icon_erde.png");
-}
-
-#versandrechner_legende li#ziel:before {
-    background-image: url("../img/icon_ziel.png");
-}
-
-#versandrechner_legende li#transport:before {
-    background-image: url("../img/icon_transport.png");
-}
-
-#versandrechner_legende li#doku:before {
-    background-image: url("../img/icon_doku.png");
-}
-
-#versandrechner_legende li#stadt:before {
-    background-image: url("../img/icon_stadt.png");
-}
-
-#versandrechner_legende .h3 {
-    display: block;
-    color: #28B298;
-    font-weight: bold;
-}
-
-#versandrechner_legende .p {
-    font-size: 0.7em;
-}
-
-#versandrechner_legende ul {
-    margin: 1em -0.5em 1em 1em;
-}
-
-#versandrechner_legende ul:first-of-type {
-    margin: 1em 0 1em -0.5em;
-}
-
-#mwst {
+#an_mwst,
+#auf_mwst {
     display: none;
 }
