@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
             $('#div_suche-auftrag-ergebnisse').empty();
         } else {
             $.ajax({
-                url: mainUrl + 'admin_content/find_client.php',
+                url: mainUrl + 'admin_content/ajax/find_client.php',
                 type: "post",
                 dataType: "json",
                 data: {
@@ -167,7 +167,7 @@ jQuery(document).ready(function($) {
             $('#div_suche-anfrage-ergebnisse').empty();
         } else {
             $.ajax({
-                url: mainUrl + 'admin_content/find_client.php',
+                url: mainUrl + 'admin_content/ajax/find_client.php',
                 type: "post",
                 dataType: "json",
                 data: {
@@ -285,27 +285,7 @@ jQuery(document).ready(function($) {
         "stats_color.png",
         "settings_color.png",
     ];
-    // Switch between the black&white and the colored images.
-    images_id.forEach(function(img_id, index) {
-        $("#" + img_id).on('click', function() {
-            let img_name = $(this).prop("src").split("/").slice(-1).pop().trim();
-            if (img_name === b_w_images[index]) {
-                unselect_all_sidenav_items();
-                $(this).prop("src", "../images/navbar/" + color_images[index]);
-            } else {
-                $(this).prop("src", "../images/navbar/" + b_w_images[index]);
-            }
-        });
-    });
 
-    // Disable when the vorreiter(home) image is clicked.
-    $("#vorreiter_img").on('click', unselect_all_sidenav_items);
-
-    function unselect_all_sidenav_items() {
-        images_id.forEach(function(img_id, index) {
-            $("#" + img_id).prop("src", "../images/navbar/" + b_w_images[index]);
-        });
-    }
 });
 
 function create_client(mainUrl, anAuf) {
@@ -373,7 +353,7 @@ function create_auftrag(mainUrl, client_id) {
     load_calender(mainUrl, 'auftrag', client_id);
 
 
-    let url = mainUrl + 'admin_content/find_client.php';
+    let url = mainUrl + 'admin_content/ajax/find_client.php';
     $.ajax({
         url: url,
         type: "post",
@@ -412,7 +392,7 @@ function create_anfrage(mainUrl, client_id) {
     $('#dialog_anfrage-erstellen-1').dialog('close');
     $('#dialog_anfrage-erstellen-2').dialog('open');
     load_calender(mainUrl, 'anfrage', client_id);
-    let url = mainUrl + 'admin_content/find_client.php';
+    let url = mainUrl + 'admin_content/ajax/find_client.php';
     $.ajax({
         url: url,
         type: "post",

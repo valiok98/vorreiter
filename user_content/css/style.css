@@ -1,0 +1,25 @@
+        .nav {
+            width: 100vw;
+            font-weight: 900;
+        }
+        
+        .nav li:last-of-type {
+            position: absolute;
+            right: 0;
+            z-index: 200;
+        }
+        
+        .heading {
+            text-align: center;
+        }
+        
+        .update_passwort_div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dataTables_filter,
+        .dataTables_length {
+            text-align: center !important;
+        }
