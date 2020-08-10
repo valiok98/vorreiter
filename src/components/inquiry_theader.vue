@@ -10,12 +10,12 @@
         v-bind:alt="img.inquiry.alt"
       />
     </div>
-    <inquiry_dialog1 :showModal="showModal" v-on:close_dialog="close_dialog()"></inquiry_dialog1>
+    <inquiry_modal1 :showInquiryModal="showInquiryModal" v-on:close_inquiry_modal="close_inquiry_modal()"></inquiry_modal1>
   </div>
 </template>
 
 <script>
-import inquiry_dialog1 from "./inquiry_dialog1.vue";
+import inquiry_modal1 from "./inquiry_modal1.vue";
 
 export default {
   name: "inquiry_theader",
@@ -32,19 +32,19 @@ export default {
           alt: "Create inquiry",
         },
       },
-      showModal: false,
+      showInquiryModal: false,
     };
   },
   methods: {
     create_inquiry: function () {
-      this.showModal = true;
+      this.showInquiryModal = true;
     },
-    close_dialog: function () {
-      this.showModal = false;
+    close_inquiry_modal: function () {
+      this.showInquiryModal = false;
     },
   },
   components: {
-    inquiry_dialog1,
+    inquiry_modal1,
   },
 };
 </script>

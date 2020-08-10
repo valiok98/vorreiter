@@ -8,7 +8,7 @@ if (
 ) {
 
     $post_data = json_decode(file_get_contents('php://input'), true);
-    $client_name = $post_data["client_name"];
+    $client_name = $post_data["clientName"];
     $sql = "SELECT * FROM kunden WHERE firmenname LIKE '%" . $client_name . "%'";
 
     if ($stmt = $mysqli->prepare($sql)) {

@@ -1,37 +1,36 @@
 <template>
-  <div id="component_inquiry_dialog1">
-    <modal v-if="showModal">
+  <div id="component_inquiry_modal1">
+    <modal v-if="showInquiryModal">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
-            <div id="dialog_anfrage-erstellen-1" class="modal-container">
+            <div id="modal_anfrage-erstellen-1" class="modal-container">
               <div class="modal-header">
                 <h5>Anfrage erstellen</h5>
                 <button class="modal-default-button" v-on:click="close()">X</button>
               </div>
               <div class="modal-body">
-                <form
-                  v-on:keyup="search_client()"
-                  id="form_suche-anfrage-kunden"
-                  class="form-inline"
-                >
+                <form id="form_suche-anfrage-kunden" class="form-inline">
                   <input
+                    v-on:keyup="search_client()"
                     class="form-control mr-sm-2"
                     type="search"
                     placeholder="Suche Kunden..."
                     aria-label="Search"
-                    v-model="search_string"
+                    v-model="searchString"
                   />
                 </form>
-                <div v-if="search_string.trim()" id="div_suche-anfrage-ergebnisse">
+                <div v-if="searchString.trim()" id="div_suche-anfrage-ergebnisse">
                   <!-- Show the 'create client' entry only if the search string is not empty. -->
                   <div
                     v-bind:key="client.id"
                     v-for="client in clients"
-                    v-on:click="select_client(client.id)"
-                    v-text="client.title"
+                    v-on:click="select_client(client.value)"
                     class="div_anfrage-kunden-ergebnis"
-                  ></div>
+                  >
+                    <span v-text="client.title"></span>
+                    <img v-bind:src="imgArrowSrc" alt="Arrow" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -39,26 +38,33 @@
         </div>
       </transition>
     </modal>
+    <client_modal :showClientModal="showClientModal" :clientType="clientType" v-on:close_client_modal="close_client_modal()"></client_modal>
   </div>
 </template>
 
 <script>
+import client_modal from "./client_modal.vue";
+
 export default {
-  name: "inquiry_dialog1",
-  props: ["showModal"],
+  name: "inquiry_modal1",
+  props: ["showInquiryModal"],
   data: function () {
     return {
-      search_string: "",
-      img_arrow_src: "../images/auftrag/auftrag_arrow.png",
+      searchString: "",
+      imgArrowSrc: "../images/auftrag/auftrag_arrow.png",
+      showInquiryModal: false,
+      clientType: 'inquiry',
       clients: [{ id: 0, value: -1, title: "Neukunden erstellen" }],
     };
   },
   methods: {
     close: function () {
-      this.$emit("close_dialog");
+      this.searchString = "";
+      this.showInquiryModal = false;
+      this.$emit("close_inquiry_modal");
     },
     search_client: function () {
-      let input = this.search_string.trim();
+      let input = this.searchString.trim();
       // Empty the search list if the input string is empty.
       if (input) {
         fetch(mainUrl + "admin_content/ajax/find_client_by_name.php", {
@@ -69,7 +75,7 @@ export default {
           headers: {
             "Access-Control-Allow-Origin": "*",
           },
-          body: JSON.stringify({ client_name: input }),
+          body: JSON.stringify({ clientName: input }),
         })
           .then((res) => res.json())
           .then((res) => {
@@ -91,15 +97,25 @@ export default {
           .catch((err) => console.log(err));
       }
     },
-    select_client: function (client_id) {
-      console.log(client_id);
-      if (client_id === -1) {
-        // create_client(mainUrl, "anfrage");
+    select_client: function (clientId) {
+      if (clientId === -1) {
+        this.create_client();
       } else {
         // Load data for an existing client.
-        // create_anfrage(mainUrl, clientID);
+        this.create_inquiry(clientId);
       }
     },
+    create_client: function () {
+      this.close();
+      this.showClientModal = true;
+    },
+    create_inquiry: function (clientId) {},
+    close_client_modal: function () {
+      this.showClientModal = false;
+    },
+  },
+  components: {
+    client_modal,
   },
 };
 </script>
@@ -124,7 +140,8 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 50%;
+  height: 90%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -134,17 +151,14 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
 .modal-body {
   margin: 20px 0;
 }
 
 .modal-default-button {
   float: right;
+  border: none;
+  background: none;
 }
 
 /*
@@ -170,10 +184,10 @@ export default {
   transform: scale(1.1);
 }
 /* Component part. */
-#component_inquiry_dialog1 {
+#component_inquiry_modal1 {
   position: absolute;
 }
-#component_inquiry_dialog1 .modal-header {
+#component_inquiry_modal1 .modal-header {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

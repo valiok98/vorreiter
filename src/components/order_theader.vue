@@ -10,12 +10,12 @@
         v-bind:alt="img.order.alt"
       />
     </div>
-    <order_dialog1 v-bind:showModal="showModal" v-on:close_dialog="close_dialog()"></order_dialog1>
+    <order_modal1 :showOrderModal="showOrderModal" v-on:close_order_modal="close_order_modal()"></order_modal1>
   </div>
 </template>
 
 <script>
-import order_dialog1 from "./order_dialog1.vue";
+import order_modal1 from "./order_modal1.vue";
 export default {
   name: "order_theader",
   data: function () {
@@ -31,19 +31,19 @@ export default {
           alt: "Create order",
         },
       },
-      showModal: false,
+      showOrderModal: false,
     };
   },
   methods: {
     create_order: function () {
-      this.showModal = true;
+      this.showOrderModal = true;
     },
-    close_dialog: function () {
-      this.showModal = false;
+    close_order_modal: function () {
+      this.showOrderModal = false;
     }
   },
   components: {
-    order_dialog1,
+    order_modal1,
   },
 };
 </script>
