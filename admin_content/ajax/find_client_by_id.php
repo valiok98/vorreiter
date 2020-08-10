@@ -7,19 +7,16 @@ if (
     $_SERVER['REQUEST_METHOD'] === 'POST'
 ) {
 
-    $post_data = file_get_contents('php://input');
-
-    $client_id = intval($post_data['client_id']);
-    $sql = "SELECT * FROM kunden WHERE id = " . $client_id;
+    $postData = json_decode(file_get_contents('php://input'), true);
+    $clientId = intval($postData['clientId']);
+    $sql = "SELECT * FROM kunden WHERE id = " . $clientId;
 
     if ($stmt = $mysqli->prepare($sql)) {
         if ($stmt->execute()) {
             $result = $stmt->get_result();
-            $client_data = [];
-            while ($row = $result->fetch_assoc()) {
-                array_push($client_data, $row);
+            if ($clientData = $result->fetch_assoc()) {
+                echo json_encode(array("success" => true, "clientData" => $clientData));
             }
-            echo json_encode(array("success" => true, "client_data" => $client_data));
         } else echo json_encode(array("success" => false));
     } else echo json_encode(array("success" => false));
 }

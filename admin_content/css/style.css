@@ -168,27 +168,6 @@ a {
 }
 
 
-/* Dialog section. */
-
-.ui-dialog {
-    border-radius: 0;
-    padding: 0;
-}
-
-.ui-dialog-titlebar {
-    background-color: transparent;
-    border-radius: 0;
-}
-
-.ui-dialog-content {
-    background-color: #f2f2f2 !important;
-}
-
-.ui-widget-overlay {
-    opacity: 0.2;
-}
-
-
 /* Auftrag dialog. */
 
 #dialog_auftrag-erstellen {}
@@ -237,69 +216,6 @@ a {
     height: 75%;
     float: right;
     cursor: pointer;
-}
-
-#kunden_anlegen {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-#kunden_anlegen>div {
-    display: grid;
-    grid-gap: 10px;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(1),
-#kunden_anlegen .kunden_input:nth-of-type(4),
-#kunden_anlegen .kunden_input:nth-of-type(6),
-#kunden_anlegen .kunden_input:nth-of-type(8),
-#kunden_anlegen .kunden_input:nth-of-type(10),
-#kunden_anlegen .kunden_input:nth-of-type(12) {
-    grid-column-start: 1;
-    grid-column-end: 2;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(2),
-#kunden_anlegen .kunden_input:nth-of-type(5),
-#kunden_anlegen .kunden_input:nth-of-type(7),
-#kunden_anlegen .kunden_input:nth-of-type(9),
-#kunden_anlegen .kunden_input:nth-of-type(11) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(2) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(3) {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 6;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(3) textarea {
-    height: 100%;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(13) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    margin-top: 30px;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(14) {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 

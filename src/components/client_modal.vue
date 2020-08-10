@@ -1,17 +1,17 @@
 <template>
   <div id="component_client_modal">
     <modal v-if="showClientModal">
-      <transition name="modal">
+      <transition>
         <div class="modal-mask">
           <div class="modal-wrapper">
-            <div id="modal_anfrage-erstellen-1" class="modal-container">
+            <div>
               <div class="modal-header">
                 <h5 v-if="clientType === 'inquiry'">Legen Sie den Kunden zur Anfrage an.</h5>
                 <h5 v-else-if="clientType === 'order'">Legen Sie den Kunden zum Auftrag an.</h5>
                 <button class="modal-default-button" v-on:click="close()">X</button>
               </div>
               <div class="modal-body">
-                <form v-on:submit="create_client($event)" id="kunden_anlegen" method="POST">
+                <form v-on:submit="create_client($event)" method="POST">
                   <div>
                     <div class="kunden_input form-group">
                       <label for="bv_firmenname">Firmenname</label>
@@ -19,8 +19,6 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_firmenname"
-                        name="bv_firmenname"
                         placeholder="Firmenname ..."
                         v-model="clientName"
                       />
@@ -29,12 +27,7 @@
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="bv_anrede">Anrede</label>
                       </div>
-                      <select
-                        v-model="salutation"
-                        class="custom-select"
-                        id="bv_anrede"
-                        name="bv_anrede"
-                      >
+                      <select v-model="salutation" class="custom-select">
                         <option value="Herr">Herr</option>
                         <option value="Frau">Frau</option>
                       </select>
@@ -43,8 +36,6 @@
                       <label for="bv_freitext">Freitext</label>
                       <textarea
                         class="form-control"
-                        id="bv_freitext"
-                        name="bv_freitext"
                         rows="10"
                         placeholder="Freitext ..."
                         v-model="freeText"
@@ -56,8 +47,6 @@
                         required
                         type="email"
                         class="form-control"
-                        id="bv_email"
-                        name="bv_email"
                         placeholder="Email Adresse ..."
                         v-model="email"
                       />
@@ -68,8 +57,6 @@
                         required
                         type="tel"
                         class="form-control"
-                        id="bv_telefon"
-                        name="bv_telefon"
                         placeholder="Telefon ..."
                         v-model="phone"
                       />
@@ -80,8 +67,6 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_ort"
-                        name="bv_ort"
                         placeholder="Ort ..."
                         v-model="place"
                       />
@@ -92,8 +77,6 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_hausnummer"
-                        name="bv_hausnummer"
                         placeholder="Hausnummer ..."
                         v-model="houseNumber"
                       />
@@ -104,8 +87,6 @@
                         required
                         type="number"
                         class="form-control"
-                        id="bv_plz"
-                        name="bv_plz"
                         placeholder="PLZ ..."
                         v-model="postcode"
                       />
@@ -116,8 +97,6 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_land"
-                        name="bv_land"
                         placeholder="Land ..."
                         v-model="country"
                       />
@@ -128,8 +107,6 @@
                         required
                         type="tel"
                         class="form-control"
-                        id="bv_ztelefon"
-                        name="bv_ztelefon"
                         placeholder="Zentrale Telefonnummer ..."
                         v-model="centralPhone"
                       />
@@ -140,8 +117,6 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_ansprechpartner"
-                        name="bv_ansprechpartner"
                         placeholder="Ansprechpartner ..."
                         v-model="contactPerson"
                       />
@@ -152,20 +127,12 @@
                         required
                         type="text"
                         class="form-control"
-                        id="bv_strasse"
-                        name="bv_strasse"
                         placeholder="Straße ..."
                         v-model="street"
                       />
                     </div>
                     <div class="kunden_input form-check">
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        name="bv_kunden_informieren"
-                        id="bv_kunden_informieren"
-                        v-model="informClient"
-                      />
+                      <input type="checkbox" class="form-check-input" v-model="informClient" />
                       <label
                         class="form-check-label"
                         for="bv_kunden_informieren"
@@ -182,10 +149,15 @@
         </div>
       </transition>
     </modal>
+    <inquiry_modal2 :clientData="clientData" :showInquiryModal2="showInquiryModal2"></inquiry_modal2>
+    <order_modal2 :clientData="clientData" :showOrderModal2="showOrderModal2"></order_modal2>
   </div>
 </template>
 
 <script>
+import inquiry_modal2 from "./inquiry_modal2";
+import order_modal2 from "./order_modal2";
+
 export default {
   name: "client_modal",
   props: ["showClientModal", "clientType"],
@@ -204,6 +176,9 @@ export default {
       contactPerson: "",
       street: "",
       informClient: false,
+      clientData: {},
+      showInquiryModal2: false,
+      showOrderModal2: false,
     };
   },
   methods: {
@@ -213,13 +188,53 @@ export default {
     },
     create_client(e) {
       e.preventDefault();
-      // Creating a client for an inquiry.
-      if (this.clientType === "inquiry") {
-        console.log(this.clientName, this.salutation);
-      } else if (this.clientType === "order") {
-        // Creating a client for an order.
-      }
+      // Send the creation request.
+      fetch(mainUrl + "admin_content/ajax/create_client.php", {
+        method: "POST",
+        dataType: "json",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          clientName: this.clientName,
+          salutation: this.salutation,
+          freeText: this.freeText,
+          email: this.email,
+          phone: this.phone,
+          place: this.place,
+          houseNumber: this.houseNumber,
+          postcode: this.postcode,
+          country: this.country,
+          centralPhone: this.centralPhone,
+          contactPerson: this.contactPerson,
+          street: this.street,
+          informClient: this.informClient,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          if (res.success && res.hasOwnProperty("clientData")) {
+            this.clientData = res.clientData;
+            // Creating a client for an inquiry.
+            if (this.clientType === "inquiry") {
+              this.close();
+              this.showInquiryModal2 = true;
+            } else if (this.clientType === "order") {
+              // Creating a client for an order.
+              this.close();
+              this.showOrderModal2 = true;
+            }
+          }
+        })
+        .catch((err) => console.log(err));
     },
+  },
+  components: {
+    inquiry_modal2,
+    order_modal2,
   },
 };
 </script>
@@ -286,5 +301,68 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+#component_client_modal #kunden_anlegen {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#component_client_modal #kunden_anlegen > div {
+  display: grid;
+  grid-gap: 10px;
+}
+
+#component_client_modal .kunden_input:nth-of-type(1),
+#component_client_modal .kunden_input:nth-of-type(4),
+#component_client_modal .kunden_input:nth-of-type(6),
+#component_client_modal .kunden_input:nth-of-type(8),
+#component_client_modal .kunden_input:nth-of-type(10),
+#component_client_modal .kunden_input:nth-of-type(12) {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+#component_client_modal .kunden_input:nth-of-type(2),
+#component_client_modal .kunden_input:nth-of-type(5),
+#component_client_modal .kunden_input:nth-of-type(7),
+#component_client_modal .kunden_input:nth-of-type(9),
+#component_client_modal .kunden_input:nth-of-type(11) {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+#component_client_modal .kunden_input:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#component_client_modal .kunden_input:nth-of-type(3) {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 6;
+}
+
+#component_client_modal .kunden_input:nth-of-type(3) textarea {
+  height: 100%;
+}
+
+#component_client_modal .kunden_input:nth-of-type(13) {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  margin-top: 30px;
+}
+
+#component_client_modal .kunden_input:nth-of-type(14) {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

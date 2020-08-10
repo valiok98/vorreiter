@@ -1,6 +1,6 @@
 <template>
   <div id="component_order_modal1">
-    <modal v-if="showOrderModal">
+    <modal v-if="showOrderModal1">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -38,29 +38,41 @@
         </div>
       </transition>
     </modal>
-    <client_modal :showClientModal="showClientModal" :clientType="clientType" v-on:close_client_modal="close_client_modal()"></client_modal>
+    <client_modal
+      :showClientModal="showClientModal"
+      :clientType="clientType"
+      v-on:close_client_modal="close_client_modal()"
+    ></client_modal>
+    <order_modal2
+      :clientData="clientData"
+      :showOrderModal2="showOrderModal2"
+      v-on:close_order_modal2="close_order_modal2()"
+    ></order_modal2>
   </div>
 </template>
 
 <script>
 import client_modal from "./client_modal.vue";
+import order_modal2 from "./order_modal2.vue";
 
 export default {
   name: "order_modal1",
-  props: ["showOrderModal"],
+  props: ["showOrderModal1"],
   data: function () {
     return {
       searchString: "",
+      img_arrow_src: "../images/auftrag/auftrag_arrow.png",
       showClientModal: false,
       clientType: "order",
-      img_arrow_src: "../images/auftrag/auftrag_arrow.png",
+      showOrderModal2: false,
+      clientData: [],
       clients: [{ id: 0, value: -1, title: "Neukunden erstellen" }],
     };
   },
   methods: {
     close: function () {
       this.searchString = "";
-      this.showOrderModal = false;
+      this.showOrderModal1 = false;
       this.$emit("close_order_modal");
     },
     search_client: function () {
@@ -98,7 +110,6 @@ export default {
       }
     },
     select_client: function (clientId) {
-      console.log(clientId);
       if (clientId === -1) {
         this.create_client();
       } else {
@@ -110,13 +121,45 @@ export default {
       this.close();
       this.showClientModal = true;
     },
-    create_order: function (clientId) {},
+    create_order: function (clientId) {
+      this.close();
+      fetch(mainUrl + "admin_content/ajax/find_client_by_id.php", {
+        method: "POST",
+        dataType: "json",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ clientId: clientId }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.success && res.hasOwnProperty("clientData")) {
+            let clientData = res.clientData;
+            // Open the second inquiry modal.
+            this.showOrderModal2 = true;
+            this.clientData = {
+              companyName: clientData.firmenname,
+              contactPerson: clientData.ansprechpartner,
+              clientId: clientData.id,
+              phone: clientData.telefon,
+              email: clientData.email,
+            };
+          }
+        })
+        .catch((err) => console.log(err));
+    },
     close_client_modal: function () {
       this.showClientModal = false;
+    },
+    close_order_modal2: function () {
+      this.showOrderModal2 = false;
     },
   },
   components: {
     client_modal,
+    order_modal2,
   },
 };
 </script>

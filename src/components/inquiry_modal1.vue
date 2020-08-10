@@ -1,6 +1,6 @@
 <template>
   <div id="component_inquiry_modal1">
-    <modal v-if="showInquiryModal">
+    <modal v-if="showInquiryModal1">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -38,29 +38,41 @@
         </div>
       </transition>
     </modal>
-    <client_modal :showClientModal="showClientModal" :clientType="clientType" v-on:close_client_modal="close_client_modal()"></client_modal>
+    <client_modal
+      :showClientModal="showClientModal"
+      :clientType="clientType"
+      v-on:close_client_modal="close_client_modal()"
+    ></client_modal>
+    <inquiry_modal2
+      :clientData="clientData"
+      :showInquiryModal2="showInquiryModal2"
+      v-on:close_inquiry_modal2="close_inquiry_modal2()"
+    ></inquiry_modal2>
   </div>
 </template>
 
 <script>
 import client_modal from "./client_modal.vue";
+import inquiry_modal2 from "./inquiry_modal2.vue";
 
 export default {
   name: "inquiry_modal1",
-  props: ["showInquiryModal"],
+  props: ["showInquiryModal1"],
   data: function () {
     return {
       searchString: "",
       imgArrowSrc: "../images/auftrag/auftrag_arrow.png",
-      showInquiryModal: false,
-      clientType: 'inquiry',
+      showClientModal: false,
+      clientType: "inquiry",
+      showInquiryModal2: false,
+      clientData: [],
       clients: [{ id: 0, value: -1, title: "Neukunden erstellen" }],
     };
   },
   methods: {
     close: function () {
       this.searchString = "";
-      this.showInquiryModal = false;
+      this.showInquiryModal1 = false;
       this.$emit("close_inquiry_modal");
     },
     search_client: function () {
@@ -109,13 +121,45 @@ export default {
       this.close();
       this.showClientModal = true;
     },
-    create_inquiry: function (clientId) {},
+    create_inquiry: function (clientId) {
+      this.close();
+      fetch(mainUrl + "admin_content/ajax/find_client_by_id.php", {
+        method: "POST",
+        dataType: "json",
+        mode: "cors",
+        credentials: "same-origin",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({ clientId: clientId }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.success && res.hasOwnProperty("clientData")) {
+            let clientData = res.clientData;
+            // Open the second inquiry modal.
+            this.showInquiryModal2 = true;
+            this.clientData = {
+              companyName: clientData.firmenname,
+              contactPerson: clientData.ansprechpartner,
+              clientId: clientData.id,
+              phone: clientData.telefon,
+              email: clientData.email,
+            };
+          }
+        })
+        .catch((err) => console.log(err));
+    },
     close_client_modal: function () {
       this.showClientModal = false;
+    },
+    close_inquiry_modal2: function () {
+      this.showInquiryModal2 = false;
     },
   },
   components: {
     client_modal,
+    inquiry_modal2,
   },
 };
 </script>

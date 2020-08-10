@@ -1,35 +1,25 @@
 <?php
-require_once dirname(__FILE__) . '/../config.php';
+require_once dirname(__FILE__) . '/../../config.php';
 if (
-    isset($_POST["bv_firmenname"]) &&
-    isset($_POST["bv_anrede"]) &&
-    isset($_POST["bv_ansprechpartner"]) &&
-    isset($_POST["bv_email"]) &&
-    isset($_POST["bv_telefon"]) &&
-    isset($_POST["bv_strasse"]) &&
-    isset($_POST["bv_hausnummer"]) &&
-    isset($_POST["bv_plz"]) &&
-    isset($_POST["bv_ort"]) &&
-    isset($_POST["bv_land"]) &&
-    isset($_POST["bv_ztelefon"]) &&
-    isset($_POST["bv_freitext"]) &&
-    isset($_POST["bv_kunden_informieren"])
+    $_SERVER['REQUEST_METHOD'] === 'POST'
 ) {
+    $post_data = json_decode(file_get_contents('php://input'), true);
+
     $client = new CreateClient(
         $mysqli,
-        $_POST["bv_firmenname"],
-        $_POST["bv_anrede"],
-        $_POST["bv_ansprechpartner"],
-        $_POST["bv_email"],
-        $_POST["bv_telefon"],
-        $_POST["bv_strasse"],
-        $_POST["bv_hausnummer"],
-        $_POST["bv_plz"],
-        $_POST["bv_ort"],
-        $_POST["bv_land"],
-        $_POST["bv_ztelefon"],
-        $_POST["bv_freitext"],
-        $_POST["bv_kunden_informieren"]
+        $post_data["clientName"],
+        $post_data["salutation"],
+        $post_data["contactPerson"],
+        $post_data["email"],
+        $post_data["phone"],
+        $post_data["street"],
+        $post_data["houseNumber"],
+        $post_data["postcode"],
+        $post_data["place"],
+        $post_data["country"],
+        $post_data["centralPhone"],
+        $post_data["freeText"],
+        $post_data["informClient"]
     );
     $client->create();
 }
@@ -89,6 +79,7 @@ class CreateClient
 
     public function create()
     {
+
         $this->rand_username = substr(str_shuffle(MD5(microtime())), 0, 10);
         $this->rand_password = substr(str_shuffle(MD5(microtime())), 0, 10);
         $rand_password_hashed =  password_hash($this->rand_password, PASSWORD_DEFAULT); // Creates a password hash
@@ -129,15 +120,15 @@ class CreateClient
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 $this->id = $this->mysqli->insert_id;
-                $client_data = [
-                    "kundennummer" => $this->id,
-                    "firmenname" => $this->name,
-                    "ansprechpartner" => $this->contact,
-                    "telefon" => $this->phone,
+                $clientData = [
+                    "cientId" => $this->id,
+                    "companyName" => $this->name,
+                    "contactPerson" => $this->contact,
+                    "phone" => $this->phone,
                     "email" => $this->email
                 ];
 
-                $this->result_json = json_encode(array("success" => true, "client_data" => $client_data));
+                $this->result_json = json_encode(array("success" => true, "clientData" => $clientData));
                 // Should we email the client ?
                 if ($this->inform_client) {
                     // Get the client ID.
@@ -170,3 +161,4 @@ class CreateClient
         }
     }
 }
+
