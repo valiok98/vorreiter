@@ -47,68 +47,6 @@ jQuery(document).ready(function($) {
             emptyTable: "Es gibt keine Daten in der Tabelle."
         }
     });
-    // Initialize the create "Anfrage 1" dialog.
-    $('#dialog_anfrage-erstellen-1').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 800,
-        height: 600,
-        close: function() {
-            $('#div_suche-anfrage-ergebnisse').empty();
-            $('#form_suche-anfrage-kunden input').val("");
-        }
-    });
-    // Initialize the create "Anfrage 2" dialog.
-    $('#dialog_anfrage-erstellen-2').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 1000,
-        height: 800,
-        close: function() {
-            $('#an_shipmentslist').empty();
-            $('#an_plz-start').val('');
-            $('#an_plz-ziel').val('');
-            sessionStorage.removeItem('numshipments');
-        }
-    });
-    // Initialize the create "Auftrag 1" dialog.
-    $('#dialog_auftrag-erstellen-1').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 800,
-        height: 600,
-        close: function() {
-            $('#div_suche-auftrag-ergebnisse').empty();
-            $('#form_suche-auftrag-kunden input').val("");
-        }
-    });
-    // Initialize the create "Auftrag 2" dialog.
-    $('#dialog_auftrag-erstellen-2').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 1000,
-        height: 800,
-        close: function() {
-            $('#auf_shipmentslist').empty();
-            sessionStorage.removeItem('numshipments');
-        }
-    });
-    // Initialize the create client dialog.
-    $('#dialog_kunden-erstellen').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 800,
-        height: 600
-    });
-    // Create an "Anfrage".
-    $('.img_anfrage-erstellen').on('click', function() {
-        $('#dialog_anfrage-erstellen-1').dialog('open');
-    });
-    // Create an "Auftrag".
-    $('.img_auftrag-erstellen').on('click', function() {
-        $('#dialog_auftrag-erstellen-1').dialog('open');
-    });
-
     // Ajax for searching the "kunden".
     $('#form_suche-auftrag-kunden input').on('keyup', function(e) {
         let input = $(this).val().trim();
@@ -147,56 +85,6 @@ jQuery(document).ready(function($) {
                                 } else {
                                     // Load data for an existing client.
                                     create_auftrag(mainUrl, clientID);
-                                }
-                            });
-                        }
-                    }
-                },
-                error: function(data) {
-                    $('.toast .toast-body').html('Ein Fehler is aufgetretten.');
-                    $('.toast').toast('show');
-                }
-            });
-        }
-    });
-
-    $('#form_suche-anfrage-kunden input').on('keyup', function(e) {
-        let input = $(this).val().trim();
-        // Empty the table if the input is empty.
-        if (!input) {
-            $('#div_suche-anfrage-ergebnisse').empty();
-        } else {
-            $.ajax({
-                url: mainUrl + 'admin_content/ajax/find_client.php',
-                type: "post",
-                dataType: "json",
-                data: {
-                    "client_data": input
-                },
-                success: function(data) {
-                    if (data['success']) {
-                        let clientData = data['client_data'];
-                        $('#div_suche-anfrage-ergebnisse').empty();
-                        // Only display the results if theere is client data.
-
-                        if (clientData.length) {
-                            $('#div_suche-anfrage-ergebnisse').append('<div class="div_anfrage-kunden-ergebnis"><input readonly type="hidden" value="-1"><span>Neukunden erstellen</span><img style="float: right" src="../images/auftrag/auftrag_arrow.png" alt=""></div>');
-
-                            clientData.forEach(function(client) {
-                                $('#div_suche-anfrage-ergebnisse').append('<div class="div_anfrage-kunden-ergebnis"><input readonly type="hidden" value="' + client["id"] + '"><span>' +
-                                    client["firmenname"] + '&nbsp;[' +
-                                    client["plz"] + '&nbsp;-&nbsp;' +
-                                    client["ort"] + ']</span><img style="float: right" src="../images/anfrage/anfrage_arrow.png" alt=""></div>');
-                            });
-
-                            $('.div_anfrage-kunden-ergebnis').on('click', function() {
-                                let clientID = parseInt($(this).find('input').val().trim());
-                                // Create a new client.
-                                if (clientID === -1) {
-                                    create_client(mainUrl, 'anfrage');
-                                } else {
-                                    // Load data for an existing client.
-                                    create_anfrage(mainUrl, clientID);
                                 }
                             });
                         }
@@ -256,35 +144,6 @@ jQuery(document).ready(function($) {
     });
     // Activate the tooltip component for kunden table.
     $('[data-toggle="tooltip"]').tooltip();
-
-    // Toggle the side navbar images on click.
-    let images_id = [
-        "img_kunden",
-        "img_an-auf",
-        "img_tracking",
-        "img_flotte",
-        "img_support",
-        "img_stats",
-        "img_settings"
-    ];
-    let b_w_images = [
-        "kunden_b_w.png",
-        "an_auf_b_w.png",
-        "tracking_b_w.png",
-        "flotte_b_w.png",
-        "support_b_w.png",
-        "stats_b_w.png",
-        "settings_b_w.png",
-    ];
-    let color_images = [
-        "kunden_color.png",
-        "an_auf_color.png",
-        "tracking_color.png",
-        "flotte_color.png",
-        "support_color.png",
-        "stats_color.png",
-        "settings_color.png",
-    ];
 
 });
 

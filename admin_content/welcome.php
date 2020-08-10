@@ -146,13 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                         <div class="tab-pane active container-fluid" id="vorreiter">
                             <div class="row">
                                 <div class="col-sm-6 container-fluid">
-                                    <div class="row div_table-header">
-                                        <h3>Anfragen</h3>
-                                        <div>
-                                            <img src="../images/an_auf_table/eye.png" alt="">
-                                            <img class="img_anfrage-erstellen" src="../images/an_auf_table/anfrage_erstellen.png" alt="">
-                                        </div>
-                                    </div>
+                                    <!-- inquiry_theader component. -->
+                                    <inquiry_theader></inquiry_theader>
                                     <div class="row div_an-auf-table-data">
                                         <table id="anfragen_table" class="compact">
                                             <thead>
@@ -189,13 +184,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     </div>
                                 </div>
                                 <div class="col-sm-6 container-fluid">
-                                    <div class="row div_table-header">
-                                        <h3>Aufträge</h3>
-                                        <div>
-                                            <img src="../images/an_auf_table/eye.png" alt="">
-                                            <img class="img_auftrag-erstellen" src="../images/an_auf_table/auftrag_erstellen.png" alt="">
-                                        </div>
-                                    </div>
+                                    <!-- order_theader component. -->
+                                    <order_theader></order_theader>
                                     <div class="row div_an-auf-table-data">
                                         <table id="auftraege_table" class="compact">
                                             <thead>
@@ -234,7 +224,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                             </div>
 
                         </div>
-
                         <div class="tab-pane table-responsive" id="an_auf_data" data-tabs="tabs">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
@@ -330,100 +319,19 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                             </div>
                         </div>
 
-
-
                         <div class="tab-pane" id="settings">
-                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#sysestlg_rechnung" data-toggle="tab">Rechnungslayout</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#sysestlg_steuersatz" data-toggle="tab">Steuersatz</a>
-                                </li>
-                            </ul>
-                            <br>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="sysestlg_rechnung">
-                                    <form id="rechnungslayout" action="ajax/create_rechnung.php" method="POST" enctype="multipart/form-data">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="rl_logo" id="rl_logo" accept="image/*">
-                                            <label class="custom-file-label" for="rl_logo">Logo wählen</label>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div>
-                                            <label for="edit_firmenname">Firmenname: </label>
-                                            <a href="#" id="edit_firmenname" data-type="text" data-pk="1" data-title="Firmenname">Firmenname</a>
-                                        </div>
-                                        <br>
-                                        <button disabled type="submit" class="btn btn-primary">Angaben speichern</button>
-                                    </form>
-                                </div>
-                                <div class="tab-pane" id="sysestlg_steuersatz">
-                                    <h5 class="text-muted heading">Hier kommt der Steuersatz.</b></h5>
-                                </div>
-                            </div>
+                            <!-- settings component. -->
+                            <settings></settings>
                         </div>
 
                     </div>
                 </div>
             </div>
         </div>
+        <!-- toast component. -->
+        <toast></toast>
 
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 15px; right: 15px;">
-            <div class="toast-header">
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body"></div>
-        </div>
-        <!-- Anfrage Dialog 1 -->
-        <div id="dialog_anfrage-erstellen-1" title="Anfrage erstellen">
-            <form id="form_suche-anfrage-kunden" class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Suche Kunden..." aria-label="Search">
-            </form>
-            <div id="div_suche-anfrage-ergebnisse"></div>
-        </div>
-        <!-- Anfrage Dialog 2 -->
-        <div id="dialog_anfrage-erstellen-2" title="Anfrage erstellen">
-            <div id="div_anfrage-erstellen-content" class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6 container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h5>Auftraggeber</h5>
-                                <span><b>Firmenname</b></span><br>
-                                <span id="span_anfrage-firmenname"></span><br>
-                                <span><b>Ansprechpartner</b></span><br>
-                                <span id="span_anfrage-ansprechpartner"></span>
-                            </div>
-                            <div class="col-sm-6">
-                                <br>
-                                <span><b>Kundennummer</b></span><br>
-                                <span id="span_anfrage-kundennummer"></span><br>
-                                <span><b>Telefon</b></span><br>
-                                <span id="span_anfrage-telefon"></span><br>
-                                <span><b>E-Mail-Adresse</b></span><br>
-                                <span id="span_anfrage-email"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="div_anfrage-versandrechner" class="col-sm-6 div_versandrechner-wrapper">
-                        <?php
-                        get_versandrechner('anfrage');
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Auftrag Dialog 1 - Search for clients. -->
-        <div id="dialog_auftrag-erstellen-1" title="Auftrag erstellen">
-            <form id="form_suche-auftrag-kunden" class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Suche Kunden..." aria-label="Search">
-            </form>
-            <div id="div_suche-auftrag-ergebnisse"></div>
-        </div>
+       
         <!-- Auftrag Dialog 2 - Create 'auftrag' to an existing client. -->
         <div id="dialog_auftrag-erstellen-2" title="Auftrag erstellen">
             <div id="div_auftrag-erstellen-content" class="container-fluid">

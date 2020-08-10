@@ -1,5 +1,5 @@
 <template>
-  <div id='div_sidenav' class='col-sm-1'>
+  <div id='component_sidenav' class='col-sm-1'>
     <nav class='navbar navbar-expand-lg navbar-light'>
       <button
         class='navbar-toggler'
@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style>
-#div_sidenav {
+#component_sidenav {
   border-right: 1px solid black;
   padding: 0;
   display: flex;
@@ -156,34 +156,34 @@ export default {
   justify-content: center;
 }
 
-#div_sidenav nav {
+#component_sidenav nav {
   height: 100%;
   max-width: 100%;
   padding: 0;
 }
 
-#div_sidenav-collapsed {
+#component_sidenav #div_sidenav-collapsed {
   max-height: 100%;
   height: 100%;
 }
 
-#div_sidenav a.nav-link {
+#component_sidenav a.nav-link {
   padding: 0 !important;
 }
 
-#div_sidenav a.nav-link img {
+#component_sidenav a.nav-link img {
   display: block;
   margin: 0 auto;
 }
 
-#div_sidenav li:last-of-type {
+#component_sidenav li:last-of-type {
   position: relative;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-#div_sidenav ul {
+#component_sidenav ul {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -191,19 +191,18 @@ export default {
   justify-content: center;
 }
 
-#div_sidenav li:first-of-type,
-li:last-of-type {
+#component_sidenav li:first-of-type,
+#component_sidenav li:last-of-type {
   flex: 1 1 0;
 }
 
-#div_sidenav li:last-of-type {
+#component_sidenav li:last-of-type {
   display: flex;
   align-items: flex-end;
 }
 
-/* 1012.800 */
 @media only screen and (max-width: 1013px) {
-  #div_sidenav {
+  #component_sidenav {
     border: none;
   }
 }

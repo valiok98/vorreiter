@@ -18,35 +18,6 @@ body {
 }
 
 
-/* Side nav section */
-
-
-/* Main nav section */
-
-.main-nav ul.navbar-nav {
-    position: absolute;
-    right: 0;
-}
-
-#li_angemeldet-als {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#li_angemeldet-als a {
-    all: unset;
-}
-
-#span_logout {
-    margin-left: -15%;
-}
-
-#img_suchen {
-    cursor: pointer;
-}
-
-
 /* Vorreiter tab pane. */
 
 .dataTable>thead>tr>th[class*="sort"]:before,
@@ -58,22 +29,22 @@ body {
     height: 100%;
 }
 
-#vorreiter .div_table-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#vorreiter .div_table-header h3 {
-    margin: 0;
-}
-
 .div_an-auf-table-data {
     padding: 0;
 }
 
 .div_an-auf-table-data table {
     width: 100%;
+}
+
+.div_table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div_table-header h3 {
+    margin: 0;
 }
 
 .div_an-auf-table-data thead,
