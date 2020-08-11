@@ -50,50 +50,30 @@
             <input
               class="form-check-input"
               type="radio"
-              value="07:30 – 08:00 Uhr"
+              value="2"
               required
-              v-model="deliveryTime"
+              v-model="deliveryTimeIndex"
             />
             <label class="form-check-label">07:30 – 08:00 Uhr</label>
           </div>
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="08:00 – 09:00 Uhr"
-              v-model="deliveryTime"
-            />
+            <input class="form-check-input" type="radio" value="3" v-model="deliveryTimeIndex" />
             <label class="form-check-label">08:00 – 09:00 Uhr</label>
           </div>
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="08:00 – 10:00 Uhr"
-              v-model="deliveryTime"
-            />
+            <input class="form-check-input" type="radio" value="5" v-model="deliveryTimeIndex" />
             <label class="form-check-label">08:00 – 10:00 Uhr</label>
           </div>
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="08:00 – 12:00 Uhr"
-              v-model="deliveryTime"
-            />
+            <input class="form-check-input" type="radio" value="6" v-model="deliveryTimeIndex" />
             <label class="form-check-label">08:00 – 12:00 Uhr</label>
           </div>
           <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              value="09:00 – 17:00 Uhr"
-              v-model="deliveryTime"
-            />
+            <input class="form-check-input" type="radio" value="7" v-model="deliveryTimeIndex" />
             <label class="form-check-label">09:00 – 17:00 Uhr</label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" value="Fixtermin" v-model="deliveryTime" />
+            <input class="form-check-input" type="radio" value="-1" v-model="deliveryTimeIndex" />
             <label class="form-check-label">Fixtermin</label>
           </div>
         </div>
@@ -224,6 +204,16 @@
                 <li>Volumengewicht: {{package_.volumeWeight}}</li>
                 <li>Gewicht: {{package_.weight}}</li>
                 <li>Preis: {{package_.price}}</li>
+                <li>
+                  <span>Dienstleistungen:</span>
+                  <br />
+                  <b-ul v-if="package_.services.length">
+                    <li
+                      v-bind:key="service.id"
+                      v-for="service in package_.services"
+                    >{{service.title}}</li>
+                  </b-ul>
+                </li>
               </b-ul>
             </b-collapse>
           </div>
@@ -257,7 +247,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">50,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Fixe Zustellung" v-model="service" />
+                  <input type="checkbox" value="0" v-model="services" />
                 </div>
               </div>
 
@@ -266,7 +256,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">5,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Bereichszustellung" v-model="service" />
+                  <input type="checkbox" value="1" v-model="services" />
                 </div>
               </div>
 
@@ -275,7 +265,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">4,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Empfangsbestaetigung" v-model="service" />
+                  <input type="checkbox" value="2" v-model="services" />
                 </div>
               </div>
 
@@ -284,7 +274,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">2,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Empfangsbestaetigung telefonisch" v-model="service" />
+                  <input type="checkbox" value="3" v-model="services" />
                 </div>
               </div>
 
@@ -293,7 +283,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">3,50&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Hoeherhaftung" v-model="service" />
+                  <input type="checkbox" value="4" v-model="services" />
                 </div>
               </div>
 
@@ -302,7 +292,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">7,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Indet-Zustellung Vertragsservice" v-model="service" />
+                  <input type="checkbox" value="5" v-model="services" />
                 </div>
               </div>
 
@@ -311,7 +301,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">30,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Insel-Zustellung" v-model="service" />
+                  <input type="checkbox" value="6" v-model="services" />
                 </div>
               </div>
 
@@ -320,7 +310,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">1,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Lagerung" v-model="service" />
+                  <input type="checkbox" value="7" v-model="services" />
                 </div>
               </div>
 
@@ -329,7 +319,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">10,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Messeservice" v-model="service" />
+                  <input type="checkbox" value="8" v-model="services" />
                 </div>
               </div>
 
@@ -338,7 +328,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">8,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Nachnahme" v-model="service" />
+                  <input type="checkbox" value="9" v-model="services" />
                 </div>
               </div>
 
@@ -347,7 +337,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">5,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Persoenliche Zustellung" v-model="service" />
+                  <input type="checkbox" value="10" v-model="services" />
                 </div>
               </div>
 
@@ -356,7 +346,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">2,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Samstagszustellung" v-model="service" />
+                  <input type="checkbox" value="11" v-model="services" />
                 </div>
               </div>
 
@@ -365,7 +355,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">46,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="SmartPic" v-model="service" />
+                  <input type="checkbox" value="12" v-model="services" />
                 </div>
               </div>
 
@@ -374,7 +364,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">50,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="SmartPic+" v-model="service" />
+                  <input type="checkbox" value="13" v-model="services" />
                 </div>
               </div>
               <div class="tblrow">
@@ -382,7 +372,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">40,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Sonntagszustellung" v-model="service" />
+                  <input type="checkbox" value="14" v-model="services" />
                 </div>
               </div>
 
@@ -391,7 +381,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">2,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="Verpackungsrueckführung" v-model="service" />
+                  <input type="checkbox" value="15" v-model="services" />
                 </div>
               </div>
 
@@ -400,7 +390,7 @@
                 <div class="tblcell">zzgl.</div>
                 <div class="tblcell">2,00&nbsp;€</div>
                 <div class="tblcell">
-                  <input type="checkbox" value="X-Change" v-model="service" />
+                  <input type="checkbox" value="16" v-model="services" />
                 </div>
               </div>
             </div>
@@ -431,6 +421,7 @@ export default {
     return {
       plzStart: "",
       plzEnd: "",
+      deliveryTimeIndex: "",
       deliveryTime: "",
       deliveryDay: "",
       sizeX: "",
@@ -439,7 +430,9 @@ export default {
       volumeWeight: "",
       weight: "",
       price: "",
-      service: [],
+      priceString: "",
+      taxString: "",
+      services: [],
       showServiceSelection: false,
       showPlainModal: false,
       packageId: -1,
@@ -449,6 +442,33 @@ export default {
         src: "../images/auftrag/icon_add.png",
         alt: "Sendung hinzufügen",
       },
+      deliveryTimes: [
+        { value: 2, title: "07:30 – 08:00 Uhr" },
+        { value: 3, title: "08:00 – 09:00 Uhr" },
+        { value: 5, title: "08:00 – 10:00 Uhr" },
+        { value: 6, title: "08:00 – 12:00 Uhr" },
+        { value: 7, title: "09:00 – 17:00 Uhr" },
+        { value: -1, title: "Fixtermin" },
+      ],
+      serviceSelection: [
+        { id: 0, title: "Fixe Zustellung" },
+        { id: 1, title: "Bereichszustellung" },
+        { id: 2, title: "Empfangsbestaetigung" },
+        { id: 3, title: "Empfangsbestaetigung telefonisch" },
+        { id: 4, title: "Hoeherhaftung" },
+        { id: 5, title: "Indet-Zustellung Vertragsservice" },
+        { id: 6, title: "Insel-Zustellung" },
+        { id: 7, title: "Lagerung" },
+        { id: 8, title: "Messeservice" },
+        { id: 9, title: "Nachnahme" },
+        { id: 10, title: "Persoenliche Zustellung" },
+        { id: 11, title: "Samstagszustellung" },
+        { id: 12, title: "SmartPic" },
+        { id: 13, title: "SmartPic+" },
+        { id: 14, title: "Sonntagszustellung" },
+        { id: 15, title: "Verpackungsrueckführung" },
+        { id: 16, title: "X-Change" },
+      ],
       packages: [],
     };
   },
@@ -462,21 +482,13 @@ export default {
     send_packages: function () {},
     add_package: function (e) {
       e.preventDefault();
-      console.log(
-        this.plzStart,
-        this.plzEnd,
-        this.deliveryTime,
-        this.deliveryDay,
-        this.sizeX,
-        this.sizeY,
-        this.sizeZ,
-        this.volumeWeight,
-        this.weight,
-        this.service
-      );
       let pLength = this.packages.length;
       // Form the new package id similar to Database principles. No id change on deletion.
       let pId = pLength === 0 ? 0 : this.packages[pLength - 1].id + 1;
+      // Fix the deliveryTime.
+      this.deliveryTime = this.deliveryTimes
+        .find((delTime) => delTime.value === parseInt(this.deliveryTimeIndex))
+        .pop().title;
       this.packages.push({
         id: pId,
         elemId: "collapse-" + pId,
@@ -489,7 +501,12 @@ export default {
         sizeZ: this.sizeZ,
         volumeWeight: this.volumeWeight,
         weight: this.weight,
-        service: this.service,
+        services: [
+          this.services.map((service, index) => ({
+            id: index,
+            title: this.serviceSelection.find((s) => s.id === index).title,
+          })),
+        ],
       });
     },
     delete_accordion_item: function (packageId) {
@@ -504,6 +521,99 @@ export default {
       this.packages = this.packages.filter(
         (package_) => package_.id !== packageId
       );
+    },
+    calculate_volumeweight: function () {
+      this.volumeWeight = Math.ceil(
+        (this.sizeX * this.sizeY * this.sizeZ) / 6000,
+        -1
+      );
+      if (isNaN(this.volumeWeight)) {
+        this.volumeWeight = 0;
+      }
+    },
+    calculate_price: function (options) {
+      let zone = parseInt(this.deliveryTimeIndex);
+      let basicPrice = {
+        7: 6.43,
+        6: 12.0,
+        5: 14.0,
+        3: 18.15,
+        2: 28.11,
+        0: 0,
+        "-1": 0,
+      };
+      let misalignmentPrice = {
+        7: 0,
+        6: 0,
+        5: 0,
+        3: 0,
+        2: 1,
+        0: 0,
+        "-1": 0,
+      };
+      let priceIncrease = {
+        7: 0.53,
+        6: 0.53,
+        5: 0.53,
+        3: 0.53,
+        2: 0.53,
+        0: 0,
+        "-1": 0,
+      };
+      let priceIncreaseHigh = {
+        7: 0.74,
+        6: 0.75, // ausnahme
+        5: 0.74,
+        3: 0.74,
+        2: 0.74,
+        0: 0,
+        "-1": 0,
+      };
+
+      let additional = 0;
+
+      if (this.weight < 31) {
+        this.price =
+          (basicPrice[zone] + (this.weight - 1) * priceIncrease[zone]) * 1.3 +
+          1;
+      } else {
+        this.price =
+          (basicPrice[zone] + 29 * priceIncrease[zone]) * 1.3 +
+          1 +
+          (this.weight - 30) * priceIncreaseHigh[zone] * 1.3;
+      }
+      // sonderheit bei zone 2
+      if (this.weight > 1) {
+        this.price =
+          this.price - misalignmentPrice[zone] * priceIncrease[zone] * 1.3;
+      }
+
+      // serviceleistungen
+      if (this.services.includes(1)) additional = additional + 50;
+      if (this.services.includes(2)) additional = additional + 5;
+      if (this.services.includes(3)) additional = additional + 4;
+      if (this.services.includes(4)) additional = additional + 2;
+      if (this.services.includes(5)) additional = additional + 3.5;
+      if (this.services.includes(6)) additional = additional + 7;
+      if (this.services.includes(7)) additional = additional + 30;
+      if (this.services.includes(8)) additional = additional + 1;
+      if (this.services.includes(9)) additional = additional + 10;
+      if (this.services.includes(11)) additional = additional + 8;
+      if (this.services.includes(12)) additional = additional + 5;
+      if (this.services.includes(13)) additional = additional + 2;
+      if (this.services.includes(14)) additional = additional + 46;
+      if (this.services.includes(15)) additional = additional + 50;
+      if (this.services.includes(16)) additional = additional + 40;
+      if (this.services.includes(17)) additional = additional + 2;
+      if (this.services.includes(18)) additional = additional + 2;
+
+      this.price = Math.round((this.price + additional) * 100) / 100;
+
+      if (this.weight < 50) {
+        this.priceString = "€ " + this.price.toFixed(2).replace(".", ",");
+        this.taxString =
+          "€ " + (this.price * 0.19).toFixed(2).replace(".", ",");
+      }
     },
   },
 };
