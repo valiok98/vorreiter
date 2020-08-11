@@ -73,7 +73,7 @@ export default {
     close: function () {
       this.searchString = "";
       this.showOrderModal1 = false;
-      this.$emit("close_order_modal");
+      this.$emit("close_order_modal1");
     },
     search_client: function () {
       let input = this.searchString.trim();
@@ -91,7 +91,6 @@ export default {
         })
           .then((res) => res.json())
           .then((res) => {
-            console.log(res);
             if (res.success && res.hasOwnProperty("clients")) {
               let clientData = res.clients;
               this.clients = this.clients.slice(0, 1);
@@ -103,7 +102,6 @@ export default {
                   title: [client.firmenname, client.plz, client.ort].join(" "),
                 })
               );
-              console.log(this.clients);
             }
           })
           .catch((err) => console.log(err));

@@ -1,534 +1,568 @@
 <template>
-  <div>
-    <h5>Sendungsdetails</h5>
-    <h5>Wo soll das Paket abgeholt werden?</h5>
-    <div>Nur nationale / in Deutschland gültige PLZ eingeben.</div>
-    <input
-      type="text"
-      id="inq_plz-start"
-      name="inq_plz-start"
-      minlength="3"
-      maxlength="10"
-      size="5"
-      pattern="[0-9]{3,10}"
-      class="form-control"
-      placeholder="Abhol-PLZ"
-      required
-    />
-    <br />
-    <h5>Wohin soll das Paket geliefert werden?</h5>
-    <div>Nur nationale / in Deutschland gültige PLZ eingeben.</div>
-    <input
-      type="text"
-      id="inq_plz-ziel"
-      name="inq_plz-ziel"
-      minlength="3"
-      maxlength="10"
-      size="5"
-      pattern="[0-9]{3,10}"
-      class="form-control"
-      placeholder="Ziel-PLZ"
-      required
-    />
-    <br />
-    <h4>Wann dürfen wir für Sie zustellen?</h4>
-    <div class="container-fluid">
-      <form id="inq_versandrechner" method="post" class="m-form">
-        <div class="row">
-          <div class="col-sm-5 smaller">Zustellfenster:</div>
-          <div class="col-sm-7 form-group smaller">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeit1"
-                value="2"
-                required
-              />
-              <label class="form-check-label" for="inq_zeit1">07:30 – 08:00 Uhr</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeit2"
-                value="3"
-              />
-              <label class="form-check-label" for="inq_zeit2">08:00 – 09:00 Uhr</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeit3"
-                value="5"
-              />
-              <label class="form-check-label" for="inq_zeit3">08:00 – 10:00 Uhr</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeit4"
-                value="6"
-              />
-              <label class="form-check-label" for="inq_zeit4">08:00 – 12:00 Uhr</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeit5"
-                value="7"
-              />
-              <label class="form-check-label" for="inq_zeit5">09:00 – 17:00 Uhr</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zeitfenster"
-                id="inq_zeitfensterfix"
-                value="-1"
-              />
-              <label class="form-check-label" for="inq_zeitfensterfix">Fixtermin</label>
-            </div>
+  <div class="container-fluid" id="component_inquiry_calculator">
+    <form v-on:submit="add_package($event)" id="inqVersandrechner" class="m-form">
+      <div class="row">
+        <h5>Sendungsdetails</h5>
+        <h5>Wo soll das Paket abgeholt werden?</h5>
+        <div>Nur nationale / in Deutschland gültige PLZ eingeben.</div>
+        <br />
+        <br />
+        <input
+          type="text"
+          minlength="3"
+          maxlength="10"
+          size="5"
+          pattern="[0-9]{3,10}"
+          class="form-control"
+          placeholder="Abhol-PLZ"
+          required
+          v-model="plzStart"
+        />
+        <br />
+        <br />
+      </div>
+      <div class="row">
+        <h5>Wohin soll das Paket geliefert werden?</h5>
+        <div>Nur nationale / in Deutschland gültige PLZ eingeben.</div>
+        <br />
+        <br />
+        <input
+          type="text"
+          minlength="3"
+          maxlength="10"
+          size="5"
+          pattern="[0-9]{3,10}"
+          class="form-control"
+          placeholder="Ziel-PLZ"
+          required
+          v-model="plzEnd"
+        />
+        <br />
+        <br />
+      </div>
+      <div class="row">
+        <h4>Wann dürfen wir für Sie zustellen?</h4>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 smaller">Zustellfenster:</div>
+        <div class="col-sm-7 form-group smaller">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="07:30 – 08:00 Uhr"
+              required
+              v-model="deliveryTime"
+            />
+            <label class="form-check-label">07:30 – 08:00 Uhr</label>
           </div>
-          <div class="col-sm-5 smaller">Zustellung am:</div>
-          <div class="col-sm-7 form-group smaller">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zustelltag"
-                id="inq_zustelltagmofr"
-                value="1"
-                required
-              />
-              <label
-                class="form-check-label"
-                for="inq_zustelltagmofr"
-              >Mo. – Fr. (am folgenen Werktag)</label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zustelltag"
-                id="inq_zustelltagsa"
-                value="2"
-              />
-              <label class="form-check-label" for="inq_zustelltagsa">Samstag</label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="inq_zustelltag"
-                id="inq_zustelltagso"
-                value="3"
-              />
-              <label class="form-check-label" for="inq_zustelltagso">Sonn-/Feiertag</label>
-            </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="08:00 – 09:00 Uhr"
+              v-model="deliveryTime"
+            />
+            <label class="form-check-label">08:00 – 09:00 Uhr</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="08:00 – 10:00 Uhr"
+              v-model="deliveryTime"
+            />
+            <label class="form-check-label">08:00 – 10:00 Uhr</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="08:00 – 12:00 Uhr"
+              v-model="deliveryTime"
+            />
+            <label class="form-check-label">08:00 – 12:00 Uhr</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              value="09:00 – 17:00 Uhr"
+              v-model="deliveryTime"
+            />
+            <label class="form-check-label">09:00 – 17:00 Uhr</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="Fixtermin" v-model="deliveryTime" />
+            <label class="form-check-label">Fixtermin</label>
           </div>
         </div>
-        <div class="row">
-          <h4>Maße und Gewicht Ihrer Sendung:</h4>
-          <div class="form-group form-inline">
+        <div class="col-sm-5 smaller">Zustellung am:</div>
+        <div class="col-sm-7 form-group smaller">
+          <div class="form-check">
             <input
-              type="text"
-              name="inq_groesse-x"
-              id="inq_groesse-x"
-              minlength="1"
-              maxlength="6"
-              size="1"
-              pattern="[0-9]+"
-              class="form-control grge"
-              placeholder="Länge"
+              class="form-check-input"
+              type="radio"
+              value="Mo. – Fr. (am folgenen Werktag)"
               required
+              v-model="deliveryDay"
             />
-            <span>&nbsp;x&nbsp;</span>
+            <label class="form-check-label">Mo. – Fr. (am folgenen Werktag)</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="Samstag" v-model="deliveryDay" />
+            <label class="form-check-label">Samstag</label>
+          </div>
+
+          <div class="form-check">
             <input
-              type="text"
-              name="inq_groesse-y"
-              id="inq_groesse-y"
-              minlength="1"
-              maxlength="6"
-              size="1"
-              pattern="[0-9]+"
-              class="form-control grge"
-              placeholder="Breite"
-              required
+              class="form-check-input"
+              type="radio"
+              value="Sonn-/Feiertag"
+              v-model="deliveryDay"
             />
-            <span>&nbsp;x&nbsp;</span>
-            <input
-              type="text"
-              name="inq_groesse-z"
-              id="inq_groesse-z"
-              minlength="1"
-              maxlength="6"
-              size="1"
-              pattern="[0-9]+"
-              class="form-control grge"
-              placeholder="Höhe"
-              required
-            />
-            <span>&nbsp;cm&nbsp;</span>
-            <br />
-            <span class="spaced smaller">
-              <label for="inq_volumengewicht">Resultierendes Volumengewicht:</label>
-              <input
-                type="text"
-                name="inq_volumengewicht"
-                id="inq_volumengewicht"
-                size="1"
-                pattern="[0-9]+"
-                class="form-control"
-                value="0"
-                disabled
-              />&nbsp;kg
-            </span>
-            <br />
-            <!-- <label for="inq_volumengewicht">Resultierendes Volumengewicht:</label> -->
-            <span id="inq_span_gewicht">
-              <input
-                type="text"
-                name="inq_gewicht"
-                id="inq_gewicht"
-                placeholder="Gewicht"
-                minlength="1"
-                maxlength="6"
-                size="1"
-                pattern="[0-9]+"
-                class="form-control grge"
-                required
-              />
-              <span>kg</span>
-            </span>
+            <label class="form-check-label">Sonn-/Feiertag</label>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group">
-            <button id="inq_neworder" type="button">
-              <img id="inq_neworder_img" alt="Sendung hinzufügen" />
-              <h4 id="inq_neworder_headline">
-                <b>Sendung hinzufügen</b>
-              </h4>
+      </div>
+      <div class="row">
+        <h4>Maße und Gewicht Ihrer Sendung:</h4>
+        <div class="form-group form-inline">
+          <input
+            type="text"
+            minlength="1"
+            maxlength="6"
+            size="1"
+            pattern="[0-9]+"
+            class="form-control grge"
+            placeholder="Länge"
+            required
+            v-model="sizeX"
+          />
+          <span>&nbsp;x&nbsp;</span>
+          <input
+            type="text"
+            minlength="1"
+            maxlength="6"
+            size="1"
+            pattern="[0-9]+"
+            class="form-control grge"
+            placeholder="Breite"
+            required
+            v-model="sizeY"
+          />
+          <span>&nbsp;x&nbsp;</span>
+          <input
+            type="text"
+            minlength="1"
+            maxlength="6"
+            size="1"
+            pattern="[0-9]+"
+            class="form-control grge"
+            placeholder="Höhe"
+            required
+            v-model="sizeZ"
+          />
+          <span>&nbsp;cm&nbsp;</span>
+          <br />
+          <label for="inqVolumeWeight">Resultierendes Volumengewicht:</label>
+          <input
+            type="text"
+            size="1"
+            pattern="[0-9]+"
+            class="form-control"
+            value="0"
+            disabled
+            v-model="volumeWeight"
+          />&nbsp;kg
+          &nbsp;&nbsp;&nbsp;
+          <input
+            type="text"
+            placeholder="Gewicht"
+            minlength="1"
+            maxlength="6"
+            size="1"
+            pattern="[0-9]+"
+            class="form-control grge"
+            required
+            id="inputWeight"
+            v-model="weight"
+          />&nbsp;kg
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <button type="submit" id="inqNeworder">
+            <img v-bind:src="packageImg.src" v-bind:alt="packageImg.alt" />
+            <h5>
+              <b>Sendung hinzufügen</b>
+            </h5>
+          </button>
+        </div>
+        <div id="inqPackages">
+          <h5>Pakete</h5>
+          <div id="inqDeletePackages">
+            <button
+              v-bind:key="package_.id"
+              v-for="package_ in packages"
+              v-on:click="delete_accordion_item(package_.id)"
+              type="button"
+            >
+              <b>X</b>
             </button>
           </div>
-
-          <div class="form-group">
-            <h4 id="inq_serviceheadline">
-              Zusätzliche Serviceleistungen
+          <VueFaqAccordion v-if="packages.length" :items="packages"></VueFaqAccordion>
+          <br />
+          <br />
+        </div>
+        <div class="form-group">
+          <h4 id="inq_serviceheadline">
+            Zusätzliche Serviceleistungen
+            <br />
+            <small>
+              [Nachname, Empfangsbestätigung, ...]
               <br />
-              <small>
-                [Nachname, Empfangsbestätigung, ...]
-                <br />
-                <span id="inq_servicelink">Bitte klicken</span>
-              </small>
-            </h4>
-            <div id="inq_serviceauswahl">
-              <div class="btn-close" id="inq_serviceclose">
-                <div class="btn-close-x"></div>
-                <div class="btn-close-x"></div>
+              <a v-if="!showServiceSelection" v-on:click="showServiceSelection = true">Bitte klicken</a>
+              <a v-else v-on:click="showServiceSelection = false">Ausklappen</a>
+            </small>
+          </h4>
+          <div v-if="showServiceSelection" id="inqServiceSelection">
+            <div class="tbl">
+              <div class="tblrow">
+                <div class="tblcell">Fixe Zustellung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">50,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Fixe Zustellung" v-model="service" />
+                </div>
               </div>
-              <div class="tbl">
-                <div class="tblrow">
-                  <div class="tblcell">Fixe Zustellung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">50,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service1"
-                      name="inq_service"
-                      value="Fixe Zustellung"
-                    />
-                    <label for="inq_service1"></label>
-                  </div>
-                </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Bereichszustellung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">5,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service2"
-                      name="inq_service"
-                      value="Bereichszustellung"
-                    />
-                    <label for="inq_service2"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Bereichszustellung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">5,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Bereichszustellung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Empfangsbestätigung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">4,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service3"
-                      name="inq_service"
-                      value="Empfangsbestaetigung"
-                    />
-                    <label for="inq_service3"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Empfangsbestätigung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">4,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Empfangsbestaetigung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Empfangsbestätigung (telefonisch)</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">2,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service4"
-                      name="inq_service"
-                      value="Empfangsbestaetigung telefonisch"
-                    />
-                    <label for="inq_service4"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Empfangsbestätigung (telefonisch)</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">2,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Empfangsbestaetigung telefonisch" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Höherhaftung bis 2.500&nbsp;€ pro Sendung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">3,50&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service5"
-                      name="inq_service"
-                      value="Hoeherhaftung"
-                    />
-                    <label for="inq_service5"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Höherhaftung bis 2.500&nbsp;€ pro Sendung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">3,50&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Hoeherhaftung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Indet-Zustellung mit Vertragsservice</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">7,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service6"
-                      name="inq_service"
-                      value="Indet-Zustellung Vertragsservice"
-                    />
-                    <label for="inq_service6"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Indet-Zustellung mit Vertragsservice</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">7,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Indet-Zustellung Vertragsservice" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Insel-Zustellung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">30,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service7"
-                      name="inq_service"
-                      value="Insel-Zustellung"
-                    />
-                    <label for="inq_service7"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Insel-Zustellung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">30,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Insel-Zustellung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Lagerung nicht zugestellter Sendung je Tag</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">1,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input type="checkbox" id="inq_service8" name="inq_service" value="Lagerung" />
-                    <label for="inq_service8"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Lagerung nicht zugestellter Sendung je Tag</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">1,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Lagerung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Messeservice</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">10,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service9"
-                      name="inq_service"
-                      value="Messeservice"
-                    />
-                    <label for="inq_service9"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Messeservice</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">10,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Messeservice" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Nachnahme</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">8,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input type="checkbox" id="inq_service11" name="inq_service" value="Nachnahme" />
-                    <label for="inq_service11"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Nachnahme</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">8,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Nachnahme" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Persönliche Zustellung mit Dokumentation</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">5,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service12"
-                      name="inq_service"
-                      value="Persoenliche Zustellung"
-                    />
-                    <label for="inq_service12"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Persönliche Zustellung mit Dokumentation</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">5,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Persoenliche Zustellung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Samstagszustellung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">2,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service13"
-                      name="inq_service"
-                      value="Samstagszustellung"
-                    />
-                    <label for="inq_service13"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Samstagszustellung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">2,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Samstagszustellung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">SmartPic</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">46,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input type="checkbox" id="inq_service14" name="inq_service" value="SmartPic" />
-                    <label for="inq_service14"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">SmartPic</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">46,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="SmartPic" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">SmartPic+</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">50,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input type="checkbox" id="inq_service15" name="inq_service" value="SmartPic+" />
-                    <label for="inq_service15"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">SmartPic+</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">50,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="SmartPic+" v-model="service" />
                 </div>
-                <div class="tblrow">
-                  <div class="tblcell">Sonn- und Feiertagszustellung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">40,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service16"
-                      name="inq_service"
-                      value="Sonntagszustellung"
-                    />
-                    <label for="inq_service16"></label>
-                  </div>
+              </div>
+              <div class="tblrow">
+                <div class="tblcell">Sonn- und Feiertagszustellung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">40,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Sonntagszustellung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">Verpackungsrückführung</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">2,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input
-                      type="checkbox"
-                      id="inq_service17"
-                      name="inq_service"
-                      value="Verpackungsrueckführung"
-                    />
-                    <label for="inq_service17"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">Verpackungsrückführung</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">2,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="Verpackungsrueckführung" v-model="service" />
                 </div>
+              </div>
 
-                <div class="tblrow">
-                  <div class="tblcell">X-Change</div>
-                  <div class="tblcell">zzgl.</div>
-                  <div class="tblcell">2,00&nbsp;€</div>
-                  <div class="tblcell">
-                    <input type="checkbox" id="inq_service18" name="inq_service" value="X-Change" />
-                    <label for="inq_service18"></label>
-                  </div>
+              <div class="tblrow">
+                <div class="tblcell">X-Change</div>
+                <div class="tblcell">zzgl.</div>
+                <div class="tblcell">2,00&nbsp;€</div>
+                <div class="tblcell">
+                  <input type="checkbox" value="X-Change" v-model="service" />
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-12 form-group" id="inq_feedbackcol">
-            <h4>Ihr Preis:</h4>
-            <h4 id="inq_gesamtpreis">
-              Gesamtpreis:
-              <span id="inq_gesamtpreisvalue"></span>
-            </h4>
-            <h4 id="inq_gesamtvolumengewicht">
-              Gesamtvolumengewicht:
-              <span id="inq_gesamtvolumengewichtvalue"></span>
-            </h4>
-          </div>
-
-          <div class="col-12 form-group" id="inq_shipmentscol">
-            <h4>Ihre Sendungen:</h4>
-            <div id="inq_shipmentslist"></div>
-          </div>
-
-          <div class="col-12" id="inq_ajaxerror">
-            <h4>Ein Fehler ist aufgetreten.</h4>
-            <span id="inq_" class="text"></span>
-          </div>
-
-          <div class="col-12" id="inq_ajaxdone">
-            <h4>Vielen Dank!</h4>
-            <br />
-            <span class="text"></span>
-          </div>
         </div>
-        <div class="row form-group">
-          <div class="col-12">
-            <button
-              name="inq_bs"
-              value="abs"
-              id="inq_btnversandrechner_abs"
-              class="btn btn-primary"
-              disabled
-            >Absenden</button>
-          </div>
-        </div>
-        <div class="row">
-          <input type="hidden" id="inq_token" name="inq_token" value="$$TOKEN$$" />
-          <input type="hidden" id="inq_summe" name="inq_summe" value />
-          <input type="text" name="inq_username" id="inq_username" value />
-        </div>
-      </form>
-      <div id="inq_dialog_delete_shipment" title="Sind Sie sich sicher ?">
-        <p>Die gewünschte Sendung wird unwiderruflich gelöscht.</p>
       </div>
-    </div>
+      <div class="row form-group">
+        <div class="col-12">
+          <button
+            type="button"
+            v-on:click="send_packages()"
+            value="abs"
+            class="btn btn-primary"
+            v-bind:disabled="!packages.length"
+          >Absenden</button>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import VueFaqAccordion from "vue-faq-accordion";
+
 export default {
   name: "inquiry_calculator",
+  data: function () {
+    return {
+      plzStart: "",
+      plzEnd: "",
+      deliveryTime: "",
+      deliveryDay: "",
+      sizeX: "",
+      sizeY: "",
+      sizeZ: "",
+      volumeWeight: "",
+      weight: "",
+      price: "",
+      service: [],
+      showServiceSelection: false,
+      packageImg: {
+        src: "../images/auftrag/icon_add.png",
+        alt: "Sendung hinzufügen",
+      },
+      packages: [],
+    };
+  },
+  components: {
+    VueFaqAccordion,
+  },
+  methods: {
+    send_packages: function () {},
+    add_package: function (e) {
+      e.preventDefault();
+      console.log(
+        this.plzStart,
+        this.plzEnd,
+        this.deliveryTime,
+        this.deliveryDay,
+        this.sizeX,
+        this.sizeY,
+        this.sizeZ,
+        this.volumeWeight,
+        this.weight,
+        this.service
+      );
+      let packageLen = this.packages.length;
+      // Configure the new package id similar to databases. No reordering on deletion.
+      let packageId = packageLen === 0 ? 0 : this.packages[packageLen - 1].id + 1;
+      // Update the packages list.
+      this.packages.push({
+        id: packageId,
+        title: "Package " + (packageLen + 1),
+        value:
+          "Sendungsnummer: " +
+          (packageLen + 1) +
+          "<br>PLZ Start: " +
+          this.plzStart +
+          "<br>PLZ Ziel: " +
+          this.plzEnd +
+          "<br>Zeitfenster: " +
+          this.deliveryTime +
+          "<br>Zustelltag: " +
+          this.deliveryDay +
+          "<br>Größe-X: " +
+          this.sizeX +
+          "<br>Größe-Y: " +
+          this.sizeY +
+          "<br>Größe-Z: " +
+          this.sizeZ +
+          "<br>Volumengewicht: " +
+          this.volumeWeight +
+          "<br>Gewicht: " +
+          this.weight +
+          "<br>Preis: " +
+          this.price,
+      });
+      // Add the button type to the accordion items.
+      // Give it some time to render properly.
+      setTimeout(this.modify_accordion_item, 300);
+    },
+    delete_accordion_item: function (index) {
+      console.log(index);
+    },
+    modify_accordion_item: function () {
+      let pTitles = document.querySelectorAll(".accordion__title-text");
+      let accItems = document.querySelectorAll(".accordion__item");
+      let delButtons = document.querySelectorAll("#inqDeletePackages button");
+      let accLength = this.packages.length;
+      let lastTitle = pTitles[accLength - 1];
+      let lastItem = accItems[accLength - 1];
+      // Place the delete button inside the title.
+      lastTitle.after(delButtons[accLength - 1]);
+      // Modify the value content of the accordion item.
+      lastItem.addEventListener("click", (e) => {
+        setTimeout(() => {
+          let pValue = document.querySelector(".accordion__value");
+          pValue.innerHTML = pValue.textContent;
+        }, 200);
+      });
+    },
+  },
 };
 </script>
 
 <style>
+#component_inquiry_calculator .tbl {
+  display: inline-table;
+  padding: 5px;
+  width: 100%;
+}
+
+#component_inquiry_calculator .tblrow {
+  display: table-row;
+  width: 100%;
+}
+
+#component_inquiry_calculator .tblcell {
+  display: table-cell;
+  text-align: right;
+  padding-left: 4px;
+  padding-top: 5px;
+}
+
+#component_inquiry_calculator .tblcell:first-of-type {
+  text-align: left;
+  padding-left: 0;
+}
+
+#component_inquiry_calculator .col-sm-7 {
+  font-size: 0.9em;
+}
+
+#component_inquiry_calculator .form-inline input {
+  width: 25%;
+}
+
+#component_inquiry_calculator #inputWeight {
+  width: 30%;
+}
+
+#component_inquiry_calculator #inq_serviceheadline small {
+  font-size: 0.6em;
+}
+
+#component_inquiry_calculator #inqNeworder {
+  border: none;
+  display: flex;
+  align-items: center;
+  width: 105%;
+  justify-content: space-evenly;
+}
+/* Accordion part. */
+#component_inquiry_calculator #inqPackages {
+  width: 100%;
+}
+#component_inquiry_calculator .accordion__title {
+  color: black;
+  padding: 5px;
+}
+#component_inquiry_calculator .accordion__toggle-button {
+  display: none;
+}
+#component_inquiry_calculator #inqDeletePackages button {
+  border: none;
+  background: none;
+}
 </style>

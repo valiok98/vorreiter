@@ -3,3 +3,15 @@
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
+
+/*!
+ * vue2-transitions v0.2.3
+ * (c) 2018-present cristij <joracristi@gmail.com>
+ * Released under the MIT License.
+ */
+
+/**
+  * vue-class-component v7.2.5
+  * (c) 2015-present Evan You
+  * @license MIT
+  */

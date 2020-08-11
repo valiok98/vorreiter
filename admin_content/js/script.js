@@ -1,3 +1,8 @@
+// Global function to delete an accordion item.
+function delete_accordion_item(index) {
+
+}
+
 jQuery(document).ready(function($) {
     // Editable component for inline editing.
     $.fn.editable.defaults.mode = 'inline';

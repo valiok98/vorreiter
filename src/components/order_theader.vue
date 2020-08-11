@@ -10,7 +10,7 @@
         v-bind:alt="img.order.alt"
       />
     </div>
-    <order_modal1 :showOrderModal1="showOrderModal1" v-on:close_order_modal="close_order_modal()"></order_modal1>
+    <order_modal1 :showOrderModal1="showOrderModal1" v-on:close_order_modal1="close_order_modal1()"></order_modal1>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
     create_order: function () {
       this.showOrderModal1 = true;
     },
-    close_order_modal: function () {
+    close_order_modal1: function () {
       this.showOrderModal1 = false;
     }
   },

@@ -10,7 +10,7 @@
         v-bind:alt="img.inquiry.alt"
       />
     </div>
-    <inquiry_modal1 :showInquiryModal1="showInquiryModal1" v-on:close_inquiry_modal="close_inquiry_modal()"></inquiry_modal1>
+    <inquiry_modal1 :showInquiryModal1="showInquiryModal1" v-on:close_inquiry_modal1="close_inquiry_modal1()"></inquiry_modal1>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
     create_inquiry: function () {
       this.showInquiryModal1 = true;
     },
-    close_inquiry_modal: function () {
+    close_inquiry_modal1: function () {
       this.showInquiryModal1 = false;
     },
   },

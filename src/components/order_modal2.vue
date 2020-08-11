@@ -478,4 +478,54 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+/* Component part. */
+
+#dialog_auftrag-erstellen {}
+
+#form_suche-anfrage-kunden,
+#form_suche-auftrag-kunden {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#div_suche-anfrage-ergebnisse,
+#div_suche-auftrag-ergebnisse {
+    margin-top: 5px;
+    margin-left: 5px;
+    background-color: white;
+    width: 50%;
+    position: static !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.div_anfrage-kunden-ergebnis:first-of-type,
+.div_auftrag-kunden-ergebnis:first-of-type {
+    color: blue;
+    font-weight: 900;
+}
+
+.div_anfrage-kunden-ergebnis,
+.div_auftrag-kunden-ergebnis {
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#div_auftrag-erstellen-content>.row {
+    height: 50%;
+    width: 100%;
+    min-height: 50%;
+}
+
+#img_auftrag-anlegen {
+    height: 75%;
+    float: right;
+    cursor: pointer;
+}
+
 </style>

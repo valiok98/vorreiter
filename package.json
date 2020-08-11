@@ -18,7 +18,9 @@
         "cross-env": "^7.0.2",
         "laravel-mix": "^5.0.4",
         "vue": "^2.6.11",
+        "vue-faq-accordion": "^1.2.0",
         "vue-template-compiler": "^2.6.11",
+        "vuejs-datatable": "^2.0.0-alpha.7",
         "webpack": "^4.44.1",
         "webpack-cli": "^3.3.12"
     },

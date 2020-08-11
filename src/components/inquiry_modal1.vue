@@ -73,7 +73,7 @@ export default {
     close: function () {
       this.searchString = "";
       this.showInquiryModal1 = false;
-      this.$emit("close_inquiry_modal");
+      this.$emit("close_inquiry_modal1");
     },
     search_client: function () {
       let input = this.searchString.trim();
@@ -122,7 +122,6 @@ export default {
       this.showClientModal = true;
     },
     create_inquiry: function (clientId) {
-      this.close();
       fetch(mainUrl + "admin_content/ajax/find_client_by_id.php", {
         method: "POST",
         dataType: "json",
@@ -138,6 +137,7 @@ export default {
           if (res.success && res.hasOwnProperty("clientData")) {
             let clientData = res.clientData;
             // Open the second inquiry modal.
+            this.close();
             this.showInquiryModal2 = true;
             this.clientData = {
               companyName: clientData.firmenname,
@@ -165,25 +165,12 @@ export default {
 </script>
 
 <style>
-/* Modal part. */
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
+/* Component part. */
+#component_inquiry_modal1 {
+  position: absolute;
 }
 
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
+#component_inquiry_modal1 .modal-container {
   width: 50%;
   height: 90%;
   margin: 0px auto;
@@ -193,47 +180,5 @@ export default {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-  border: none;
-  background: none;
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-/* Component part. */
-#component_inquiry_modal1 {
-  position: absolute;
-}
-#component_inquiry_modal1 .modal-header {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
 }
 </style>

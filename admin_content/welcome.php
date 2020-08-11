@@ -63,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
 
     <!-- Eigenes CSS start -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/versandrechner.css">
     <!-- Eigenes CSS end -->
 
     <!-- Eigenes JS start -->
