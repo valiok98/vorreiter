@@ -4,7 +4,7 @@
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
-            <div id="modal_anfrage-erstellen-1" class="modal-container">
+            <div id="plain_modal_container" class="modal-container">
               <div class="modal-header">
                 <h5>{{modalHeader}}</h5>
                 <button class="modal-default-button" v-on:click="close()">X</button>
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style>
-#component_plain_modal .modal-container {
+#component_plain_modal #plain_modal_container {
   width: 30%;
   height: 30%;
   margin: 0px auto;
