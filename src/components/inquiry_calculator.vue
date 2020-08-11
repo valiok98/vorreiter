@@ -200,12 +200,42 @@
             </h5>
           </button>
         </div>
-        <div id="inqPackages">
+        <div v-if="packages.length" id="inqPackages">
           <h5>Pakete</h5>
           <div v-bind:key="package_.id" v-for="package_ in packages">
-            <b-p v-on:click="collapsing(package_.elemId)">Package {{package_.id}}</b-p>
-            <b-collapse v-bind:id="package_.elemId">{{package_.id}}</b-collapse>
+            <b-h3 v-on:click="collapse_accordion_item(package_.elemId)">
+              <span>Package {{package_.id+1}}</span>
+              <b-button
+                v-on:click="delete_accordion_item(package_.id)"
+                type="button"
+                class="deleteAccItem"
+              >X</b-button>
+            </b-h3>
+            <b-collapse v-bind:id="package_.elemId" accordion="my-accordion" class="collapseElem">
+              <b-ul>
+                <li>Sendungsnummer: {{package_.id+1}}</li>
+                <li>PLZ Start: {{package_.plzStart}}</li>
+                <li>PLZ Ziel: {{package_.plzEnd}}</li>
+                <li>Zeitfenster: {{package_.deliveryTime}}</li>
+                <li>Zustelltag: {{package_.deliveryDay}}</li>
+                <li>Größe-X: {{package_.sizeX}}</li>
+                <li>Größe-Y: {{package_.sizeY}}</li>
+                <li>Größe-Z: {{package_.sizeZ}}</li>
+                <li>Volumengewicht: {{package_.volumeWeight}}</li>
+                <li>Gewicht: {{package_.weight}}</li>
+                <li>Preis: {{package_.price}}</li>
+              </b-ul>
+            </b-collapse>
           </div>
+          <!-- The modal responsible for deleting the accordion items. -->
+          <plain_modal
+            :showPlainModal="showPlainModal"
+            :packageId="packageId"
+            :modalHeader="plainModalHeader"
+            :modalBody="plainModalBody"
+            v-on:cancel_item_deletion="cancel_item_deletion()"
+            v-on:confirm_item_deletion="confirm_item_deletion($event)"
+          ></plain_modal>
           <br />
           <br />
         </div>
@@ -393,6 +423,7 @@
 </template>
 
 <script>
+import plain_modal from "./plain_modal.vue";
 
 export default {
   name: "inquiry_calculator",
@@ -410,23 +441,23 @@ export default {
       price: "",
       service: [],
       showServiceSelection: false,
+      showPlainModal: false,
+      packageId: -1,
+      plainModalHeader: "Deleting a package",
+      plainModalBody: "Deleting the package is irrevirsible. Are you sure ?",
       packageImg: {
         src: "../images/auftrag/icon_add.png",
         alt: "Sendung hinzufügen",
       },
-      packages: [
-        {
-          id: 0,
-          elemId: "collapse-0",
-        },
-      ],
+      packages: [],
     };
   },
   components: {
+    plain_modal,
   },
   methods: {
-    collapsing: function (id) {
-      this.$root.$emit("bv::toggle::collapse", id);
+    collapse_accordion_item: function (elemId) {
+      this.$root.$emit("bv::toggle::collapse", elemId);
     },
     send_packages: function () {},
     add_package: function (e) {
@@ -443,9 +474,37 @@ export default {
         this.weight,
         this.service
       );
+      let pLength = this.packages.length;
+      // Form the new package id similar to Database principles. No id change on deletion.
+      let pId = pLength === 0 ? 0 : this.packages[pLength - 1].id + 1;
+      this.packages.push({
+        id: pId,
+        elemId: "collapse-" + pId,
+        plzStart: this.plzStart,
+        plzEnd: this.plzEnd,
+        deliveryTime: this.deliveryTime,
+        deliveryDay: this.deliveryDay,
+        sizeX: this.sizeX,
+        sizeY: this.sizeY,
+        sizeZ: this.sizeZ,
+        volumeWeight: this.volumeWeight,
+        weight: this.weight,
+        service: this.service,
+      });
     },
-    delete_accordion_item: function (packageId) {},
-    modify_accordion_item: function (packageId) {},
+    delete_accordion_item: function (packageId) {
+      this.showPlainModal = true;
+      this.packageId = packageId;
+    },
+    cancel_item_deletion: function () {
+      this.showPlainModal = false;
+    },
+    confirm_item_deletion: function (packageId) {
+      this.showPlainModal = false;
+      this.packages = this.packages.filter(
+        (package_) => package_.id !== packageId
+      );
+    },
   },
 };
 </script>
@@ -501,15 +560,31 @@ export default {
 #component_inquiry_calculator #inqPackages {
   width: 100%;
 }
-#component_inquiry_calculator .accordion__title {
-  color: black;
+#component_inquiry_calculator b-h3 {
+  background: #f2f2f2;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 100%;
+  display: block;
   padding: 5px;
 }
-#component_inquiry_calculator .accordion__toggle-button {
-  display: none;
+#component_inquiry_calculator .collapseElem {
+  background: #f2f2f2;
 }
-#component_inquiry_calculator #inqDeletePackages button {
-  border: none;
+#component_inquiry_calculator b-ul {
+  display: block;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+#component_inquiry_calculator .deleteAccItem {
   background: none;
+  color: black;
+  border: none;
+  float: right;
+  margin: 0;
+  padding: 0;
+  padding-right: 5px;
 }
 </style>
