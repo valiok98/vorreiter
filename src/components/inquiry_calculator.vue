@@ -202,17 +202,10 @@
         </div>
         <div id="inqPackages">
           <h5>Pakete</h5>
-          <div id="inqDeletePackages">
-            <button
-              v-bind:key="package_.id"
-              v-for="package_ in packages"
-              v-on:click="delete_accordion_item(package_.id)"
-              type="button"
-            >
-              <b>X</b>
-            </button>
+          <div v-bind:key="package_.id" v-for="package_ in packages">
+            <b-p v-on:click="collapsing(package_.elemId)">Package {{package_.id}}</b-p>
+            <b-collapse v-bind:id="package_.elemId">{{package_.id}}</b-collapse>
           </div>
-          <VueFaqAccordion v-if="packages.length" :items="packages"></VueFaqAccordion>
           <br />
           <br />
         </div>
@@ -400,7 +393,6 @@
 </template>
 
 <script>
-import VueFaqAccordion from "vue-faq-accordion";
 
 export default {
   name: "inquiry_calculator",
@@ -422,13 +414,20 @@ export default {
         src: "../images/auftrag/icon_add.png",
         alt: "Sendung hinzufügen",
       },
-      packages: [],
+      packages: [
+        {
+          id: 0,
+          elemId: "collapse-0",
+        },
+      ],
     };
   },
   components: {
-    VueFaqAccordion,
   },
   methods: {
+    collapsing: function (id) {
+      this.$root.$emit("bv::toggle::collapse", id);
+    },
     send_packages: function () {},
     add_package: function (e) {
       e.preventDefault();
@@ -444,61 +443,9 @@ export default {
         this.weight,
         this.service
       );
-      let packageLen = this.packages.length;
-      // Configure the new package id similar to databases. No reordering on deletion.
-      let packageId = packageLen === 0 ? 0 : this.packages[packageLen - 1].id + 1;
-      // Update the packages list.
-      this.packages.push({
-        id: packageId,
-        title: "Package " + (packageLen + 1),
-        value:
-          "Sendungsnummer: " +
-          (packageLen + 1) +
-          "<br>PLZ Start: " +
-          this.plzStart +
-          "<br>PLZ Ziel: " +
-          this.plzEnd +
-          "<br>Zeitfenster: " +
-          this.deliveryTime +
-          "<br>Zustelltag: " +
-          this.deliveryDay +
-          "<br>Größe-X: " +
-          this.sizeX +
-          "<br>Größe-Y: " +
-          this.sizeY +
-          "<br>Größe-Z: " +
-          this.sizeZ +
-          "<br>Volumengewicht: " +
-          this.volumeWeight +
-          "<br>Gewicht: " +
-          this.weight +
-          "<br>Preis: " +
-          this.price,
-      });
-      // Add the button type to the accordion items.
-      // Give it some time to render properly.
-      setTimeout(this.modify_accordion_item, 300);
     },
-    delete_accordion_item: function (index) {
-      console.log(index);
-    },
-    modify_accordion_item: function () {
-      let pTitles = document.querySelectorAll(".accordion__title-text");
-      let accItems = document.querySelectorAll(".accordion__item");
-      let delButtons = document.querySelectorAll("#inqDeletePackages button");
-      let accLength = this.packages.length;
-      let lastTitle = pTitles[accLength - 1];
-      let lastItem = accItems[accLength - 1];
-      // Place the delete button inside the title.
-      lastTitle.after(delButtons[accLength - 1]);
-      // Modify the value content of the accordion item.
-      lastItem.addEventListener("click", (e) => {
-        setTimeout(() => {
-          let pValue = document.querySelector(".accordion__value");
-          pValue.innerHTML = pValue.textContent;
-        }, 200);
-      });
-    },
+    delete_accordion_item: function (packageId) {},
+    modify_accordion_item: function (packageId) {},
   },
 };
 </script>
