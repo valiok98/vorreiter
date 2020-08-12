@@ -118,6 +118,7 @@
             class="form-control grge"
             placeholder="Länge"
             required
+            v-on:input="calculate_volumeweight()"
             v-model="sizeX"
           />
           <span>&nbsp;x&nbsp;</span>
@@ -130,6 +131,7 @@
             class="form-control grge"
             placeholder="Breite"
             required
+            v-on:input="calculate_volumeweight()"
             v-model="sizeY"
           />
           <span>&nbsp;x&nbsp;</span>
@@ -142,6 +144,7 @@
             class="form-control grge"
             placeholder="Höhe"
             required
+            v-on:input="calculate_volumeweight()"
             v-model="sizeZ"
           />
           <span>&nbsp;cm&nbsp;</span>
@@ -167,6 +170,7 @@
             class="form-control grge"
             required
             id="inputWeight"
+            v-on:input="calculate_volumeweight()"
             v-model="weight"
           />&nbsp;kg
         </div>
@@ -181,7 +185,7 @@
           </button>
         </div>
         <div v-if="packages.length" id="inqPackages">
-          <h5>Pakete</h5>
+          <h5>Packages</h5>
           <div v-bind:key="package_.id" v-for="package_ in packages">
             <b-h3 v-on:click="collapse_accordion_item(package_.elemId)">
               <span>Package {{package_.id+1}}</span>
@@ -204,7 +208,7 @@
                 <li>Volumengewicht: {{package_.volumeWeight}}</li>
                 <li>Gewicht: {{package_.weight}}</li>
                 <li>Preis: {{package_.price}}</li>
-                <li>
+                <li v-if="package_.services.length">
                   <span>Dienstleistungen:</span>
                   <br />
                   <b-ul v-if="package_.services.length">
@@ -398,7 +402,7 @@
         </div>
       </div>
       <div class="row form-group">
-        <div class="col-12">
+        <div class="col-12" id="inqSendPackages">
           <button
             type="button"
             v-on:click="send_packages()"
@@ -486,9 +490,13 @@ export default {
       // Form the new package id similar to Database principles. No id change on deletion.
       let pId = pLength === 0 ? 0 : this.packages[pLength - 1].id + 1;
       // Fix the deliveryTime.
-      this.deliveryTime = this.deliveryTimes
-        .find((delTime) => delTime.value === parseInt(this.deliveryTimeIndex))
-        .pop().title;
+      this.deliveryTime = this.deliveryTimes.find(
+        (delTime) => delTime.value === parseInt(this.deliveryTimeIndex)
+      ).title;
+      // Calculate the price.
+      this.calculate_price();
+      console.log(this.services);
+
       this.packages.push({
         id: pId,
         elemId: "collapse-" + pId,
@@ -501,12 +509,12 @@ export default {
         sizeZ: this.sizeZ,
         volumeWeight: this.volumeWeight,
         weight: this.weight,
-        services: [
-          this.services.map((service, index) => ({
-            id: index,
-            title: this.serviceSelection.find((s) => s.id === index).title,
-          })),
-        ],
+        price: this.price,
+        services: this.services.map((service) => ({
+          id: parseInt(service),
+          title: this.serviceSelection.find((s) => s.id === parseInt(service))
+            .title,
+        })),
       });
     },
     delete_accordion_item: function (packageId) {
@@ -531,7 +539,7 @@ export default {
         this.volumeWeight = 0;
       }
     },
-    calculate_price: function (options) {
+    calculate_price: function () {
       let zone = parseInt(this.deliveryTimeIndex);
       let basicPrice = {
         7: 6.43,
@@ -588,24 +596,24 @@ export default {
           this.price - misalignmentPrice[zone] * priceIncrease[zone] * 1.3;
       }
 
-      // serviceleistungen
-      if (this.services.includes(1)) additional = additional + 50;
-      if (this.services.includes(2)) additional = additional + 5;
-      if (this.services.includes(3)) additional = additional + 4;
-      if (this.services.includes(4)) additional = additional + 2;
-      if (this.services.includes(5)) additional = additional + 3.5;
-      if (this.services.includes(6)) additional = additional + 7;
-      if (this.services.includes(7)) additional = additional + 30;
-      if (this.services.includes(8)) additional = additional + 1;
-      if (this.services.includes(9)) additional = additional + 10;
-      if (this.services.includes(11)) additional = additional + 8;
-      if (this.services.includes(12)) additional = additional + 5;
-      if (this.services.includes(13)) additional = additional + 2;
-      if (this.services.includes(14)) additional = additional + 46;
-      if (this.services.includes(15)) additional = additional + 50;
-      if (this.services.includes(16)) additional = additional + 40;
-      if (this.services.includes(17)) additional = additional + 2;
-      if (this.services.includes(18)) additional = additional + 2;
+      let serviceValues = this.services.map((s) => s.id);
+      if (serviceValues.includes(1)) additional = additional + 50;
+      if (serviceValues.includes(2)) additional = additional + 5;
+      if (serviceValues.includes(3)) additional = additional + 4;
+      if (serviceValues.includes(4)) additional = additional + 2;
+      if (serviceValues.includes(5)) additional = additional + 3.5;
+      if (serviceValues.includes(6)) additional = additional + 7;
+      if (serviceValues.includes(7)) additional = additional + 30;
+      if (serviceValues.includes(8)) additional = additional + 1;
+      if (serviceValues.includes(9)) additional = additional + 10;
+      if (serviceValues.includes(11)) additional = additional + 8;
+      if (serviceValues.includes(12)) additional = additional + 5;
+      if (serviceValues.includes(13)) additional = additional + 2;
+      if (serviceValues.includes(14)) additional = additional + 46;
+      if (serviceValues.includes(15)) additional = additional + 50;
+      if (serviceValues.includes(16)) additional = additional + 40;
+      if (serviceValues.includes(17)) additional = additional + 2;
+      if (serviceValues.includes(18)) additional = additional + 2;
 
       this.price = Math.round((this.price + additional) * 100) / 100;
 
@@ -696,5 +704,12 @@ export default {
   margin: 0;
   padding: 0;
   padding-right: 5px;
+}
+
+#component_inquiry_calculator #inqSendPackages {
+  padding: 0;
+}
+#component_inquiry_calculator #inqSendPackages button {
+  float: left;
 }
 </style>
