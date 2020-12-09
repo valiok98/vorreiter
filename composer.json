@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "OrderSocket\\": "vorreiter/admin_content/sockets"
+        }
+    },
+    "require": {
+        "cboden/ratchet": "^0.4.3"
+    }
+}

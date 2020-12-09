@@ -9,12 +9,17 @@ if (
         $mysqli,
         $post_data["clientName"],
         $post_data["salutation"],
-        $post_data["contactPerson"],
         $post_data["email"],
         $post_data["phone"],
         $post_data["street"],
         $post_data["houseNumber"],
         $post_data["postcode"],
+        $post_data["firstName"],
+        $post_data["lastName"],
+        $post_data["fax"],
+        $post_data["title"],
+        $post_data["clientAbv"],
+        $post_data["mobilePhone"],
         $post_data["place"],
         $post_data["country"],
         $post_data["centralPhone"],
@@ -30,12 +35,17 @@ class CreateClient
     private $id;
     private $name;
     private $salutation;
-    private $contact;
     private $email;
     private $phone;
     private $street;
     private $house_number;
     private $plz;
+    private $first_name;
+    private $last_name;
+    private $fax;
+    private $title;
+    private $client_abv;
+    private $mobile;
     private $place;
     private $country;
     private $central_phone;
@@ -49,12 +59,17 @@ class CreateClient
         $mysqli,
         $name,
         $salutation,
-        $contact,
         $email,
         $phone,
         $street,
         $house_number,
         $plz,
+        $first_name,
+        $last_name,
+        $fax,
+        $title,
+        $client_abv,
+        $mobile,
         $place,
         $country,
         $central_phone,
@@ -64,12 +79,17 @@ class CreateClient
         $this->mysqli = $mysqli;
         $this->name = $name;
         $this->salutation = $salutation;
-        $this->contact = $contact;
         $this->email = $email;
         $this->phone = $phone;
         $this->street = $street;
         $this->house_number = $house_number + 0;
         $this->plz = $plz + 0;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->fax = $fax;
+        $this->title = $title;
+        $this->client_abv = $client_abv;
+        $this->mobile = $mobile;
         $this->place = $place;
         $this->country = $country;
         $this->central_phone = $central_phone;
@@ -87,28 +107,38 @@ class CreateClient
         // Prepare an insert statement
         $sql = "INSERT INTO kunden (firmenname,
             anrede,
-            ansprechpartner,
             email,
             telefon,
             strasse,
             hausnummer,
             plz,
+            vorname,
+            nachname,
+            titel,
+            fax,
+            mobil,
+            kuerzel,
             ort,
             land, telefon_zentrale, freitext, username, password)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if ($stmt = $this->mysqli->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param(
-                "ssssssiissssss",
+                "sssssiissssssssssss",
                 $this->name,
                 $this->salutation,
-                $this->contact,
                 $this->email,
                 $this->phone,
                 $this->street,
                 $this->house_number,
                 $this->plz,
+                $this->first_name,
+                $this->last_name,
+                $this->title,
+                $this->fax,
+                $this->mobile,
+                $this->client_abv,
                 $this->place,
                 $this->country,
                 $this->central_phone,
@@ -121,9 +151,8 @@ class CreateClient
             if ($stmt->execute()) {
                 $this->id = $this->mysqli->insert_id;
                 $clientData = [
-                    "cientId" => $this->id,
+                    "clientId" => $this->id,
                     "companyName" => $this->name,
-                    "contactPerson" => $this->contact,
                     "phone" => $this->phone,
                     "email" => $this->email
                 ];
@@ -135,12 +164,14 @@ class CreateClient
                     $this->email_client();
                 }
             } else {
-                $this->result_json = json_encode(array("success" => false, "message" => $this->mysqli->error));
-                // $this->result_json = json_encode(array("success" => false, "message" => "A database error occured."));
+                $this->result_json = json_encode(array("success" => false, "msg" => $stmt->error));
+                // $this->result_json = json_encode(array("success" => false, "msg" => "A database error occured."));
             }
 
             // Close statement
             $stmt->close();
+        } else {
+            $this->result_json = json_encode(array("success" => false, "msg" => $this->mysqli->error));
         }
         // Close connection
         $this->mysqli->close();
@@ -157,8 +188,7 @@ class CreateClient
             $headers = "From: v.kostadinov@weiter-entwickelt.de";
             mail($this->email, "Ihr Konto wurde automatisch angelegt", $msg, $headers);
         } catch (Exception $e) {
-            $this->result_json = json_encode(array("success" => false, "message" => "Error in sending an email."));
+            $this->result_json = json_encode(array("success" => false, "msg" => "Error in sending an email."));
         }
     }
 }
-

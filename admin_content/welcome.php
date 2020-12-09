@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/../config.php';
 require_once dirname(__FILE__) . '/../definitions.php';
-require_once dirname(__FILE__) . '/templates/versandrechner.tmp.php';
+require_once dirname(__FILE__) . '/sockets/order_socket.php';
 
 session_start();
 
@@ -14,21 +14,7 @@ if (isset($_SESSION['username'])) {
     header('location: ' . URL . 'logout.php');
     die;
 }
-// Set the completed value of the anfrage to true.
-if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !empty($_POST['anfrage_id'])) {
-    $anfrage_id = $_POST['anfrage_id'];
-    $sql = "UPDATE anfragen SET completed = 1 WHERE id = ?";
-    if ($stmt = $mysqli->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bind_param("i", $anfrage_id);
-        // Attempt to execute the prepared statement
-        if (!$stmt->execute()) {
-            die('MySQL Fehler.');
-        }
-        // Close statement
-        $stmt->close();
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <!-- Moment.js end -->
 
+    <!-- HTML2PDF start -->
+    <script src="js/html2pdf.bundle.min.js"></script>
+    <!-- HTML2PDF end -->
+
     <!-- Eigenes CSS start -->
     <link rel="stylesheet" href="css/style.css">
     <!-- Eigenes CSS end -->
@@ -68,16 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
     <!-- Eigenes JS start -->
     <script>
         var mainUrl = '<?= URL ?>';
+        var domain = '<?= $_SERVER['HTTP_HOST'] ?>';
         var username = '<?= $_SESSION['username'] ?>';
     </script>
-    <script src="js/script.js"></script>
-    <script src="../dist/app.js" defer></script>
-
+    <script src="../dist/admin.js" defer></script>
+    <script src="js/order_socket.js" defer></script>
     <!-- Eigenes JS end -->
 </head>
 
 <body>
-    <div id="app">
+    <div id="admin">
 
         <div class="container-fluid">
             <div class="row">
@@ -127,8 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     <td>' . $row['ort'] . '</td>
                                     <td>' . $row['land'] . '</td>
                                     <td>' . $row['telefon_zentrale'] . '</td>
-                                    <td>' . $row['freitext'] . '</td>
-                                    </tr>';
+                                    <td>' . $row['freitext'] . '</td></tr>';
                                             }
                                         }
                                     }
@@ -139,8 +128,14 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                         <div class="tab-pane active container-fluid" id="vorreiter">
                             <div class="row">
                                 <div class="col-sm-6 container-fluid">
-                                    <!-- inquiry_theader component. -->
-                                    <inquiry_theader></inquiry_theader>
+                                    <div class="row div_table-header">
+                                        <h3>Anfragen</h3>
+                                        <div>
+                                            <img src="../images/an_auf_table/eye.png" alt="View inquiries" />
+                                            <inquiry_theader></inquiry_theader>
+                                        </div>
+                                    </div>
+
                                     <div class="row div_an-auf-table-data">
                                         <table id="anfragen_table" class="compact">
                                             <thead>
@@ -162,9 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                     if ($stmt->execute()) {
                                                         $result = $stmt->get_result();
                                                         while ($row = $result->fetch_assoc()) {
-                                                            if ($row["service_leistung"] == '{}') {
-                                                                $row["service_leistung"] = '';
-                                                            }
                                                             // Initialize the dialog.
                                                             require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
                                                             echo anfragen_table($row);
@@ -177,66 +169,43 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                     </div>
                                 </div>
                                 <div class="col-sm-6 container-fluid">
-                                    <!-- order_theader component. -->
-                                    <order_theader></order_theader>
+                                    <div class="row div_table-header">
+                                        <h3>Aufträge</h3>
+                                        <div>
+                                            <img src="../images/an_auf_table/eye.png" alt="View orders" />
+                                            <order_theader></order_theader>
+                                        </div>
+                                    </div>
                                     <div class="row div_an-auf-table-data">
-                                        <table id="auftraege_table" class="compact">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Kunde</th>
-                                                    <th scope="col">Eingegangen</th>
-                                                    <th scope="col">Von</th>
-                                                    <th scope="col">Nach</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Aktionen</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                // Get the user package requests.
-                                                $sql = "SELECT * FROM auftraege";
+                                        <?php
+                                        // Get the user package requests.
+                                        $sql = "SELECT * FROM auftraege";
 
-                                                if ($stmt = $mysqli->prepare($sql)) {
-                                                    if ($stmt->execute()) {
-                                                        $result = $stmt->get_result();
-                                                        while ($row = $result->fetch_assoc()) {
-                                                            if ($row["service_leistung"] == '{}') {
-                                                                $row["service_leistung"] = '';
-                                                            }
-                                                            // Initialize the dialog.
-                                                            require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                            echo auftraege_table($row);
-                                                        }
-                                                    }
+                                        if ($stmt = $mysqli->prepare($sql)) {
+                                            if ($stmt->execute()) {
+                                                $result = $stmt->get_result();
+                                                require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
+                                                $tableRows = [];
+                                                while ($row = $result->fetch_assoc()) {
+                                                    array_push($tableRows, order_row($row));
                                                 }
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                            }
+                                        }
+                                        ?>
+                                        <script>
+                                            // Hold the data in localStorage for now.
+                                            // If the data becomes too big, then search for an alternative such as AJAX on load...
+                                            // PHP + Vue.js just don't work well with each other :)
+                                            localStorage.setItem("orderTableRows", JSON.stringify(<?= json_encode($tableRows) ?>));
+                                        </script>
+                                        <order_table></order_table>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="tab-pane table-responsive" id="an_auf_data" data-tabs="tabs">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#anfragen" data-toggle="tab">
-                                        <h4>Anfragen</h4>
-                                        <span>&nbsp;&nbsp;</span>
-                                        <img class="img_anfrage-erstellen" src="../images/an_auf_table/anfrage_erstellen.png" alt="">
-                                    </a>
-                                </li>
-                                <span class="span_white-space">&nbsp;</span>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#auftraege" data-toggle="tab">
-                                        <h4>Aufträge</h4>
-                                        <span>&nbsp;&nbsp;</span>
-                                        <img class="img_auftrag-erstellen" src="../images/an_auf_table/auftrag_erstellen.png" alt="">
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                </li>
-                            </ul>
+                            <inquiry_order_theader></inquiry_order_theader>
                             <div class="tab-content">
                                 <div id="anfragen" class="tab-pane active">
                                     <table id="anfragen_table_full" class="compact">
@@ -259,9 +228,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                 if ($stmt->execute()) {
                                                     $result = $stmt->get_result();
                                                     while ($row = $result->fetch_assoc()) {
-                                                        if ($row["service_leistung"] == '{}') {
-                                                            $row["service_leistung"] = '';
-                                                        }
                                                         // Initialize the dialog.
                                                         require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
                                                         echo anfragen_table($row);
@@ -296,12 +262,9 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['anfrage_id']) && !emp
                                                 if ($stmt->execute()) {
                                                     $result = $stmt->get_result();
                                                     while ($row = $result->fetch_assoc()) {
-                                                        if ($row["service_leistung"] == '{}') {
-                                                            $row["service_leistung"] = '';
-                                                        }
                                                         // Initialize the dialog.
                                                         require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo auftraege_table($row);
+                                                        echo auftraege_table_detailed($row);
                                                     }
                                                 }
                                             }

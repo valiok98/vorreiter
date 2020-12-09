@@ -3,126 +3,142 @@ class AdminLogin
 {
     private $mysqli;
     private $id;
-    private $username_or_email;
-    private $password;
-    private $hashed_password;
-    private $check_by_email;
-    private $password_error;
-    private $username_or_email_error;
+    private $inputEmailUsername;
+    private $inputPassword;
+    private $inputRememberMe;
+    private $hashedPassword;
+    private $checkEmail;
+    private $error;
+    private $success;
 
-    public function __construct($mysqli, $username_or_email, $password)
+
+    public function __construct($mysqli, $inputEmailUsername, $inputPassword, $inputRememberMe)
     {
         $this->mysqli = $mysqli;
-        $this->username_or_email = trim($username_or_email);
-        $this->password = trim($password);
-        if (filter_var($this->username_or_email, FILTER_VALIDATE_EMAIL)) {
-            $this->check_by_email = true;
+        $this->inputEmailUsername = trim($inputEmailUsername);
+        $this->inputPassword = trim($inputPassword);
+        $this->inputRememberMe = $inputRememberMe;
+        if (filter_var($this->inputEmailUsername, FILTER_VALIDATE_EMAIL)) {
+            $this->checkEmail = true;
         } else {
-            $this->check_by_email = false;
+            $this->checkEmail = false;
         }
     }
 
 
     public function exists()
     {
-        $sql = '';
-        if ($this->check_by_email) {
-            $sql = "SELECT password FROM admin_users WHERE email = ?";
-        } else {
-            $sql = "SELECT password FROM admin_users WHERE username = ?";
-        }
 
+        try {
+            $sql = "";
+            if ($this->checkEmail) {
+                $sql = "SELECT password FROM vorreiter_admin_users WHERE email = ? AND permanent = 1";
+            } else {
+                $sql = "SELECT password FROM vorreiter_admin_users WHERE username = ? AND permanent = 1";
+            }
 
-        if ($stmt = $this->mysqli->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("s", $this->username_or_email);
+            if ($stmt = $this->mysqli->prepare($sql)) {
+                // Bind variables to the prepared statement as parameters
+                $stmt->bind_param(
+                    "s",
+                    $this->mysqli->real_escape_string($this->inputEmailUsername)
+                );
 
-            // Attempt to execute the prepared statement
-            if ($stmt->execute()) {
-                // Store result
-                $stmt->store_result();
+                // Attempt to execute the prepared statement
+                if ($stmt->execute()) {
+                    // Store result
+                    $stmt->store_result();
 
-                // Check if username exists, if yes then verify password
-                if ($stmt->num_rows == 1) {
-                    $stmt->bind_result($this->hashed_password);
-                    if ($stmt->fetch()) {
-                        if (password_verify($this->password, $this->hashed_password)) {
-                            return true;
+                    // Check if username exists, if yes then verify password
+                    if ($stmt->num_rows == 1) {
+                        $stmt->bind_result($this->hashedPassword);
+                        if ($stmt->fetch()) {
+                            if (password_verify($this->inputPassword, $this->hashedPassword)) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            return false;
+        } catch (Exception $e) {
+            return array("success" => false, "msg" => $e->getMessage());
         }
-        return false;
     }
 
     public function login()
     {
-        // Prepare a select statement
-        $sql = '';
-        if ($this->check_by_email) {
-            $sql = "SELECT id, username, password FROM admin_users WHERE email = ?";
-        } else {
-            $sql = "SELECT id, username, password FROM admin_users WHERE username = ?";
-        }
 
-        $username = '';
-
-        if ($stmt = $this->mysqli->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("s", $this->username_or_email);
-
-            // Attempt to execute the prepared statement
-            if ($stmt->execute()) {
-                // Store result
-                $stmt->store_result();
-
-                // Check if username exists, if yes then verify password
-                if ($stmt->num_rows == 1) {
-                    // Bind result variables
-                    $stmt->bind_result($this->id, $username, $this->hashed_password);
-                    if ($stmt->fetch()) {
-                        if (password_verify($this->password, $this->hashed_password)) {
-                            // Password is correct, so start a new session
-                            session_start();
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $this->id;
-                            $_SESSION["username"] = $username;
-                            $_SESSION["usertype"] = 'admin';
-
-                            // Redirect user to welcome page
-                            header("location:" . URL . "admin_content/welcome.php");
-                            die;
-                        } else {
-                            // Display an error message if password is not valid
-                            $this->password_error = "The password you entered was not valid.";
-                        }
-                    }
-                } else {
-                    // Display an error message if username doesn't exist
-                    $this->username_or_email_error = "No account found with that username/email.";
-                }
+        try {
+            // Prepare a select statement
+            $sql = '';
+            if ($this->checkEmail) {
+                $sql = "SELECT id, username, password FROM vorreiter_admin_users WHERE email = ? AND permanent = 1";
             } else {
-                echo "Something went wrong with MySQL.";
+                $sql = "SELECT id, username, password FROM vorreiter_admin_users WHERE username = ? AND permanent = 1";
             }
 
-            // Close statement
-            $stmt->close();
-        }
+            $username = '';
 
-        $this->display_errors();
-        // Close connection
-        $this->mysqli->close();
-    }
+            if ($stmt = $this->mysqli->prepare($sql)) {
+                // Bind variables to the prepared statement as parameters
+                $stmt->bind_param(
+                    "s",
+                    $this->mysqli->real_escape_string($this->inputEmailUsername)
+                );
 
+                // Attempt to execute the prepared statement
+                if ($stmt->execute()) {
+                    // Store result
+                    $stmt->store_result();
 
-    private function display_errors()
-    {
-        if (!empty($this->username_or_email_error) || !empty($this->password_error)) {
+                    // Check if username exists, if yes then verify password
+                    if ($stmt->num_rows == 1) {
+                        // Bind result variables
+                        $stmt->bind_result($this->id, $username, $this->hashedPassword);
+                        if ($stmt->fetch()) {
+                            if (password_verify($this->inputPassword, $this->hashedPassword)) {
+                                // Password is correct, so start a new session
+                                session_start();
+                                // Store data in session variables
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["id"] = $this->id;
+                                $_SESSION["username"] = $username;
+                                $_SESSION["usertype"] = 'admin';
 
-            echo 'The following error/s occured:<br>' . $this->username_or_email_error .
-                '<br>' . $this->password_error;
+                                // Set a cookie if the remember me checkbox is checked.
+                                if ($this->inputRememberMe) {
+                                    setcookie("rememberMeCookie", $username, time() + 7200);
+                                }
+
+                                $this->success = true;
+                            } else {
+                                // Display an error message if password is not valid
+                                $this->error = "Das eingegebene Passwort stimmt nicht.";
+                            }
+                        }
+                    } else {
+                        // Display an error message if username doesn't exist
+                        $this->error = "Es gibt kein Profil mit den Angaben(Benutzername/Email).";
+                    }
+                } else {
+                    echo "Es ist ein MySQL Fehler aufgetretten.";
+                }
+
+                // Close statement
+                $stmt->close();
+            }
+
+            // Close connection
+            $this->mysqli->close();
+
+            if ($this->error) {
+                return array("success" => false, "msg" => $this->error);
+            } else if ($this->success) {
+                return array("success" => true, "url" => URL . "admin_content/welcome.php");
+            }
+        } catch (Exception $e) {
+            return array("success" => false, "msg" => $e->getMessage());
         }
     }
 }

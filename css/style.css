@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import 'modal.css';
 * {
     margin: 0;
     padding: 0;
@@ -16,15 +17,16 @@ body {
     background-image: url("../images/index/background.png");
     background-repeat: repeat-y;
     background-size: cover;
-    color: white;
+    color: white !important;
 }
 
-.col-sm-6 {
+.col-lg-6 {
+    position: static !important;
     width: 100%;
     height: 100%;
 }
 
-.col-sm-6>div {
+.col-lg-6>div {
     max-height: 100%;
     padding-top: 4%;
     padding-bottom: 4%;
@@ -34,7 +36,21 @@ body {
     justify-content: center;
 }
 
-#div_vorreiter-logo {
+#div_main_content {
+    position: relative;
+}
+
+#div_login_form {
+    width: 360px;
+    float: right;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 0.8em;
+    border-radius: 2%;
+    background-image: linear-gradient(to right, #0b2055, #3e6fb4, #0b2055);
+}
+
+#div_vorreiter_logo {
     flex: 1 1 0;
     margin-bottom: 15px;
     display: flex;
@@ -42,68 +58,16 @@ body {
     justify-content: center;
 }
 
-#div_main-content {
+#div_main_content {
     flex: 4 1 0;
     width: 500px;
     position: relative;
     left: -60px;
 }
 
-#div_zug-logo img {
+#div_zug_logo img {
     width: 500px;
     border-radius: 2%;
-}
-
-#div_login-form {
-    border-radius: 2%;
-    width: 360px;
-    margin-left: 140px;
-    background: #446eda;
-    font-family: "Open Sans";
-    padding-left: 5%;
-    padding-right: 5%;
-    box-shadow: inset 0px 0px 1000px #102969;
-}
-
-#div_login-form p,
-label {
-    font-size: 0.7em;
-    display: inline-block;
-}
-
-#div_login-form .container {
-    padding: 0;
-    text-align: right;
-}
-
-#div_login-form .form-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#div_login-form .col-sm-4 {
-    padding-right: 0;
-}
-
-#div_login-form .div_erinnere-dich {
-    text-align: right;
-    padding: 0;
-}
-
-#div_login-form .div_pass-vergessen {
-    padding: 0;
-    text-align: center;
-    cursor: pointer;
-}
-
-#div_login-form .div_pass-vergessen p {
-    text-decoration: underline;
-}
-
-#button_submit {
-    display: block;
-    margin: 0 auto;
 }
 
 .overlay {

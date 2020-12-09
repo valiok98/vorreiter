@@ -1,6 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../../config.php';
-require_once dirname(__FILE__) . '/../../definitions.php';
+require_once dirname(__FILE__) . '/get_data_helpers.php';
 
 
 if (
@@ -8,15 +7,9 @@ if (
 ) {
 
     $postData = json_decode(file_get_contents('php://input'), true);
-    $clientId = intval($postData['clientId']);
-    $sql = "SELECT * FROM kunden WHERE id = " . $clientId;
-
-    if ($stmt = $mysqli->prepare($sql)) {
-        if ($stmt->execute()) {
-            $result = $stmt->get_result();
-            if ($clientData = $result->fetch_assoc()) {
-                echo json_encode(array("success" => true, "clientData" => $clientData));
-            }
-        } else echo json_encode(array("success" => false));
+    $id = intval($postData['id']);
+    $clientData = get_client_by_id($id);
+    if ($clientData) {
+        echo json_encode(array("success" => true, "clientData" => $clientData));
     } else echo json_encode(array("success" => false));
 }

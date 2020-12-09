@@ -5,18 +5,20 @@ require_once dirname(__FILE__) . "/definitions.php";
 // Processing form data when form is submitted.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once dirname(__FILE__) . '/admin_content/login.php';
-    $admin = new AdminLogin($mysqli, $_POST['loginEmailOrUsername'], $_POST['loginPassword']);
+
+    $_POST = json_decode(file_get_contents('php://input'), true);
+
+    $SAFE_POST = filter_var_array($_POST, [
+        "inputEmailUsername" => FILTER_SANITIZE_STRING,
+        "inputPassword" => FILTER_SANITIZE_STRING,
+        "inputRememberMe" => FILTER_VALIDATE_BOOLEAN
+    ]);
+
+    $admin = new AdminLogin($mysqli, trim($SAFE_POST["inputEmailUsername"]), trim($SAFE_POST["inputPassword"]), $SAFE_POST["inputRememberMe"]);
     // Check if the login data is for an admin.
     if ($admin->exists()) {
-        $admin->login();
+        echo json_encode($admin->login());
     } else {
-        // Check if the login data is for a regular user.
-        require_once dirname(__FILE__) . '/user_content/login.php';
-        $user = new UserLogin($mysqli, $_POST['loginEmailOrUsername'], $_POST['loginPassword']);
-        if ($user->exists()) {
-            $user->login();
-        } else {
-            header('location:' . URL . 'index.php');
-        }
+        echo json_encode(array("success" => false, "msg" => "Es gibt kein Admin mit den Angaben oder Sie sind nicht als Admin bestätigt."));
     }
 }
