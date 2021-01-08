@@ -46,7 +46,7 @@ function get_order_by_id($orderId)
  * 
  * @param{$orderData} - the order data.
  * 
- * @return{boolean|string} - true if everything is ok, string containing the error.
+ * @return{integer|string} - integer(order id) if everything is ok, string containing the error.
  */
 function create_order($orderData)
 {
@@ -128,7 +128,11 @@ function create_order($orderData)
         );
 
         if ($stmt->execute()) {
-            return create_order_packages($orderData['packages'], $mysqli->insert_id);
+            $orderId = $mysqli->insert_id;
+            $response = create_order_packages($orderData['packages'], $orderId);
+            if ($response === true) {
+                return $orderId;
+            } else return $response;
         } else return $stmt->error;
 
         $stmt->close();
@@ -227,7 +231,11 @@ function create_order_from_inquiry($data)
         );
 
         if ($stmt->execute()) {
-            return create_order_packages($packages, $mysqli->insert_id);
+            $orderId = $mysqli->insert_id;
+            $response = create_order_packages($packages, $orderId);
+            if ($response === true) {
+                return $orderId;
+            } else return $response;
         } else return $stmt->error;
 
         $stmt->close();
@@ -239,7 +247,7 @@ function create_order_from_inquiry($data)
  * 
  * @return{$orders} - all the orders.
  */
-function get_orders()
+function get_table_orders()
 {
     global $mysqli;
     $sql = "SELECT * FROM vorreiter_orders ORDER BY timestamp DESC";
@@ -249,14 +257,19 @@ function get_orders()
             $result = $stmt->get_result();
             $orders = [];
             while ($row = $result->fetch_assoc()) {
-                array_push($orders, order_row($row));
+                array_push($orders, get_order_row($row));
             }
             return $orders;
         } else return $stmt->error;
     } else return $mysqli->error;
 }
+/**
+ * Get the modified data for a specific order as it should be placed in the table.
+ * 
+ * @return{$row_return} - order data.
+ */
 
-function order_row($order)
+function get_order_row($order)
 {
     global $countries_code;
 
@@ -283,6 +296,7 @@ function order_row($order)
     $lieferadresse = get_delivery_address_by_id($order['delivery_address_id']);
     $packages = get_packages_by_order_id($order['id']);
 
+    $row_return['id'] = $order['id'];
     $row_return['client_data'] = $client_data;
     $row_return['packages'] = $packages;
     $row_return['created_at'] = date_format(date_create($order['timestamp']), "H:i d/m/Y");

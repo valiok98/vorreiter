@@ -758,6 +758,9 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
+            // Update the store by adding the newly created inquiry.
+            this.$store.commit("add_inquiry", res.inquiry);
+            
             this.$refs.snackbar.info("Anfrage erflogreich erstellt.");
           } else {
             this.$refs.snackbar.error(res.msg);

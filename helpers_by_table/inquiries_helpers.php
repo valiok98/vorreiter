@@ -49,7 +49,7 @@ function get_inquiry_by_id($inquiryId)
  * 
  * @param{$inquiryData} - the inquiry data.
  * 
- * @return{boolean|string} - true if everything is ok, string containing the error.
+ * @return{integer|string} - integer(inquiry id) if everything is ok, string containing the error.
  */
 function create_inquiry($inquiryData)
 {
@@ -131,7 +131,11 @@ function create_inquiry($inquiryData)
         );
 
         if ($stmt->execute()) {
-            return create_inquiry_packages($inquiryData['packages'], $mysqli->insert_id);
+            $inquiryId = $mysqli->insert_id;
+            $response = create_inquiry_packages($inquiryData['packages'], $inquiryId);
+            if ($response === true) {
+                return $inquiryId;
+            } else return $response;
         } else return $stmt->error;
         $stmt->close();
     } else return $mysqli->error;
@@ -251,7 +255,7 @@ function get_table_inquiries()
             $result = $stmt->get_result();
             $inquiries = [];
             while ($row = $result->fetch_assoc()) {
-                array_push($inquiries, inquiry_row($row));
+                array_push($inquiries, get_inquiry_row($row));
             }
             return $inquiries;
         } else return $stmt->error;
@@ -259,7 +263,13 @@ function get_table_inquiries()
 }
 
 
-function inquiry_row($inquiry)
+/**
+ * Get the modified data for a specific inquiry as it should be placed in the table.
+ * 
+ * @return{$row_return} - inquiry data.
+ */
+
+function get_inquiry_row($inquiry)
 {
     global $countries_code;
 
@@ -286,6 +296,7 @@ function inquiry_row($inquiry)
     $lieferadresse = get_delivery_address_by_id($inquiry['delivery_address_id']);
     $packages = get_packages_by_order_id($inquiry['id']);
 
+    $row_return['id'] = $inquiry['id'];
     $row_return['client_data'] = $client_data;
     $row_return['packages'] = $packages;
     $row_return['created_at'] = date_format(date_create($inquiry['timestamp']), "H:i d/m/Y");

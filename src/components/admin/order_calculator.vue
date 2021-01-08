@@ -654,6 +654,9 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
+            // Update the store by adding the newly created order.
+            this.$store.commit("add_order", res.order);
+
             this.$refs.snackbar.info("Auftrag erflogreich angelegt.");
             this.order_invoice();
             return new Promise((resolve, reject) => setTimeout(resolve, 1000));

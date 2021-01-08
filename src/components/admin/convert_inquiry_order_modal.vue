@@ -37,7 +37,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Firmenname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Firmenname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -62,7 +62,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Anrede<span style="color:red;">&nbsp;*</span></b>
+                                <b>Anrede<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -98,7 +98,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Vorname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Vorname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Nachname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Nachname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -130,7 +130,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Telefon<span style="color:red;">&nbsp;*</span></b>
+                                <b>Telefon<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -145,7 +145,11 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>E-Mail Adresse<span style="color:red;">&nbsp;*</span></b>
+                                <b
+                                  >E-Mail Adresse<span style="color: red"
+                                    >&nbsp;*</span
+                                  ></b
+                                >
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -162,7 +166,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Staße<span style="color:red;">&nbsp;*</span></b>
+                                <b>Staße<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -177,7 +181,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Hausnummer<span style="color:red;">&nbsp;*</span></b>
+                                <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -194,7 +198,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>PLZ<span style="color:red;">&nbsp;*</span></b>
+                                <b>PLZ<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -209,7 +213,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Ort<span style="color:red;">&nbsp;*</span></b>
+                                <b>Ort<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -227,7 +231,11 @@
                             <div class="col-sm-6">
                               <div>
                                 <label>
-                                  <b>Wählen Sie ein Land aus<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >Wählen Sie ein Land aus<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </label>
                               </div>
                               <div class="input-group mb-3">
@@ -269,7 +277,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Firmenname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Firmenname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -296,7 +304,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Anrede<span style="color:red;">&nbsp;*</span></b>
+                                <b>Anrede<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -331,7 +339,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Vorname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Vorname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -346,7 +354,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Nachname<span style="color:red;">&nbsp;*</span></b>
+                                <b>Nachname<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -363,7 +371,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Telefon<span style="color:red;">&nbsp;*</span></b>
+                                <b>Telefon<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -378,7 +386,11 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>E-Mail Adresse<span style="color:red;">&nbsp;*</span></b>
+                                <b
+                                  >E-Mail Adresse<span style="color: red"
+                                    >&nbsp;*</span
+                                  ></b
+                                >
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -395,7 +407,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>Staße<span style="color:red;">&nbsp;*</span></b>
+                                <b>Staße<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -410,7 +422,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Hausnummer<span style="color:red;">&nbsp;*</span></b>
+                                <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -427,7 +439,7 @@
                           <div class="row">
                             <div class="col-sm-6">
                               <span>
-                                <b>PLZ<span style="color:red;">&nbsp;*</span></b>
+                                <b>PLZ<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -442,7 +454,7 @@
                             </div>
                             <div class="col-sm-6">
                               <span>
-                                <b>Ort<span style="color:red;">&nbsp;*</span></b>
+                                <b>Ort<span style="color: red">&nbsp;*</span></b>
                               </span>
                               <br />
                               <div class="form-group form-inline">
@@ -460,7 +472,11 @@
                             <div class="col-sm-6">
                               <div>
                                 <label>
-                                  <b>Wählen Sie ein Land aus<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >Wählen Sie ein Land aus<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </label>
                               </div>
                               <div class="input-group mb-3">
@@ -611,7 +627,6 @@ export default {
       this.$emit("close_convert_inquiry_order_modal");
     },
     convert_to_order: function () {
-
       // Check if we're using the default pickup address.
       if (!this.default_pickup_address) {
         this.$refs.snackbar.error("Es fehlen erforderliche Daten über die Abholadresse.");
@@ -643,7 +658,10 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
-            this.$refs.snackbar.info("Auftrag erflogreich angelegt.");
+            // Update the store by adding the newly created order.
+            this.$store.commit("add_order", res.order);
+
+            this.$refs.snackbar.info("Auftrag erflogreich erstellt.");
           } else {
             this.$refs.snackbar.error(res.msg);
           }
@@ -651,8 +669,6 @@ export default {
         })
         .then((res) => this.$emit("close_convert_inquiry_order_modal"))
         .catch((err) => this.$refs.snackbar.error(err));
-
-      
     },
   },
   components: {

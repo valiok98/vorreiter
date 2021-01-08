@@ -1,6 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/../../helpers_by_table/inquiries_helpers.php';
-require_once dirname(__FILE__) . '/../../helpers_general/helpers.php';
 
 
 if (
@@ -10,8 +9,16 @@ if (
     $response = create_inquiry($post_data);
 
     // Check if the response is true, otherwise send the error message.
-    if ($response === true) {
-        echo json_encode(array("success" => true));
+    if (gettype($response) === 'integer') {
+        // Get the newly created inquiry.
+        $inquiry = get_inquiry_by_id($response);
+        if (gettype($inquiry) === 'string') {
+            echo_failure($inquiry);
+        } else {
+            // Convert the newly created inquiry to the table format for display.
+            $inquiry = get_inquiry_row($inquiry);
+            echo json_encode(array("success" => true, "inquiry" => $inquiry));
+        }
     } else {
         echo_failure($response);
     }

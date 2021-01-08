@@ -100,7 +100,7 @@ function create_inquiry_packages($packages, $inquiryId)
         if ($stmt = $mysqli->prepare($sql)) {
 
             // Check if the services is already encoded as a string.
-            $services = $package['services'] || [];
+            $services = $package['services'] ? $package['services'] : [];
             if (gettype($services) === 'array') {
                 $services = json_encode($services);
             }
@@ -162,7 +162,7 @@ function create_order_packages($packages, $orderId)
         if ($stmt = $mysqli->prepare($sql)) {
 
             // Check if the services is already encoded as a string.
-            $services = $package['services'] || [];
+            $services = $package['services'] ? $package['services']: [];
             if (gettype($services) === 'array') {
                 $services = json_encode($services);
             }

@@ -5,7 +5,7 @@ require_once dirname(__FILE__) . '/../../helpers_by_table/inquiries_helpers.php'
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST'
 ) {
-    $inquiries = get_inquiries();
+    $inquiries = get_table_inquiries();
     if (gettype($inquiries) === 'string') {
         echo_failure("Die Daten zu den Anfragen konnten nicht geladen werden.");
     } else {

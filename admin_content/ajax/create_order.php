@@ -8,9 +8,17 @@ if (
     $post_data = json_decode(file_get_contents('php://input'), true);
     $response = create_order($post_data);
 
-     // Check if the response is true, otherwise send the error message.
-     if ($response === true) {
-        echo json_encode(array("success" => true));
+    // Check if the response is true, otherwise send the error message.
+    if (gettype($response) === 'integer') {
+        // Get the newly created order.
+        $order = get_order_by_id($response);
+        if (gettype($order) === 'string') {
+            echo_failure($order);
+        } else {
+            // Convert the newly created order to the table format for display.
+            $order = get_order_row($order);
+            echo json_encode(array("success" => true, "order" => $order));
+        }
     } else {
         echo json_encode(array("success" => false, "msg" => $response));
     }
