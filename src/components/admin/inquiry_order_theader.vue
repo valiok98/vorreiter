@@ -4,23 +4,23 @@
       <li class="nav-item">
         <a
           class="nav-link active"
-          href="#anfragen"
+          href="#div_inquiries"
           data-toggle="tab"
           v-on:click="activate_inquiry()"
         >
           <h4>Anfragen</h4>
           <span>&nbsp;&nbsp;</span>
         </a>
-        <inquiry_theader v-if="inquiryActive" class="activeCreateButton"></inquiry_theader>
+        <inquiry_theader v-if="inquiry_active" class="activeCreateButton"></inquiry_theader>
         <inquiry_theader v-else></inquiry_theader>
       </li>
       <span class="span_white-space">&nbsp;</span>
       <li class="nav-item">
-        <a class="nav-link" href="#auftraege" data-toggle="tab" v-on:click="activate_order()">
+        <a class="nav-link" href="#div_orders" data-toggle="tab" v-on:click="activate_order()">
           <h4>Aufträge</h4>
           <span>&nbsp;&nbsp;</span>
         </a>
-        <order_theader v-if="orderActive" class="activeCreateButton"></order_theader>
+        <order_theader v-if="order_active" class="activeCreateButton"></order_theader>
         <order_theader v-else></order_theader>
       </li>
       <li class="nav-item"></li>
@@ -36,8 +36,8 @@ export default {
   name: "inquiry_order_theader",
   data: function () {
     return {
-      inquiryActive: true,
-      orderActive: false,
+      inquiry_active: true,
+      order_active: false,
     };
   },
   components: {
@@ -46,12 +46,12 @@ export default {
   },
   methods: {
     activate_inquiry: function () {
-      this.inquiryActive = true;
-      this.orderActive = false;
+      this.inquiry_active = true;
+      this.order_active = false;
     },
     activate_order: function () {
-      this.orderActive = true;
-      this.inquiryActive = false;
+      this.order_active = true;
+      this.inquiry_active = false;
     },
   },
 };

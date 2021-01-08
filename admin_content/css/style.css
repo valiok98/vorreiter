@@ -27,31 +27,23 @@ body {
     content: "" !important;
 }
 
-.div_an-auf-table-data {
-    padding: 0;
-}
-
-.div_an-auf-table-data table {
-    width: 100%;
-}
-
-.div_table-header,
-.div_table-header>div {
+.div_table_header,
+.div_table_header>div {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.div_table-header h3 {
+.div_table_header h3 {
     margin: 0;
 }
 
-.div_an-auf-table-data thead,
+.div_inq_ord_table_data thead,
 tbody {
     background: #f2f2f2;
 }
 
-.div_an-auf-table-data tbody:before {
+.div_inq_ord_table_data tbody:before {
     content: "-";
     display: block;
     line-height: 0.5em;
@@ -59,23 +51,8 @@ tbody {
     background: white;
 }
 
-.div_an-auf-table-data .col-sm-2 {
+.div_inq_ord_table_data .col-sm-2 {
     text-align: center;
-}
-
-#anfragen_table_wrapper,
-#auftraege_table_wrapper {
-    width: 100%;
-}
-
-#anfragen_table_wrapper .row,
-#auftraege_table_wrapper .row {
-    margin: 0;
-}
-
-#anfragen_table_wrapper .row .col-sm-12,
-#auftraege_table_wrapper .row .col-sm-12 {
-    padding: 0;
 }
 
 .pagination li,
@@ -98,157 +75,78 @@ a {
     border-color: black !important;
 }
 
-.img_anfrage-erstellen,
-.img_auftrag-erstellen {
-    cursor: pointer;
-}
 
+/* Inquiries & Orders pane. */
 
-/* Anfragen & Auftäge pane. */
-
-#an_auf_data {
+#inq_ord_data {
     background-color: #f2f2f2;
 }
 
-#an_auf_data table {
+#inq_ord_data table {
     width: 100%;
 }
 
-#an_auf_data thead {
+#inq_ord_data thead {
     background-color: #00cf65;
     text-align: left;
 }
 
-#an_auf_data tbody {
+#inq_ord_data tbody {
     text-align: left;
 }
 
-
-/* Kunden pane */
-
-#kunden_table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 15px;
+a[href="#div_inquiries"],
+a[href="#div_orders"] {
+    padding: 0;
 }
 
-#kunden thead {
+
+/* Clients pane */
+
+#table_clients {
+    width: 100%;
+    /* border-collapse: separate; */
+    /* border-spacing: 0 15px; */
+}
+
+#tablie_clients thead {
     background-color: #00cf65;
     text-align: center;
 }
 
 
-/* Auftrag dialog. */
+/* Order dialog. */
 
-#dialog_auftrag-erstellen {}
-
-#form_suche-anfrage-kunden,
-#form_suche-auftrag-kunden {
-    margin-top: 5px;
-    margin-left: 5px;
-}
-
-#div_suche-anfrage-ergebnisse,
-#div_suche-auftrag-ergebnisse {
-    margin-top: 5px;
-    margin-left: 5px;
-    background-color: white;
-    width: 50%;
-    position: static !important;
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    right: 0 !important;
-}
-
-.div_anfrage-kunden-ergebnis:first-of-type,
-.div_auftrag-kunden-ergebnis:first-of-type {
-    color: blue;
-    font-weight: 900;
-}
-
-.div_anfrage-kunden-ergebnis,
-.div_auftrag-kunden-ergebnis {
-    padding: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-#div_auftrag-erstellen-content>.row {
+#div_order_create_content>.row {
     height: 50%;
     width: 100%;
     min-height: 50%;
 }
 
-#img_auftrag-anlegen {
+#img_create_order {
     height: 75%;
     float: right;
     cursor: pointer;
 }
 
-#kunden_anlegen {
+#create_clients {
     width: 100%;
     height: 100%;
     max-width: 100%;
     max-height: 100%;
 }
 
-#kunden_anlegen>div {
+#create_clients>div {
     display: grid;
     grid-gap: 10px;
 }
 
-#kunden_anlegen .kunden_input:nth-of-type(1),
-#kunden_anlegen .kunden_input:nth-of-type(4),
-#kunden_anlegen .kunden_input:nth-of-type(6),
-#kunden_anlegen .kunden_input:nth-of-type(8),
-#kunden_anlegen .kunden_input:nth-of-type(10),
-#kunden_anlegen .kunden_input:nth-of-type(12) {
-    grid-column-start: 1;
-    grid-column-end: 2;
+input[type="checkbox"] {
+    cursor: pointer;
 }
 
-#kunden_anlegen .kunden_input:nth-of-type(2),
-#kunden_anlegen .kunden_input:nth-of-type(5),
-#kunden_anlegen .kunden_input:nth-of-type(7),
-#kunden_anlegen .kunden_input:nth-of-type(9),
-#kunden_anlegen .kunden_input:nth-of-type(11) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(2) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(3) {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    grid-row-start: 1;
-    grid-row-end: 6;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(3) textarea {
-    height: 100%;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(13) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    margin-top: 30px;
-}
-
-#kunden_anlegen .kunden_input:nth-of-type(14) {
-    grid-column-start: 3;
-    grid-column-end: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+input[type="radio"] {
+    cursor: pointer;
 }
 
 
@@ -265,24 +163,4 @@ a {
         align-items: center;
         justify-content: center;
     }
-}
-
-
-/* PREVIOUS CSS ... NEED TO CLEAN UP */
-
-.dataTables_filter,
-.dataTables_length {
-    display: none;
-}
-
-.auftrag_erstellen_div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-}
-
-#rechnungslayout {
-    max-width: 50%;
-    margin: 0 auto;
 }

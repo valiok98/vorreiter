@@ -2,12 +2,11 @@
   <div id="component_inquiry_theader">
     <img
       v-on:click="create_inquiry()"
-      v-bind:class="img.inquiry.class"
-      v-bind:src="img.inquiry.src"
-      v-bind:alt="img.inquiry.alt"
+      v-bind:src="create_img.src"
+      v-bind:alt="create_img.alt"
     />
     <inquiry_modal1
-      :showInquiryModal1="showInquiryModal1"
+      :show_inquiry_modal1="show_inquiry_modal1"
       v-on:close_inquiry_modal1="close_inquiry_modal1($event)"
     ></inquiry_modal1>
     <snackbar ref="snackbar" baseSize="100px" position="bottom-right"></snackbar>
@@ -22,28 +21,24 @@ export default {
   name: "inquiry_theader",
   data: function () {
     return {
-      img: {
-        inquiry: {
-          class: "img_anfrage-erstellen",
-          src: "../images/an_auf_table/anfrage_erstellen.png",
-          alt: "Create inquiry",
-        },
+      create_img: {
+        src: "img/create_inquiry.png",
+        alt: "Anfrage erstellen",
       },
-      showInquiryModal1: false,
+      show_inquiry_modal1: false,
     };
   },
   methods: {
     create_inquiry: function () {
-      this.showInquiryModal1 = true;
+      this.show_inquiry_modal1 = true;
     },
     close_inquiry_modal1: function ($event) {
-      this.showInquiryModal1 = false;
-      console.log($event);
+      this.show_inquiry_modal1 = false;
     },
   },
   components: {
     inquiry_modal1,
-    Snackbar
+    Snackbar,
   },
 };
 </script>
@@ -51,5 +46,6 @@ export default {
 <style>
 #component_inquiry_theader img {
   height: 100%;
+  cursor: pointer;
 }
 </style>

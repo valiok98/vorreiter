@@ -1,71 +1,56 @@
 <?php
-header('Access-Control-Allow-Origin', '*');
-// switch ($_SERVER['HTTP_ORIGIN']) {
-//     case 'https://www.wirliefernsicher.de': case 'https://weiter-entwickelt.de':
-//     header('Access-Control-Allow-Origin: '.$_SERVER['HTTP_ORIGIN']);
-//     header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-//     header('Access-Control-Max-Age: 1000');
-//     header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-//     break;
-// }
-require_once dirname(__FILE__) . '/../../../config.php';
-require_once dirname(__FILE__) . '/helpers.php';
+// Set the header for remote access.
+header('Access-Control-Allow-Origin: https://wirliefernsicher.de');
+require_once dirname(__FILE__) . '/../../../helpers_by_table/admin_users_helpers.php';
+require_once dirname(__FILE__) . '/../../../helpers_general/helpers.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $fullName = $_POST['fullName'];
-    $username = gen_random_username();
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $newPassHash =  password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-
-
-    // Insert the new record.
-    $sql = "INSERT INTO admin_users (username,
-        email,
-        PASSWORD)
-        VALUES (?, ?, ?)";
-
-    if ($stmt = $mysqli->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bind_param(
-            "sss",
-            $username,
-            $email,
-            $newPassHash
-        );
-
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            $result_json =  json_encode(array("success" => true));
+    $response = create_admin($_POST);
+    // Check if the response is true, otherwise send the error message.
+    if ($response === true) {
+        // Get the admin with the specified email.
+        $client_data = get_admin_by_email(trim(strval($_POST["email"])));
+        if (gettype($client_data) === 'string') {
+            echo_failure($client_data);
         } else {
-            $result_json =  json_encode(array("success" => false, "msg" => $stmt->error));
+            // Try emailing the admin.
+            $response = email_admin($client_data);
+            if ($response === true) {
+                echo json_encode(array("success" => true));
+            } else {
+                echo_failure($response);
+            }
         }
     } else {
-        $result_json =  json_encode(array("success" => false, "msg" => $mysqli->error));
+        echo_failure($response);
     }
-    // Close connection
-    $mysqli->close();
-
-    $to = $email;
-    // $to = "d.krumpholz@weiter-entwickelt.de";
-    $from = $email;
-    $subject = "Herzlich willkommen bei LST-Siegen !";
-
-
-    $txt = "Hallo !
-    \r\n\r\nIhr Name: " . $fullName .
-    "\r\n\r\nIhr Benutzername: " . $username .
-        "\r\n\r\nEmail: " . $email .
-        "\r\n\r\nPasswort: " . $password . "\r\n\r\nDas Passwort ist vorläufig.\r\nUm sich unter https://vorreiter.net/demo/vorreiter einloggen zu können," .
-        "\r\nmüssen Sie es unter https://vorreiter.net/demo/vorreiter/admin_content/ajax/create_admin/index.php erneuern.\r\n";
-
-    $headers = "From: " . $from . "\r\n" .
-        "Content-Type: text/plain; charset=UTF-8";
-
-    mail($to, $subject, $txt, $headers);
-
-    echo json_encode(array("success" => true));
 }
 
+function email_admin($client_data)
+{
+    try {
+
+        $to = $client_data["email"];
+        // $to = "d.krumpholz@weiter-entwickelt.de";
+        $from = "vorreiter@vorreiter.net";
+        $subject = "Herzlich willkommen bei LST-Siegen !";
+
+
+        $txt = "Hallo !
+    \r\n\r\nIhr Name: " . $client_data["full_name"] .
+            "\r\n\r\nIhr Benutzername: " . $client_data["username"] .
+            "\r\n\r\nEmail: " . $client_data["email"] .
+            "\r\n\r\nIhr Passwort ist vorläufig.\r\nUm sich unter https://vorreiter.net/demo/vorreiter einloggen zu können," .
+            "\r\nmüssen Sie es unter https://vorreiter.net/demo/vorreiter/admin_content/ajax/create_admin/index.php erneuern.\r\n";
+
+        $headers = "From: " . $from . "\r\n" .
+            "Content-Type: text/plain; charset=UTF-8";
+
+        mail($to, $subject, $txt, $headers);
+        return true;
+    } catch (Exception $e) {
+        return "Es konnte keine Email abgesendet werden.";
+    }
+}

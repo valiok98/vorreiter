@@ -2,11 +2,13 @@
   <div id="component_order_theader">
     <img
       v-on:click="create_order()"
-      v-bind:class="img.order.class"
-      v-bind:src="img.order.src"
-      v-bind:alt="img.order.alt"
+      v-bind:src="create_img.src"
+      v-bind:alt="create_img.alt"
     />
-    <order_modal1 :showOrderModal1="showOrderModal1" v-on:close_order_modal1="close_order_modal1()"></order_modal1>
+    <order_modal1
+      :show_order_modal1="show_order_modal1"
+      v-on:close_order_modal1="close_order_modal1()"
+    ></order_modal1>
   </div>
 </template>
 
@@ -16,29 +18,29 @@ export default {
   name: "order_theader",
   data: function () {
     return {
-      img: {
-        order: {
-          class: "img_auftrag-erstellen",
-          src: "../images/an_auf_table/auftrag_erstellen.png",
-          alt: "Create order",
-        },
+      create_img: {
+        src: "img/create_order.png",
+        alt: "Auftrag erstellen",
       },
-      showOrderModal1: false,
+      show_order_modal1: false,
     };
   },
   methods: {
     create_order: function () {
-      this.showOrderModal1 = true;
+      this.show_order_modal1 = true;
     },
     close_order_modal1: function () {
-      this.showOrderModal1 = false;
+      this.show_order_modal1 = false;
     },
   },
   components: {
     order_modal1,
-  }
+  },
 };
 </script>
 
 <style>
+#component_order_theader img {
+  cursor: pointer;
+}
 </style>

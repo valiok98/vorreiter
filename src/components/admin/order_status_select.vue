@@ -1,11 +1,11 @@
 <template>
   <div :id="componentId" class="component_order_status_select">
     <v-select
-      v-if="showStatusSelect"
+      v-if="show_status_select"
       :options="options"
       v-model="statusValue"
-      placeholder="Hello world"
-      v-on:input="optionChange()"
+      placeholder=""
+      v-on:input="option_change()"
     ></v-select>
   </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "order_status_select",
-  props: ["id", "statusValue", "showStatusSelect"],
+  props: ["id", "statusValue", "show_status_select"],
   data: function () {
     return {
       options: [
@@ -24,14 +24,13 @@ export default {
         "abgeschlossen",
       ],
       componentId: "component_order_status_select_" + this.id,
-      placeholder: "hello world"
     };
   },
   methods: {
-    optionChange: function () {
-      this.showStatusSelect = false;
+    option_change: function () {
+      this.show_status_select = false;
       console.log(this.statusValue);
-      this.$emit("optionChange", this.statusValue);
+      this.$emit("option_change", this.statusValue);
     },
   },
 };

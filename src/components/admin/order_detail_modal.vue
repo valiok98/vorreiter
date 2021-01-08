@@ -1,6 +1,6 @@
 <template>
   <div id="component_order_detail_modal">
-    <modal v-if="showOrderDetailModal">
+    <modal v-if="show_order_detail_modal">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -23,41 +23,37 @@
                               <b>Firmenname</b>
                             </span>
                             <br />
-                            <span
-                              v-text="orderData.clientData.firmenname"
-                            ></span>
+                            <span v-text="order_data.client_data.company_name"></span>
                             <br />
                             <span>
                               <b>E-Mail Adresse</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.email"></span>
+                            <span v-text="order_data.client_data.email"></span>
                             <br />
                             <span>
                               <b>Ort</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.ort"></span>
+                            <span v-text="order_data.client_data.place"></span>
                             <br />
                             <span>
                               <b>PLZ</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.plz"></span>
+                            <span v-text="order_data.client_data.postal_code"></span>
                             <br />
                             <span>
                               <b>Zentrale Telefonnummer</b>
                             </span>
                             <br />
-                            <span
-                              v-text="orderData.clientData.telefon_zentrale"
-                            ></span>
+                            <span v-text="order_data.client_data.phone_central"></span>
                             <br />
                             <span>
                               <b>Straße</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.strasse"></span>
+                            <span v-text="order_data.client_data.street"></span>
                           </div>
                           <div class="col-sm-6">
                             <h5></h5>
@@ -66,291 +62,311 @@
                               <b>Kundennummer</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.id"></span>
+                            <span v-text="order_data.client_data.id"></span>
                             <br />
                             <span>
                               <b>Anrede</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.anrede"></span>
+                            <span v-text="order_data.client_data.salutation"></span>
                             <br />
                             <span>
                               <b>Telefon</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.telefon"></span>
+                            <span v-text="order_data.client_data.phone"></span>
                             <br />
                             <span>
                               <b>Hausnummer</b>
                             </span>
                             <br />
-                            <span
-                              v-text="orderData.clientData.hausnummer"
-                            ></span>
+                            <span v-text="order_data.client_data.house_number"></span>
                             <br />
                             <span>
                               <b>Land</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.land"></span>
+                            <span v-text="order_data.client_data.country"></span>
                             <br />
                             <span>
                               <b>Freitext</b>
                             </span>
                             <br />
-                            <span v-text="orderData.clientData.freitext"></span>
+                            <span v-text="order_data.client_data.additional_text"></span>
                           </div>
                         </div>
                       </div>
                       <div class="col-sm-6 container-fluid">
                         <!-- here comes the data for the calculator -->
-                        <div class="row" id="inqInformation">
+                        <div class="row" id="div_ord_information">
                           <div>
                             <!-- Pickup adress part. -->
                             <h5>Abholadresse</h5>
-                            <span>
-                              <b>Firmenname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.firmenname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Anrede</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.anrede"></span>
-                            <br />
-                            <span>
-                              <b>Titel</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.titel"></span>
-                            <br />
-                            <span>
-                              <b>Vorname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.vorname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Nachname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.nachname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Telefon</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.telefon"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>E-Mail Adresse</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.email"></span>
-                            <br />
-                            <span>
-                              <b>Staße</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.strasse"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Hausnummer</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.abholadresse.hausnummer"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>PLZ</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.plz"></span>
-                            <br />
-                            <span>
-                              <b>Ort</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.ort"></span>
-                            <br />
-                            <span>
-                              <b>Land</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.abholadresse.land"></span>
-                            <br />
+                            <div class="container-fluid">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>Firmenname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.company_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Anrede</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.salutation"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Titel</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.title"></span>
+                                  <br />
+                                  <span>
+                                    <b>Vorname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.first_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Nachname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.last_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Telefon</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.phone"></span>
+                                  <br />
+                                </div>
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>E-Mail Adresse</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.email"></span>
+                                  <br />
+                                  <span>
+                                    <b>Staße</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.street"></span>
+                                  <br />
+                                  <span>
+                                    <b>Hausnummer</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.house_number"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>PLZ</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.pickup_address.postal_code"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Ort</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.place"></span>
+                                  <br />
+                                  <span>
+                                    <b>Land</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.pickup_address.country"></span>
+                                  <br />
+                                </div>
+                              </div>
+                            </div>
                             <br />
                             <!-- Delivery adress part. -->
                             <h5>Lieferadresse</h5>
-                            <span>
-                              <b>Firmenname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.firmenname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Anrede</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.anrede"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Titel</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.lieferadresse.titel"></span>
-                            <br />
-                            <span>
-                              <b>Vorname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.vorname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Nachname</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.nachname"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Telefon</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.telefon"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>E-Mail Adresse</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.lieferadresse.email"></span>
-                            <br />
-                            <span>
-                              <b>Staße</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.strasse"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>Hausnummer</b>
-                            </span>
-                            <br />
-                            <span
-                              v-text="orderData.lieferadresse.hausnummer"
-                            ></span>
-                            <br />
-                            <span>
-                              <b>PLZ</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.lieferadresse.plz"></span>
-                            <br />
-                            <span>
-                              <b>Ort</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.lieferadresse.ort"></span>
-                            <br />
-                            <span>
-                              <b>Land</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.lieferadresse.land"></span>
-                            <br />
-                            <!-- Package part. -->
-                            <span>
-                              <b>Zustellfenster</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.zeit_fenster"></span>
-                            <br />
-                            <span>
-                              <b>Zustellung am</b>
-                            </span>
-                            <br />
-                            <span v-text="orderData.zustelltag"></span>
-                            <br />
-                            <div v-if="orderData.packages.length">
+                            <div class="container-fluid">
                               <div class="row">
-                                <h5>Packages</h5>
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>Firmenname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.company_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Anrede</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.salutation"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Titel</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.delivery_address.title"></span>
+                                  <br />
+                                  <span>
+                                    <b>Vorname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.first_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Nachname</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.last_name"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Telefon</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.delivery_address.phone"></span>
+                                  <br />
+                                </div>
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>E-Mail Adresse</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.delivery_address.email"></span>
+                                  <br />
+                                  <span>
+                                    <b>Staße</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.street"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Hausnummer</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.house_number"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>PLZ</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.postal_code"
+                                  ></span>
+                                  <br />
+                                  <span>
+                                    <b>Ort</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.delivery_address.place"></span>
+                                  <br />
+                                  <span>
+                                    <b>Land</b>
+                                  </span>
+                                  <br />
+                                  <span
+                                    v-text="order_data.delivery_address.country"
+                                  ></span>
+                                  <br />
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Package part. -->
+
+                            <div class="container-fluid">
+                              <div class="row"><br /></div>
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>Zustellfenster</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.time_window"></span>
+                                  <br />
+                                </div>
+                                <div class="col-sm-6">
+                                  <span>
+                                    <b>Zustellung am</b>
+                                  </span>
+                                  <br />
+                                  <span v-text="order_data.delivery_day"></span>
+                                  <br />
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="order_data.packages.length">
+                              <div class="row">
+                                <h5>Pakete</h5>
                               </div>
                               <div class="row">
                                 <div
                                   v-bind:key="package_.id"
-                                  v-for="package_ in orderData.packages"
+                                  v-for="package_ in order_data.packages"
                                   class="col-sm-12"
-                                  id="inqPackages"
+                                  id="div_ord_packages"
                                 >
                                   <b-h3
-                                    v-on:click="
-                                      collapse_accordion_item(package_.elemId)
-                                    "
+                                    v-on:click="collapse_accordion_item(package_.elemId)"
                                   >
-                                    <span>Package {{ package_.id + 1 }}</span>
+                                    <span>Paket {{ package_.id + 1 }}</span>
                                   </b-h3>
                                   <b-collapse
                                     v-bind:id="package_.elemId"
                                     accordion="my-accordion"
-                                    class="collapseElem"
+                                    class="collapese_elem"
                                   >
                                     <b-ul>
-                                      <li>
-                                        Sendungsnummer: {{ package_.id + 1 }}
-                                      </li>
-                                      <li>Größe-X: {{ package_.laenge }}</li>
-                                      <li>Größe-Y: {{ package_.breite }}</li>
-                                      <li>Größe-Z: {{ package_.hoehe }}</li>
+                                      <li>Sendungsnummer: {{ package_.id + 1 }}</li>
+                                      <li>Länge: {{ package_.length }}</li>
+                                      <li>Breite: {{ package_.width }}</li>
+                                      <li>Höhe: {{ package_.height }}</li>
                                       <li>
                                         Volumengewicht:
-                                        {{ package_.volumengewicht }}
+                                        {{ package_.volume_weight }}
                                       </li>
-                                      <li>Gewicht: {{ package_.gewicht }}</li>
-                                      <li>Gurtmaß: {{ package_.gurtmass }}</li>
-                                      <li>Preis: {{ package_.preis }}</li>
+                                      <li>Gewicht: {{ package_.weight }}</li>
+                                      <li>Gurtmaß: {{ package_.girth }}</li>
+                                      <li>Preis: €{{ package_.price.toFixed(2) }}</li>
                                       <li
                                         v-if="
-                                          JSON.parse(
-                                            package_.service_leistungen
-                                          ).length
+                                          package_.services &&
+                                          JSON.parse(package_.services).length
                                         "
                                       >
                                         <span>Dienstleistungen:</span>
                                         <br />
                                         <b-ul
                                           v-if="
-                                            JSON.parse(
-                                              package_.service_leistungen
-                                            ).length
+                                            package_.services &&
+                                            JSON.parse(package_.services).length
                                           "
                                         >
                                           <li
                                             v-bind:key="service.id"
                                             v-for="service in JSON.parse(
-                                              package_.service_leistungen
+                                              package_.services
                                             )"
                                           >
                                             {{ service.title }}
@@ -380,13 +396,13 @@
 <script>
 export default {
   name: "order_detail_modal",
-  props: ["showOrderDetailModal", "orderData"],
+  props: ["show_order_detail_modal", "order_data"],
   data: function () {
     return {
       modalHeader: "Auftrag im Detail",
       closeImg: {
-        src: "../images/modal/close_window.gif",
-        alt: "Close modal",
+        src: "img/close_window.png",
+        alt: "Fenster schließen",
       },
     };
   },
@@ -395,7 +411,7 @@ export default {
       this.$root.$emit("bv::toggle::collapse", elemId);
     },
     close: function () {
-      this.showOrderDetailModal = false;
+      this.show_order_detail_modal = false;
       this.$emit("close_order_detail_modal");
     },
   },
@@ -412,8 +428,8 @@ export default {
   height: 90%;
 }
 
-#component_order_detail_modal #inqInformation > div,
-#component_order_detail_modal #inqPackages {
+#component_order_detail_modal #div_ord_information > div,
+#component_order_detail_modal #div_ord_packages {
   width: 100%;
 }
 #component_order_detail_modal b-h3 {
@@ -425,7 +441,7 @@ export default {
   padding: 5px;
   cursor: pointer;
 }
-#component_order_detail_modal .collapseElem {
+#component_order_detail_modal .collapese_elem {
   background: #f2f2f2;
 }
 #component_order_detail_modal b-ul {
@@ -439,5 +455,9 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+}
+
+#component_order_detail_modal span {
+  overflow-wrap: break-word;
 }
 </style>

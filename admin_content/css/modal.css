@@ -35,6 +35,7 @@
         width: 50%;
         height: 90%;
         margin: 0px auto;
+        overflow-y: auto;
         padding: 20px 30px;
         background-color: #fff;
         border-radius: 2px;
@@ -63,12 +64,6 @@
     .modal-leave-active .modal-container {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
-    }
-    
-    @media only screen and (max-width: 1381px) {
-        .modal-container {
-            overflow-y: scroll;
-        }
     }
     
     @media only screen and (max-width: 759px) {

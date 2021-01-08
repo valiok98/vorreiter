@@ -1,0 +1,9 @@
+.main-part {
+    margin: 0 auto;
+    min-width: 40%;
+    width: 50%;
+}
+
+.input-group-append {
+    cursor: pointer;
+}

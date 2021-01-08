@@ -4,15 +4,15 @@
       class="navbar-toggler"
       type="button"
       data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
+      data-target="#div_navbar_supported_content"
+      aria-controls="div_navbar_supported_content"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="div_navbar_supported_content">
       <form class="form-inline">
         <input
           class="form-control mr-sm-2"
@@ -20,21 +20,24 @@
           placeholder="Suche..."
           aria-label="Search"
         />
-        <img id="img_suchen" v-bind:src="img_src.suchen" alt="suchen" />
+        <img id="img_search" v-bind:src="search_img.src" v-bind:alt="search_img.alt" />
         <ul class="navbar-nav mr-auto">
-          <li id="li_angemeldet-als" class="nav-item">
+          <li id="li_loggedin_as" class="nav-item">
             <a href="#" class="nav-link">
-              <span v-text="angemeldetUsername"></span>
+              <span v-text="logged_in_username"></span>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <img alt="notifications" v-bind:src="img_src.notifications" />
+              <img
+                v-bind:alt="notifications_img.alt"
+                v-bind:src="notifications_img.src"
+              />
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" v-bind:href="logoutHref">
-              <img alt="logout" v-bind:src="img_src.logout" />
+            <a class="nav-link" v-bind:href="logout_href">
+              <img v-bind:alt="logout_img.alt" v-bind:src="logout_img.src" />
               <span id="span_logout">Logout</span>
             </a>
           </li>
@@ -49,12 +52,19 @@ export default {
   name: "mainnav",
   data: function () {
     return {
-      angemeldetUsername: "Angemeldet als: " + username,
-      logoutHref: mainUrl + "logout.php",
-      img_src: {
-        suchen: "../images/navbar/suchen.png",
-        notifications: "../images/navbar/notifications.png",
-        logout: "../images/navbar/logout.png",
+      logged_in_username: "Angemeldet als: " + username,
+      logout_href: mainUrl + "index_content/logout.php",
+      search_img: {
+        src: "img/search.png",
+        alt: "Suchen",
+      },
+      notifications_img: {
+        src: "img/notifications.png",
+        alt: "Benachrichtigungen",
+      },
+      logout_img: {
+        src: "img/logout.png",
+        alt: "Ausloggen",
       },
     };
   },
@@ -71,13 +81,13 @@ export default {
   justify-content: center;
 }
 
-#component_mainnav #li_angemeldet-als {
+#component_mainnav #li_loggedin_as {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#component_mainnav #li_angemeldet-als a {
+#component_mainnav #li_loggedin_as a {
   all: unset;
 }
 
@@ -85,7 +95,7 @@ export default {
   margin-left: -15%;
 }
 
-#component_mainnav #img_suchen {
+#component_mainnav #img_search {
   cursor: pointer;
 }
 </style>

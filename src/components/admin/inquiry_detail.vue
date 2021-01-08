@@ -2,8 +2,8 @@
   <div id="component_inquiry_detail">
     <img v-bind:src="img.src" v-bind:alt="img.alt" v-on:click="display_inquiry()" />
     <inquiry_detail_modal
-      :showInquiryDetailModal="showInquiryDetailModal"
-      :inquiryData="inquiryData"
+      :show_inquiry_detail_modal="show_inquiry_detail_modal"
+      :inquiry_data="inquiry_data"
       v-on:close_inquiry_detail_modal="close_inquiry_detail_modal()"
     ></inquiry_detail_modal>
     <snackbar ref="snackbar" baseSize="100px" position="bottom-right"></snackbar>
@@ -20,11 +20,11 @@ export default {
   data: function () {
     return {
       img: {
-        src: "../images/an_auf_table/eye.png",
-        alt: "View entry",
+        src: "img/eye.png",
+        alt: "Anfrage anzeigen",
       },
-      showInquiryDetailModal: false,
-      inquiryData: {},
+      show_inquiry_detail_modal: false,
+      inquiry_data: {},
     };
   },
   components: {
@@ -47,9 +47,9 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.success && res.hasOwnProperty("inquiryData")) {
+          if (res.success && res.hasOwnProperty("inquiry_data")) {
             // Configure the packages for the accordion component.
-            let packages = res.inquiryData.packages;
+            let packages = res.inquiry_data.packages;
             packages = packages.map((package_, index) => {
               return {
                 ...package_,
@@ -58,19 +58,17 @@ export default {
               };
             });
             // Set the packages back in the res object.
-            res.inquiryData.packages = packages;
-            this.inquiryData = res.inquiryData;
-            this.showInquiryDetailModal = true;
+            res.inquiry_data.packages = packages;
+            this.inquiry_data = res.inquiry_data;
+            this.show_inquiry_detail_modal = true;
           } else {
-            this.$refs.snackbar.error(
-              "Die Anfrage konnte nicht gefunden werden."
-            );
+            this.$refs.snackbar.error(res.msg);
           }
         })
         .catch((err) => this.$refs.snackbar.error(err));
     },
     close_inquiry_detail_modal: function () {
-      this.showInquiryDetailModal = false;
+      this.show_inquiry_detail_modal = false;
     },
   },
 };
@@ -78,7 +76,9 @@ export default {
 
 <style>
 #component_inquiry_detail {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #component_inquiry_detail img {

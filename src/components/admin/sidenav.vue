@@ -5,14 +5,14 @@
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
-        data-target="#div_sidenav-collapsed"
+        data-target="#div_sidenav_collapsed"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="div_sidenav-collapsed" class="collapse navbar-collapse">
+      <div id="div_sidenav_collapsed" class="collapse navbar-collapse">
         <ul class="nav navbar-nav mr-auto flex-column" data-tabs="tabs">
           <li v-bind:key="navitem.id" class="nav-item" v-for="navitem in navitems">
             <a
@@ -61,73 +61,73 @@ export default {
         {
           id: 0,
           bw: true,
-          href: "#vorreiter",
+          href: "#tab_vorreiter",
           img_id: "img_vorreiter",
-          img_src: "../images/navbar/vorreiter_logo.png",
+          img_src: "img/vorreiter_logo.png",
           img_alt: "vorreiter",
         },
         {
           id: 1,
           bw: true,
-          href: "#kunden",
-          img_id: "img_kunden",
-          img_bw_src: "../images/navbar/kunden_b_w.png",
-          img_cl_src: "../images/navbar/kunden_color.png",
-          img_alt: "kunden",
+          href: "#tab_clients",
+          img_id: "img_clients",
+          img_bw_src: "img/clients_b_w.png",
+          img_cl_src: "img/clients_color.png",
+          img_alt: "Kunden",
         },
         {
           id: 2,
           bw: true,
-          href: "#an_auf_data",
-          img_id: "img_an_auf_data",
-          img_bw_src: "../images/navbar/an_auf_b_w.png",
-          img_cl_src: "../images/navbar/an_auf_color.png",
-          img_alt: "an_auf_data",
+          href: "#tab_inq_ord_data",
+          img_id: "img_inq_ord_data",
+          img_bw_src: "img/inq_ord_b_w.png",
+          img_cl_src: "img/inq_ord_color.png",
+          img_alt: "Anfragen&Aufträge",
         },
         {
           id: 3,
           bw: true,
-          href: "#tracking",
+          href: "#tab_tracking",
           img_id: "img_tracking",
-          img_bw_src: "../images/navbar/tracking_b_w.png",
-          img_cl_src: "../images/navbar/tracking_color.png",
-          img_alt: "tracking",
+          img_bw_src: "img/tracking_b_w.png",
+          img_cl_src: "img/tracking_color.png",
+          img_alt: "Tracking",
         },
         {
           id: 4,
           bw: true,
-          href: "#flotte",
-          img_id: "img_flotte",
-          img_bw_src: "../images/navbar/flotte_b_w.png",
-          img_cl_src: "../images/navbar/flotte_color.png",
-          img_alt: "flotte",
+          href: "#tab_fleet",
+          img_id: "img_fleet",
+          img_bw_src: "img/fleet_b_w.png",
+          img_cl_src: "img/fleet_color.png",
+          img_alt: "Flotte",
         },
         {
           id: 5,
           bw: true,
-          href: "#support",
+          href: "#tab_support",
           img_id: "img_support",
-          img_bw_src: "../images/navbar/support_b_w.png",
-          img_cl_src: "../images/navbar/support_color.png",
-          img_alt: "support",
+          img_bw_src: "img/support_b_w.png",
+          img_cl_src: "img/support_color.png",
+          img_alt: "Support",
         },
         {
           id: 6,
           bw: true,
-          href: "#stats",
+          href: "#tab_stats",
           img_id: "img_stats",
-          img_bw_src: "../images/navbar/stats_b_w.png",
-          img_cl_src: "../images/navbar/stats_color.png",
-          img_alt: "stats",
+          img_bw_src: "img/stats_b_w.png",
+          img_cl_src: "img/stats_color.png",
+          img_alt: "Stats",
         },
         {
           id: 7,
           bw: true,
-          href: "#settings",
+          href: "#tab_settings",
           img_id: "img_settings",
-          img_bw_src: "../images/navbar/settings_b_w.png",
-          img_cl_src: "../images/navbar/settings_color.png",
-          img_alt: "settings",
+          img_bw_src: "img/settings_b_w.png",
+          img_cl_src: "img/settings_color.png",
+          img_alt: "Einstellungen",
         },
       ],
     };
@@ -164,7 +164,7 @@ export default {
   padding: 0;
 }
 
-#component_sidenav #div_sidenav-collapsed {
+#component_sidenav #div_sidenav_collapsed {
   max-height: 100%;
   height: 100%;
 }

@@ -1,21 +1,21 @@
 <template>
   <div id="component_delete_package_modal">
-    <modal v-if="showDeletePackageModal">
+    <modal v-if="show_delete_package_modal">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div id="delete_package_modal_container" class="modal-container">
               <div class="modal-header">
-                <h5>{{ modalHeader }}</h5>
+                <h5>{{ modal_header }}</h5>
                 <button class="modal-default-button" v-on:click="close()">
-                  <img v-bind:src="closeImg.src" v-bind:alt="closeImg.alt" />
+                  <img v-bind:src="close_img.src" v-bind:alt="close_img.alt" />
                 </button>
               </div>
-              <div class="modal-body">{{ modalBody }}</div>
+              <div class="modal-body">{{ modal_body }}</div>
               <div class="modal-footer">
                 <b-button v-on:click="close()" variant="light">Cancel</b-button>
                 <b-button v-on:click="confirm_deletion()" variant="primary"
-                  >Delete</b-button
+                  >Löschen</b-button
                 >
               </div>
             </div>
@@ -29,23 +29,23 @@
 <script>
 export default {
   name: "delete_package_modal",
-  props: ["showDeletePackageModal", "packageId", "modalHeader", "modalBody"],
+  props: ["show_delete_package_modal", "package_id", "modal_header", "modal_body"],
   data: function () {
     return {
-      closeImg: {
-        src: "../images/modal/close_window.gif",
-        alt: "Close modal",
+      close_img: {
+        src: "img/close_window.png",
+        alt: "Fenster schließen",
       },
     };
   },
   methods: {
     close: function () {
-      this.showDeletePackageModal = false;
+      this.show_delete_package_modal = false;
       this.$emit("cancel_item_deletion");
     },
     confirm_deletion: function () {
-      this.showDeletePackageModal = false;
-      this.$emit("confirm_item_deletion", this.packageId);
+      this.show_delete_package_modal = false;
+      this.$emit("confirm_item_deletion", this.package_id);
     },
   },
 };

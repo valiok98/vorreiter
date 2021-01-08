@@ -11,7 +11,7 @@ if (isset($_SESSION['username'])) {
     $title = 'Welcome, ' . $_SESSION['username'] . '!';
     $username = $_SESSION['username'];
 } else {
-    header('location: ' . URL . 'logout.php');
+    header('location: ' . URL . 'index_content/logout.php');
     die;
 }
 
@@ -42,7 +42,6 @@ if (isset($_SESSION['username'])) {
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
     <!-- Editable end -->
-
     <!-- Moment.js start -->
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <!-- Moment.js end -->
@@ -62,7 +61,7 @@ if (isset($_SESSION['username'])) {
         var username = '<?= $_SESSION['username'] ?>';
     </script>
     <script src="../dist/admin.js" defer></script>
-    <script src="js/order_socket.js" defer></script>
+    <!-- <script src="js/order_socket.js" defer></script> -->
     <!-- Eigenes JS end -->
 </head>
 
@@ -76,10 +75,9 @@ if (isset($_SESSION['username'])) {
                 <div id="div_main-content" class="col-sm-11">
                     <!-- mainnav component. -->
                     <mainnav></mainnav>
-
                     <div class="tab-content">
-                        <div class="tab-pane" id="kunden">
-                            <table id="kunden_table" class="compact">
+                        <div class="tab-pane" id="tab_clients" data-tabs="tabs">
+                            <table id="table_clients" class="compact">
                                 <thead>
                                     <tr>
                                         <th scope="col">Firmenname</th>
@@ -99,25 +97,25 @@ if (isset($_SESSION['username'])) {
                                 <tbody>
                                     <?php
                                     // Get the user package requests.
-                                    $sql = "SELECT * FROM kunden";
+                                    $sql = "SELECT * FROM vorreiter_clients";
 
                                     if ($stmt = $mysqli->prepare($sql)) {
                                         if ($stmt->execute()) {
                                             $result = $stmt->get_result();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo '<tr>
-                                    <td>' . $row['firmenname'] . '</td>
-                                    <td>' . $row['anrede'] . '</td>
-                                    <td>' . $row['ansprechpartner'] . '</td>
+                                    <td>' . $row['company_name'] . '</td>
+                                    <td>' . $row['salutation'] . '</td>
+                                    <td>' . $row['contact_person'] . '</td>
                                     <td>' . $row['email'] . '</td>
-                                    <td>' . $row['telefon'] . '</td>
-                                    <td>' . $row['strasse'] . '</td>
-                                    <td>' . $row['hausnummer'] . '</td>
-                                    <td>' . $row['plz'] . '</td>
-                                    <td>' . $row['ort'] . '</td>
-                                    <td>' . $row['land'] . '</td>
-                                    <td>' . $row['telefon_zentrale'] . '</td>
-                                    <td>' . $row['freitext'] . '</td></tr>';
+                                    <td>' . $row['phone'] . '</td>
+                                    <td>' . $row['street'] . '</td>
+                                    <td>' . $row['house_number'] . '</td>
+                                    <td>' . $row['postal_code'] . '</td>
+                                    <td>' . $row['place'] . '</td>
+                                    <td>' . $row['country'] . '</td>
+                                    <td>' . $row['phone_central'] . '</td>
+                                    <td>' . $row['additional_text'] . '</td></tr>';
                                             }
                                         }
                                     }
@@ -125,161 +123,61 @@ if (isset($_SESSION['username'])) {
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane active container-fluid" id="vorreiter">
+                        <div class="tab-pane active container-fluid" id="tab_vorreiter" data-tabs="tabs">
                             <div class="row">
                                 <div class="col-sm-6 container-fluid">
-                                    <div class="row div_table-header">
+                                    <div class="row div_table_header">
                                         <h3>Anfragen</h3>
                                         <div>
-                                            <img src="../images/an_auf_table/eye.png" alt="View inquiries" />
                                             <inquiry_theader></inquiry_theader>
                                         </div>
                                     </div>
 
-                                    <div class="row div_an-auf-table-data">
-                                        <table id="anfragen_table" class="compact">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Kunde</th>
-                                                    <th scope="col">Eingegangen</th>
-                                                    <th scope="col">Von</th>
-                                                    <th scope="col">Nach</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Aktionen</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                // Get the user package requests.
-                                                $sql = "SELECT * FROM anfragen";
-
-                                                if ($stmt = $mysqli->prepare($sql)) {
-                                                    if ($stmt->execute()) {
-                                                        $result = $stmt->get_result();
-                                                        while ($row = $result->fetch_assoc()) {
-                                                            // Initialize the dialog.
-                                                            require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                            echo anfragen_table($row);
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                    <div class="row div_inq_ord_table_data">
+                                        <inquiry_table></inquiry_table>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 container-fluid">
-                                    <div class="row div_table-header">
+                                    <div class="row div_table_header">
                                         <h3>Aufträge</h3>
                                         <div>
-                                            <img src="../images/an_auf_table/eye.png" alt="View orders" />
                                             <order_theader></order_theader>
                                         </div>
                                     </div>
-                                    <div class="row div_an-auf-table-data">
-                                        <?php
-                                        // Get the user package requests.
-                                        $sql = "SELECT * FROM auftraege";
-
-                                        if ($stmt = $mysqli->prepare($sql)) {
-                                            if ($stmt->execute()) {
-                                                $result = $stmt->get_result();
-                                                require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                $tableRows = [];
-                                                while ($row = $result->fetch_assoc()) {
-                                                    array_push($tableRows, order_row($row));
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                        <script>
-                                            // Hold the data in localStorage for now.
-                                            // If the data becomes too big, then search for an alternative such as AJAX on load...
-                                            // PHP + Vue.js just don't work well with each other :)
-                                            localStorage.setItem("orderTableRows", JSON.stringify(<?= json_encode($tableRows) ?>));
-                                        </script>
+                                    <div class="row div_inq_ord_table_data">
                                         <order_table></order_table>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="tab-pane table-responsive" id="an_auf_data" data-tabs="tabs">
+                        <div class="tab-pane table-responsive" id="tab_inq_ord_data" data-tabs="tabs">
                             <inquiry_order_theader></inquiry_order_theader>
                             <div class="tab-content">
-                                <div id="anfragen" class="tab-pane active">
-                                    <table id="anfragen_table_full" class="compact">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Kunde</th>
-                                                <th scope="col">Eingegangen</th>
-                                                <th scope="col">Von</th>
-                                                <th scope="col">Nach</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Aktionen</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            // Get the user package requests.
-                                            $sql = "SELECT * FROM anfragen";
-
-                                            if ($stmt = $mysqli->prepare($sql)) {
-                                                if ($stmt->execute()) {
-                                                    $result = $stmt->get_result();
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        // Initialize the dialog.
-                                                        require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo anfragen_table($row);
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                <div id="div_inquiries" class="tab-pane active">
+                                    <inquiry_table></inquiry_table>
                                 </div>
-                                <div id="auftraege" class="tab-pane">
-                                    <table id="auftraege_table_full" class="compact">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Nummer</th>
-                                                <th scope="col">Kunde</th>
-                                                <th scope="col">Ansprechpartner</th>
-                                                <th scope="col">Telefon</th>
-                                                <th scope="col">Eingegangen</th>
-                                                <th scope="col">Von</th>
-                                                <th scope="col">Nach</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Aktionen</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            // Get the user package requests.
-                                            $sql = "SELECT * FROM auftraege";
-
-                                            if ($stmt = $mysqli->prepare($sql)) {
-                                                if ($stmt->execute()) {
-                                                    $result = $stmt->get_result();
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        // Initialize the dialog.
-                                                        require_once dirname(__FILE__) . '/templates/welcome.tmp.php';
-                                                        echo auftraege_table_detailed($row);
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                <div id="div_orders" class="tab-pane">
+                                    <order_table></order_table>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane" id="settings">
+                        <div class="tab-pane" id="tab_settings" data-tabs="tabs">
                             <!-- settings component. -->
                             <settings></settings>
                         </div>
-
+                        <div class="tab-pane" id="tab_tracking" data-tabs="tabs">
+                            <h1>Tracking</h1>
+                        </div>
+                        <div class="tab-pane" id="tab_fleet" data-tabs="tabs">
+                            <h1>Flotte</h1>
+                        </div>
+                        <div class="tab-pane" id="tab_support" data-tabs="tabs">
+                            <h1>Support</h1>
+                        </div>
+                        <div class="tab-pane" id="tab_stats" data-tabs="tabs">
+                            <h1>Stats</h1>
+                        </div>
                     </div>
                 </div>
             </div>

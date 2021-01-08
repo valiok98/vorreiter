@@ -31,89 +31,13 @@ $title = 'Erneuern Sie Ihr Passwort';
     </title>
 
     <script>
-        $(document).ready(function() {
-            let pass1 = '';
-            let pass2 = '';
-
-            $('input[aria-describedby="helpNewPass"]').on('input', function(e) {
-                $(".inputHiddenPass")[0].value = e.target.value;
-                $($(".inputHiddenPass")[0]).pwstrength("forceUpdate");
-                pass1 = e.target.value;
-                enable_disable_submit(pass1, pass2);
-            });
-
-            $('input[aria-describedby="helpNewPassAgain"]').on('input', function(e) {
-                $(".inputHiddenPass")[1].value = e.target.value;
-                $($(".inputHiddenPass")[1]).pwstrength("forceUpdate");
-                pass2 = e.target.value;
-                enable_disable_submit(pass1, pass2);
-            });
-
-            $('.inputHiddenPass').pwstrength();
-
-            $('i.fa').on('click', function() {
-                $(this).toggleClass('fa-eye-slash');
-                $(this).toggleClass('fa-eye');
-                if ($(this).hasClass('fa-eye')) {
-                    $(this).parent().parent().parent().find('input').attr("type", "text");
-                } else {
-                    $(this).parent().parent().parent().find('input').attr("type", "password");
-                }
-            });
-
-
-            $('form').on('submit', function(e) {
-                e.preventDefault();
-                let data = $(this).serializeArray();
-                $.ajax({
-                    type: "POST",
-                    url: "<?= URL ?>admin_content/ajax/create_admin/create_perm_admin.php",
-                    data: data,
-                    success: function(data) {
-                        data = JSON.parse(data);
-                        if (data.success) {
-                            $('.toast-body').text("Passwort erfolgreich erneuert.");
-                            $('.toast').toast('show');
-                        } else {
-                            $('.toast-body').text(data.msg);
-                            $('.toast').toast('show');
-                        }
-                        console.log(data);
-                    },
-                    error: function() {
-
-                    }
-                })
-            });
-
-            $('.toast').toast({
-                delay: 3000
-            });
-
-            function enable_disable_submit(pass1, pass2) {
-                if (pass1 === pass2 && pass1) {
-                    $('button[type="submit"]').removeAttr("disabled");
-                    $('.pIncorrectPass').hide();
-                } else {
-                    $('button[type="submit"]').attr("disabled", true);
-                    $('.pIncorrectPass').show();
-                }
-            }
-
-        });
+        var mainUrl = "<?= URL ?>";
     </script>
 
-    <style>
-        .main-part {
-            margin: 0 auto;
-            min-width: 40%;
-            width: 50%;
-        }
 
-        .input-group-append {
-            cursor: pointer;
-        }
-    </style>
+    <script src="js/script.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 

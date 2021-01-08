@@ -17,24 +17,20 @@
                   <div class="container-fluid">
                     <div class="row">
                       <h5>
-                        Bitte geben Sie Ihre E-Mail Adresse oder Ihren
-                        Benutzernamen ein
+                        Bitte geben Sie Ihre E-Mail Adresse oder Ihren Benutzernamen ein
                       </h5>
                     </div>
                     <div class="row"><br /></div>
                     <div class="row">
                       <div class="col-sm-12" style="padding: 0">
                         <form
-                          id="form_change-password"
+                          id="form_change_password"
                           v-on:submit="change_password($event)"
                         >
                           <div class="container-fluid">
                             <div class="row">
-                              <div
-                                class="col-sm-4"
-                                style="text-align: left; padding: 0"
-                              >
-                                <label for="input_email-username"
+                              <div class="col-sm-4" style="text-align: left; padding: 0">
+                                <label for="input_email_username"
                                   ><b
                                     >E-Mail Adresse<br />oder <br />
                                     Benutzername</b
@@ -44,24 +40,24 @@
                               <div class="col-sm-8">
                                 <input
                                   class="form-control mr-sm-2"
-                                  id="input_email-username"
+                                  id="input_email_username"
                                   type="search"
                                   placeholder="E-Mail/Benutzername"
                                   v-model="inputEmailUsername"
+                                  required
                                 />
                               </div>
                             </div>
-                            <!-- Try including captcha here. -->
-
-                            <!-- <script
-                              src="https://www.google.com/recaptcha/api.js"
-                              async
-                              defer
-                            ></script>
-                            <div
-                              class="g-recaptcha"
-                              data-sitekey="6LfzgfgZAAAAAFfjgpmEibLWHgn3Fdf0MG7jxa-c"
-                            ></div> -->
+                            <div class="row"><br /></div>
+                            <div class="row"><br /></div>
+                            <div class="row">
+                              <vue-recaptcha
+                                sitekey="6LfzgfgZAAAAAFfjgpmEibLWHgn3Fdf0MG7jxa-c"
+                                v-on:verify="verify($event)"
+                                v-on:expired="captcha_expired()"
+                              >
+                              </vue-recaptcha>
+                            </div>
                             <div class="row"><br /></div>
                             <div class="row"><br /></div>
                             <div class="row"><br /></div>
@@ -71,7 +67,9 @@
                                 value="abs"
                                 variant="success"
                                 class="btn btn-primary"
-                                v-bind:disabled="!inputEmailUsername.length"
+                                v-bind:disabled="
+                                  !inputEmailUsername.length || !captchaSuccess
+                                "
                               >
                                 Absenden
                               </b-button>
@@ -88,36 +86,63 @@
         </transition>
       </modal>
     </div>
+    <snackbar
+      ref="snackbar"
+      baseSize="100px"
+      position="bottom-right"
+      holdTime="5000"
+    ></snackbar>
   </div>
 </template>
 
 <script>
 import Snackbar from "vuejs-snackbar";
+import VueRecaptcha from "vue-recaptcha";
 
 export default {
   name: "change_password_modal",
   data: function () {
     return {
       closeImg: {
-        src: "images/modal/close_window.gif",
+        src: "index_content/img/close_window.png",
         alt: "Close modal",
       },
       showChangePasswordModal: false,
       inputEmailUsername: "",
+      captchaSuccess: false,
     };
   },
   methods: {
+    document_close_event_listener: function (e) {
+      if (e.key === "Escape") {
+        this.close();
+      }
+    },
+    verify: function (response) {
+      if (response) {
+        this.captchaSuccess = true;
+      }
+    },
+    captcha_expired: function () {
+      this.captchaSuccess = false;
+    },
     close: function () {
       this.showChangePasswordModal = false;
+      this.captchaSuccess = false;
+      this.inputEmailUsername = "";
+      document.body.removeEventListener("keyup", this.document_close_event_listener);
+    },
+    updated() {
+      if (this.showChangePasswordModal) {
+        console.log("adding EL");
+        document.body.addEventListener("keyup", this.document_close_event_listener);
+      }
     },
     change_password: function (e) {
       e.preventDefault();
-      // Close the window.
-      this.close();
-      // Send the request.
-      fetch(
-        mainUrl + "admin_content/ajax/change_password/change_password.php",
-        {
+      if (this.inputEmailUsername.length && this.captchaSuccess) {
+        // Send the request.
+        fetch(mainUrl + "index_content/change_password/change_password.php", {
           method: "POST",
           dataType: "json",
           mode: "cors",
@@ -130,25 +155,27 @@ export default {
           body: JSON.stringify({
             inputEmailUsername: this.inputEmailUsername,
           }),
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          if (res.success) {
-            // Show the snackbar.
-            this.$refs.snackbar.open(
-              "Es wurde eine Email an die eingegebene E-Mail Adresse(oder Benutzername) gesendet."
-            );
-          } else {
-            this.$refs.snackbar.error(res.msg);
-          }
         })
-        .catch((err) => this.$refs.snackbar.error(err));
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.success) {
+              // Show the snackbar.
+              this.$refs.snackbar.info(
+                "Eine Email wurde an die eingegebene E-Mail Adresse(oder Benutzername) gesendet.\r\nBitte checken Sie auch Ihre Spambox."
+              );
+            } else {
+              this.$refs.snackbar.error(res.msg);
+            }
+          })
+          .catch((err) => this.$refs.snackbar.error(err));
+      }
+      // Close the window.
+      this.close();
     },
   },
   components: {
     Snackbar,
+    VueRecaptcha,
   },
 };
 </script>

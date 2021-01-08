@@ -108,7 +108,7 @@ class AdminLogin
 
                                 // Set a cookie if the remember me checkbox is checked.
                                 if ($this->inputRememberMe) {
-                                    setcookie("rememberMeCookie", $username, time() + 7200);
+                                    setcookie("rememberMeCookie", $username, time() + 7200, "/");
                                 }
 
                                 $this->success = true;

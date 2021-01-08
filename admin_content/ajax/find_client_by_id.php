@@ -1,15 +1,20 @@
 <?php
-require_once dirname(__FILE__) . '/get_data_helpers.php';
+require_once dirname(__FILE__) . '/../../helpers_by_table/clients_helpers.php';
+require_once dirname(__FILE__) . '/../../helpers_general/helpers.php';
 
 
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST'
 ) {
 
-    $postData = json_decode(file_get_contents('php://input'), true);
-    $id = intval($postData['id']);
-    $clientData = get_client_by_id($id);
-    if ($clientData) {
-        echo json_encode(array("success" => true, "clientData" => $clientData));
-    } else echo json_encode(array("success" => false));
+    $post_data = json_decode(file_get_contents('php://input'), true);
+    $client_id = intval($post_data["client_id"]);
+    $client_data = get_client_by_id($client_id);
+    // Remove the password for security reasons.
+    unset($client_data['password']);
+    if (gettype($client_data) === 'string') {
+        echo_failure("Die Daten zum Kunden konnten nicht geladen werden.");
+    } else {
+        echo json_encode(array("success" => true, "client_data" => $client_data));
+    }
 }

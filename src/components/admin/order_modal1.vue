@@ -1,6 +1,6 @@
 <template>
   <div id="component_order_modal1">
-    <modal v-if="showOrderModal1">
+    <modal v-if="show_order_modal1">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -8,33 +8,30 @@
               <div class="modal-header">
                 <h5>Auftrag erstellen</h5>
                 <button class="modal-default-button" v-on:click="close()">
-                  <img v-bind:src="closeImg.src" v-bind:alt="closeImg.alt" />
+                  <img v-bind:src="close_img.src" v-bind:alt="close_img.alt" />
                 </button>
               </div>
               <div class="modal-body">
-                <form id="form_suche-auftrag-kunden" class="form-inline">
+                <form id="form_search_order_clients" class="form-inline">
                   <input
                     v-on:keyup="search_client()"
                     class="form-control mr-sm-2"
                     type="search"
                     placeholder="Suche Kunden..."
                     aria-label="Search"
-                    v-model="searchString"
+                    v-model="search_string"
                   />
                 </form>
-                <div
-                  v-if="searchString.trim()"
-                  id="div_suche-auftrag-ergebnisse"
-                >
+                <div v-if="search_string.trim()" id="div_search_order_results">
                   <!-- Show the 'create client' entry only if the search string is not empty. -->
                   <div
                     v-bind:key="client.id"
                     v-for="client in clients"
-                    v-on:click="select_client(client.value)"
-                    class="div_auftrag-kunden-ergebnis"
+                    v-on:click="select_client(client.id)"
+                    class="div_order_clients_result"
                   >
                     <span v-text="client.title"></span>
-                    <img v-bind:src="img_arrow_src" alt="Arrow" />
+                    <img v-bind:src="arrow_img.src" v-bind:alt="arrow_img.alt" />
                   </div>
                 </div>
               </div>
@@ -44,13 +41,13 @@
       </transition>
     </modal>
     <client_modal
-      :showClientModal="showClientModal"
-      :clientType="clientType"
+      :show_client_modal="show_client_modal"
+      :client_type="client_type"
       v-on:close_client_modal="close_client_modal()"
     ></client_modal>
     <order_modal2
-      :clientData="clientData"
-      :showOrderModal2="showOrderModal2"
+      :client_data="client_data"
+      :show_order_modal2="show_order_modal2"
       v-on:close_order_modal2="close_order_modal2()"
     ></order_modal2>
   </div>
@@ -62,30 +59,33 @@ import order_modal2 from "./order_modal2.vue";
 
 export default {
   name: "order_modal1",
-  props: ["showOrderModal1"],
+  props: ["show_order_modal1"],
   data: function () {
     return {
-      searchString: "",
-      img_arrow_src: "../images/auftrag/auftrag_arrow.png",
-      showClientModal: false,
-      clientType: "order",
-      showOrderModal2: false,
-      clientData: [],
-      clients: [{ id: 0, value: -1, title: "Neukunden erstellen" }],
-      closeImg: {
-        src: "../images/modal/close_window.gif",
-        alt: "Close modal",
+      search_string: "",
+      show_client_modal: false,
+      client_type: "order",
+      show_order_modal2: false,
+      client_data: [],
+      clients: [{ value: 0, id: -1, title: "Neukunden erstellen" }],
+      close_img: {
+        src: "img/close_window.png",
+        alt: "Fenster schließen",
+      },
+      arrow_img: {
+        src: "img/arrow.png",
+        alt: "Pfeil",
       },
     };
   },
   methods: {
     close: function () {
-      this.searchString = "";
-      this.showOrderModal1 = false;
+      this.search_string = "";
+      this.show_order_modal1 = false;
       this.$emit("close_order_modal1");
     },
     search_client: function () {
-      let input = this.searchString.trim();
+      let input = this.search_string.trim();
       // Empty the search list if the input string is empty.
       if (input) {
         fetch(mainUrl + "admin_content/ajax/find_client_by_name.php", {
@@ -96,24 +96,30 @@ export default {
           headers: {
             "Access-Control-Allow-Origin": "*",
           },
-          body: JSON.stringify({ clientName: input }),
+          body: JSON.stringify({ client_name: input }),
         })
           .then((res) => res.json())
           .then((res) => {
-            if (res.success && res.hasOwnProperty("clientData")) {
-              let clientData = res.clientData;
+            if (res.success && res.hasOwnProperty("client_data")) {
+              let client_data = res.client_data;
               this.clients = this.clients.slice(0, 1);
 
-              clientData.map((client, index) =>
+              client_data.map((client, index) =>
                 this.clients.push({
-                  id: index + 1,
-                  value: client.id,
+                  value: index + 1,
+                  id: client.id,
+                  company_name: client.company_name,
+                  street: client.street,
+                  place: client.place,
+                  contact_person: client.contact_person,
+                  phone: client.phone,
+                  email: client.email,
                   title:
-                    client.firmenname +
+                    client.company_name +
                     " (" +
-                    client.ort +
+                    client.place +
                     ", " +
-                    client.plz +
+                    client.postal_code +
                     ")",
                 })
               );
@@ -122,55 +128,41 @@ export default {
           .catch((err) => console.log(err));
       }
     },
-    select_client: function (clientId) {
-      if (clientId === -1) {
+    select_client: function (client_id) {
+      if (client_id === -1) {
         this.create_client();
       } else {
         // Load data for an existing client.
-        this.create_order(clientId);
+        this.create_order(client_id);
       }
     },
     create_client: function () {
       this.close();
-      this.showClientModal = true;
+      this.show_client_modal = true;
     },
-    create_order: function (clientId) {
-      fetch(mainUrl + "admin_content/ajax/find_client_by_id.php", {
-        method: "POST",
-        dataType: "json",
-        mode: "cors",
-        credentials: "same-origin",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({ id: clientId }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.success && res.hasOwnProperty("clientData")) {
-            let clientData = res.clientData;
-            // Open the second inquiry modal.
-            this.close();
-            this.showOrderModal2 = true;
-            this.clientData = {
-              companyName: clientData.firmenname,
-              companyStreet: clientData.strasse,
-              companyAddress: clientData.ort,
-              clientNumber: clientData.id,
-              contactPerson: clientData.ansprechpartner,
-              clientId: clientData.id,
-              phone: clientData.telefon,
-              email: clientData.email,
-            };
-          }
-        })
-        .catch((err) => console.log(err));
+    create_order: function (client_id) {
+      let client_data = this.clients.find((client) => client.id === client_id);
+
+      if (client_data) {
+        // Open the second inquiry modal.
+        this.close();
+        this.show_order_modal2 = true;
+        this.client_data = {
+          company_name: client_data.company_name,
+          street: client_data.street,
+          place: client_data.place,
+          id: client_data.id,
+          contact_person: client_data.contact_person,
+          phone: client_data.phone,
+          email: client_data.email,
+        };
+      }
     },
     close_client_modal: function () {
-      this.showClientModal = false;
+      this.show_client_modal = false;
     },
     close_order_modal2: function () {
-      this.showOrderModal2 = false;
+      this.show_order_modal2 = false;
     },
   },
   components: {
@@ -189,5 +181,39 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+}
+
+#component_order_modal1 #form_search_order_clients {
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+#component_order_modal1 #div_search_order_results {
+  margin-top: 5px;
+  margin-left: 5px;
+  background-color: white;
+  width: 50%;
+  position: static !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+}
+
+#component_order_modal1 .div_order_clients_result:first-of-type {
+  color: blue;
+  font-weight: 900;
+}
+
+#component_order_modal1 .div_order_clients_result {
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#component_order_modal1 .div_order_clients_result:hover {
+  background: lightgray;
 }
 </style>

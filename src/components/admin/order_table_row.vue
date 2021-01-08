@@ -4,34 +4,43 @@
       <span>
         &nbsp;
         <img v-bind:src="clientImg.src" v-bind:alt="clientImg.alt" />
-        <span>&nbsp;{{companyName}}</span>
+        <span>&nbsp;{{ client_data.company_name }}</span>
       </span>
     </td>
-    <td>{{createdAt}}</td>
-    <td>{{pickupCountry}}&nbsp;{{pickupPLZ}}</td>
-    <td>{{deliveryCountry}}&nbsp;{{deliveryPLZ}}</td>
+    <td>{{ created_at }}</td>
+    <td>{{ pickup_country }}&nbsp;{{ pickup_postal_code }}</td>
+    <td>{{ delivery_country }}&nbsp;{{ delivery_postal_code }}</td>
     <td>
       <order_status_select
-        v-if="showStatusSelect"
-        :id="statusSelectId"
-        :statusValue="statusValue"
-        :showStatusSelect="showStatusSelect"
-        v-on:optionChange="option_change($event)"
+        v-if="show_status_select"
+        :id="status_select_id"
+        :status="status"
+        :show_status_select="show_status_select"
+        v-on:option_change="option_change($event)"
       ></order_status_select>
-      <span v-else :id="statusId">{{statusValue}}</span>
+      <span v-else :id="status_id">{{ status }}</span>
     </td>
     <td class="td_actions">
       <order_detail :id="id"></order_detail>
-      <img v-bind:src="EditImg.src" v-bind:alt="EditImg.alt" v-on:click="display_order_select()" />
       <img
-        v-if="showOrderInvoice"
-        v-bind:src="CreateInv.src"
-        v-bind:alt="CreateInv.alt"
+        v-bind:src="editImg.src"
+        v-bind:alt="editImg.alt"
+        v-on:click="display_order_select()"
+      />
+      <img
+        v-if="show_order_invoice"
+        v-bind:src="createInvoiceImg.src"
+        v-bind:alt="createInvoiceImg.alt"
         v-on:click="order_invoice()"
       />
     </td>
     <td>
-      <order_invoice :invoiceId="id" :clientData="clientData"></order_invoice>
+      <order_invoice
+        :invoice_id="id"
+        :client_data="client_data"
+        :packages="packages"
+        :completed_timestamp="completed_timestamp"
+      ></order_invoice>
     </td>
   </tr>
 </template>
@@ -40,40 +49,41 @@
 import order_detail from "./order_detail.vue";
 import order_status_select from "./order_status_select.vue";
 import order_invoice from "./order_invoice.vue";
+import moment from "moment";
 
 export default {
   name: "order_table_row",
   props: [
     "id",
-    "companyName",
-    "clientId",
-    "clientData",
-    "createdAt",
-    "pickupCountry",
-    "pickupPLZ",
-    "deliveryCountry",
-    "deliveryPLZ",
-    "statusValue",
-    "statusColor",
+    "client_data",
+    "packages",
+    "created_at",
+    "pickup_country",
+    "pickup_postal_code",
+    "delivery_country",
+    "delivery_postal_code",
+    "status",
+    "status_color",
   ],
   data: function () {
     return {
       clientImg: {
-        src: "../images/an_auf_table/firmen_details.png",
-        alt: "Company",
+        src: "img/company_details.png",
+        alt: "Firma",
       },
-      EditImg: {
-        src: "../images/an_auf_table/change_status.png",
-        alt: "Change status",
+      editImg: {
+        src: "img/change_status.png",
+        alt: "Status ändern",
       },
-      CreateInv: {
-        src: "../images/an_auf_table/order_invoice.png",
-        alt: "Download invoice",
+      createInvoiceImg: {
+        src: "img/order_invoice.png",
+        alt: "Rechnung herunterladen",
       },
-      showStatusSelect: false,
-      statusSelectId: "statusSelect_" + this.id,
-      statusId: "status_" + this.id,
-      showOrderInvoice: false,
+      show_status_select: false,
+      status_select_id: "status_select_" + this.id,
+      status_id: "status_" + this.id,
+      show_order_invoice: false,
+      completed_timestamp: "",
     };
   },
   mounted: function () {
@@ -84,19 +94,20 @@ export default {
   },
   methods: {
     display_order_select: function () {
-      this.showStatusSelect = true;
+      this.show_status_select = true;
     },
     option_change: function (newOption) {
-      this.showStatusSelect = false;
-      this.statusValue = newOption;
-      if (this.statusValue === "abgeschlossen") {
-        this.showOrderInvoice = true;
+      this.show_status_select = false;
+      this.status = newOption;
+      if (this.status === "abgeschlossen") {
+        this.completed_timestamp = moment().format("DD.MM.YYYY");
+        this.show_order_invoice = true;
       } else {
-        this.showOrderInvoice = false;
+        this.show_order_invoice = false;
       }
     },
     order_invoice: function () {
-      const element = document.getElementById("orderInvoice_" + this.id);
+      const element = document.getElementById("order_invoice_" + this.id);
       const opt = {
         filename: `document.pdf`,
         image: { type: "jpeg", quality: 0.98 },
@@ -106,25 +117,25 @@ export default {
       html2pdf().from(element).set(opt).save();
     },
     apply_status_color: function () {
-      switch (this.statusValue) {
+      switch (this.status) {
         case "offen":
-          this.statusColor = "red";
+          this.status_color = "red";
           break;
         case "ausstehend":
-          this.statusColor = "orange";
+          this.status_color = "orange";
           break;
         case "abgelehnt":
-          this.statusColor = "purple";
+          this.status_color = "purple";
           break;
         case "beauftragt":
-          this.statusColor = "green";
+          this.status_color = "green";
           break;
         case "abgeschlossen":
-          this.statusColor = "black";
+          this.status_color = "black";
           break;
       }
-      if (!this.showStatusSelect) {
-        document.getElementById(this.statusId).style.color = this.statusColor;
+      if (!this.show_status_select) {
+        document.getElementById(this.status_id).style.color = this.status_color;
       }
     },
   },

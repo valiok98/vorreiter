@@ -2,8 +2,8 @@
   <div id="component_order_detail">
     <img v-bind:src="img.src" v-bind:alt="img.alt" v-on:click="display_order()" />
     <order_detail_modal
-      :showOrderDetailModal="showOrderDetailModal"
-      :orderData="orderData"
+      :show_order_detail_modal="show_order_detail_modal"
+      :order_data="order_data"
       v-on:close_order_detail_modal="close_order_detail_modal()"
     ></order_detail_modal>
     <snackbar ref="snackbar" baseSize="100px" position="bottom-right"></snackbar>
@@ -20,11 +20,11 @@ export default {
   data: function () {
     return {
       img: {
-        src: "../images/an_auf_table/eye.png",
-        alt: "View entry",
+        src: "img/eye.png",
+        alt: "Auftrag anzeigen",
       },
-      showOrderDetailModal: false,
-      orderData: {},
+      show_order_detail_modal: false,
+      order_data: {},
     };
   },
   components: {
@@ -47,9 +47,9 @@ export default {
       })
         .then((res) => res.json())
         .then((res) => {
-          if (res.success && res.hasOwnProperty("orderData")) {
+          if (res.success && res.hasOwnProperty("order_data")) {
             // Configure the packages for the accordion component.
-            let packages = res.orderData.packages;
+            let packages = res.order_data.packages;
             packages = packages.map((package_, index) => {
               return {
                 ...package_,
@@ -58,19 +58,17 @@ export default {
               };
             });
             // Set the packages back in the res object.
-            res.orderData.packages = packages;
-            this.orderData = res.orderData;
-            this.showOrderDetailModal = true;
+            res.order_data.packages = packages;
+            this.order_data = res.order_data;
+            this.show_order_detail_modal = true;
           } else {
-            this.$refs.snackbar.error(
-              "Der Auftrag konnte nicht gefunden werden."
-            );
+            this.$refs.snackbar.error(res.msg);
           }
         })
         .catch((err) => this.$refs.snackbar.error(err));
     },
     close_order_detail_modal: function () {
-      this.showOrderDetailModal = false;
+      this.show_order_detail_modal = false;
     },
   },
 };

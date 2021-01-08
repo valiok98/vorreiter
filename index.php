@@ -4,14 +4,10 @@ require_once dirname(__FILE__) . '/definitions.php';
 // Initialize the session
 session_start();
 
-$title = 'Vorreiter - New horizons for a digital world';
-
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] === 'admin') {
         header("location:" . URL . "admin_content/welcome.php");
-    } else if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] === 'user') {
-        header("location:" . URL . "user_content/welcome.php");
     }
     die;
 }
@@ -23,19 +19,21 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    <title>Vorreiter - New horizons for a digital world</title>
+
+
     <!-- Fonts start -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <!-- Fonts end -->
 
     <!-- Eigenes CSS start -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="index_content/css/style.css">
     <!-- Eigenes CSS end -->
 
-
-    <title>
-        <?= $title ?>
-    </title>
-
+    <!-- Google captcha start -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+    <!-- Google captcha end -->
 
     <script>
         var mainUrl = "<?= URL ?>";
@@ -56,11 +54,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
             <div class="col-lg-6">
                 <div>
                     <div id="div_vorreiter-logo">
-                        <img src="images/index/vorreiter_logo.png" alt="vorreiter">
+                        <img src="index_content/img/vorreiter_logo.png" alt="Vorreiter">
                     </div>
                     <div id="div_main_content">
                         <div id="div_zug_logo">
-                            <img src="images/index/zug_logo.png" alt="zug">
+                            <img src="index_content/img/train_logo.png" alt="Zug">
                         </div>
                         <div id="div_login_form">
                             <h1><b>Login</b></h1>

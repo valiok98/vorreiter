@@ -88,7 +88,7 @@ export default {
   methods: {
     login: function (e) {
       e.preventDefault();
-      fetch(mainUrl + "login.php", {
+      fetch(mainUrl + "index_content/login.php", {
         method: "POST",
         dataType: "json",
         mode: "cors",
