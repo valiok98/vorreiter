@@ -56,13 +56,14 @@ function create_delivery_address($deliveryAddressData)
         house_number,
         postal_code,
         place,
-        country
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)";
+        country,
+        fax
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)";
 
     if ($stmt = $mysqli->prepare($sql)) {
 
         $stmt->bind_param(
-            "ssssssssiiss",
+            "ssssssssiisss",
             $mysqli->real_escape_string(trim($deliveryAddressData['company_name'])),
             $mysqli->real_escape_string(trim($deliveryAddressData['salutation'])),
             $mysqli->real_escape_string(trim($deliveryAddressData['title'])),
@@ -74,7 +75,8 @@ function create_delivery_address($deliveryAddressData)
             $mysqli->real_escape_string(intval($deliveryAddressData['house_number'])),
             $mysqli->real_escape_string(intval($deliveryAddressData['postal_code'])),
             $mysqli->real_escape_string(trim($deliveryAddressData['place'])),
-            $mysqli->real_escape_string(trim($deliveryAddressData['country']))
+            $mysqli->real_escape_string(trim($deliveryAddressData['country'])),
+            $mysqli->real_escape_string(trim($deliveryAddressData['fax']))
         );
 
         if ($stmt->execute()) {

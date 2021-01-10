@@ -42,7 +42,7 @@ function get_pickup_address_by_id($addressId)
 function create_pickup_address($pickupAddressData)
 {
     global $mysqli;
-    
+
     $sql = "INSERT INTO vorreiter_pickup_address
         (
         company_name,
@@ -56,12 +56,13 @@ function create_pickup_address($pickupAddressData)
         house_number,
         postal_code,
         place,
-        country
-        ) VALUES (?, ?, ?, ?,     ?, ?, ?, ?,   ?, ?, ?, ?)";
+        country,
+        fax
+        ) VALUES (?, ?, ?, ?,     ?, ?, ?, ?,   ?, ?, ?, ?, ?)";
 
     if ($stmt = $mysqli->prepare($sql)) {
         $stmt->bind_param(
-            "ssssssssiiss",
+            "ssssssssiisss",
             $mysqli->real_escape_string(trim($pickupAddressData['company_name'])),
             $mysqli->real_escape_string(trim($pickupAddressData['salutation'])),
             $mysqli->real_escape_string(trim($pickupAddressData['title'])),
@@ -73,7 +74,8 @@ function create_pickup_address($pickupAddressData)
             $mysqli->real_escape_string(intval($pickupAddressData['house_number'])),
             $mysqli->real_escape_string(intval($pickupAddressData['postal_code'])),
             $mysqli->real_escape_string(trim($pickupAddressData['place'])),
-            $mysqli->real_escape_string(trim($pickupAddressData['country']))
+            $mysqli->real_escape_string(trim($pickupAddressData['country'])),
+            $mysqli->real_escape_string(trim($pickupAddressData['fax']))
         );
 
         if ($stmt->execute()) {

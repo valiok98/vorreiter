@@ -19,6 +19,11 @@ body {
     width: 100%;
 }
 
+#div_main_content {
+    height: 100vh;
+    overflow-y: auto;
+}
+
 
 /* Vorreiter tab pane. */
 
@@ -105,8 +110,8 @@ a[href="#div_orders"] {
 
 #table_clients {
     width: 100%;
-    /* border-collapse: separate; */
-    /* border-spacing: 0 15px; */
+    border-collapse: separate;
+    border-spacing: 0 15px;
 }
 
 #tablie_clients thead {

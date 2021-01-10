@@ -15,49 +15,49 @@
                 <div>
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-sm-6 container-fluid">
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <h5>Auftraggeber</h5>
-                            <span>
-                              <b>Firmenname</b>
-                            </span>
-                            <br />
-                            <span v-text="client_data.company_name"></span>
+                      <div class="col-lg-6 container-fluid">
+                        <form id="form_inquiry_address" class="m-form">
+                          <div class="row">
+                            <div class="col-lg-6">
+                              <h5>Auftraggeber</h5>
+                              <span>
+                                <b>Firmenname</b>
+                              </span>
+                              <br />
+                              <span v-text="client_data.company_name"></span>
+                              <br />
+                            </div>
+                            <div class="col-lg-6">
+                              <br />
+                              <span>
+                                <b>Kundennummer</b>
+                              </span>
+                              <br />
+                              <span v-text="client_data.id"></span>
+                              <br />
+                              <span>
+                                <b>Telefon</b>
+                              </span>
+                              <br />
+                              <span v-text="client_data.phone"></span>
+                              <br />
+                              <span>
+                                <b>E-Mail-Adresse</b>
+                              </span>
+                              <br />
+                              <span v-text="client_data.email"></span>
+                            </div>
+                          </div>
+                          <div class="row">
                             <br />
                           </div>
-                          <div class="col-sm-6">
-                            <br />
-                            <span>
-                              <b>Kundennummer</b>
-                            </span>
-                            <br />
-                            <span v-text="client_data.id"></span>
-                            <br />
-                            <span>
-                              <b>Telefon</b>
-                            </span>
-                            <br />
-                            <span v-text="client_data.phone"></span>
-                            <br />
-                            <span>
-                              <b>E-Mail-Adresse</b>
-                            </span>
-                            <br />
-                            <span v-text="client_data.email"></span>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <br />
-                        </div>
 
-                        <div class="row">
                           <!-- Part for the pickup address. -->
                           <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-lg-6">
                               <h5>Abholadresse</h5>
                             </div>
-                            <div class="col-sm-6" id="div_pickup_address">
+                            <div class="col-lg-6" id="div_pickup_address">
                               <input
                                 type="checkbox"
                                 value="0"
@@ -69,11 +69,11 @@
                               <h6>ist gleich dem Auftraggeber</h6>
                             </div>
                           </div>
-                          <div v-if="!from.same_address.length" class="container-fluid">
+                          <div v-if="!from.same_address.length">
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Firmenname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Firmenname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -93,9 +93,9 @@
                               </span>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Anrede<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -114,25 +114,31 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
                                   <b>Titel</b>
                                 </span>
-                                <br />
                                 <div class="form-group form-inline">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Titel ..."
-                                    v-model="from.title"
-                                  />
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
+                                    </div>
+                                    <select v-model="from.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Vorname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Vorname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -145,9 +151,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Nachname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Nachname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -162,9 +168,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Telefon<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Telefon<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -177,9 +183,13 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>E-Mail Adresse<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >E-Mail Adresse<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -194,9 +204,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Staße<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Staße<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -209,9 +219,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Hausnummer<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -227,9 +237,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>PLZ<span style="color:red;">&nbsp;*</span></b>
+                                  <b>PLZ<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -243,9 +253,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Ort<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Ort<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -260,9 +270,13 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <label>
-                                  <b>Wählen Sie ein Land aus<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >Wählen Sie ein Land aus<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </label>
                                 <br />
                                 <div class="input-group mb-3">
@@ -280,6 +294,19 @@
                                   </select>
                                 </div>
                               </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>
+                                    <b>Fax</b>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Fax ..."
+                                    v-model="from.fax"
+                                  />
+                                </div>
+                              </div>
                             </div>
                             <div class="row">
                               <br />
@@ -287,10 +314,10 @@
                           </div>
                           <!-- Part for the delivery address. -->
                           <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-lg-6">
                               <h5>Lieferadresse</h5>
                             </div>
-                            <div class="col-sm-6" id="div_delivery_address">
+                            <div class="col-lg-6" id="div_delivery_address">
                               <input
                                 type="checkbox"
                                 value="0"
@@ -302,11 +329,11 @@
                               <h6>ist gleich dem Auftraggeber</h6>
                             </div>
                           </div>
-                          <div v-if="!to.same_address.length" class="container-fluid">
+                          <div v-if="!to.same_address.length">
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Firmenname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Firmenname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -326,9 +353,9 @@
                               </span>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Anrede<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -344,25 +371,31 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
                                   <b>Titel</b>
                                 </span>
-                                <br />
                                 <div class="form-group form-inline">
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Titel ..."
-                                    v-model="to.title"
-                                  />
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
+                                    </div>
+                                    <select v-model="to.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Vorname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Vorname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -375,9 +408,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Nachname<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Nachname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -392,9 +425,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Telefon<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Telefon<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -407,9 +440,13 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>E-Mail Adresse<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >E-Mail Adresse<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -424,9 +461,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Staße<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Staße<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -439,9 +476,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Hausnummer<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -457,9 +494,9 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>PLZ<span style="color:red;">&nbsp;*</span></b>
+                                  <b>PLZ<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -473,9 +510,9 @@
                                   />
                                 </div>
                               </div>
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <span>
-                                  <b>Ort<span style="color:red;">&nbsp;*</span></b>
+                                  <b>Ort<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -490,9 +527,13 @@
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-sm-6">
+                              <div class="col-lg-6">
                                 <label>
-                                  <b>Wählen Sie ein Land aus<span style="color:red;">&nbsp;*</span></b>
+                                  <b
+                                    >Wählen Sie ein Land aus<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </label>
                                 <br />
                                 <div class="input-group mb-3">
@@ -510,14 +551,24 @@
                                   </select>
                                 </div>
                               </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>
+                                    <b>Fax</b>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Fax ..."
+                                    v-model="to.fax"
+                                  />
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        </form>
                       </div>
-                      <div
-                        id="div_inquiry_calculator"
-                        class="col-sm-6 div_calculator_wrapper"
-                      >
+                      <div class="col-lg-6">
                         <inquiry_calculator
                           :client_data="client_data"
                           :from_address="from"
@@ -539,6 +590,7 @@
 
 <script>
 import inquiry_calculator from "./inquiry_calculator.vue";
+import { COUNTRIES } from "../general/COUNTRIES";
 
 export default {
   name: "inquiry_modal2",
@@ -558,6 +610,7 @@ export default {
         postal_code: 0,
         place: "",
         country: "",
+        fax: "",
         same_address: [],
       },
       to: {
@@ -573,12 +626,14 @@ export default {
         postal_code: 0,
         place: "",
         country: "",
+        fax: "",
         same_address: [],
       },
       close_img: {
         src: "img/close_window.png",
         alt: "Fenster schließen",
       },
+      countries_list: COUNTRIES,
     };
   },
   methods: {
@@ -599,6 +654,10 @@ export default {
   /* Overwrite the width from the client modal. */
   width: 75% !important;
   height: 90%;
+}
+
+#component_inquiry_modal2 #form_inquiry_address input[type="text"] {
+  width: 100%;
 }
 
 #component_inquiry_modal2 .modal-header {

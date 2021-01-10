@@ -77,7 +77,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 #component_inquiry_table_row .td_actions img {
   cursor: pointer;

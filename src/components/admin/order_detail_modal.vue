@@ -6,9 +6,17 @@
           <div class="modal-wrapper">
             <div class="modal-container">
               <div class="modal-header">
-                <h5>{{ modalHeader }}</h5>
+                <h5>
+                  Auftrag&nbsp;
+                  {{ order_data.id }}
+                  &nbsp;zu Sendungsnummer&nbsp;
+                  {{ order_data.id }}
+                  &nbsp;-&nbsp;
+                  {{ order_data.client_data.company_name }}
+                  [Kundennummer&nbsp;{{ order_data.client_data.id }}]
+                </h5>
                 <button class="modal-default-button" v-on:click="close()">
-                  <img v-bind:src="closeImg.src" v-bind:alt="closeImg.alt" />
+                  <img v-bind:src="close_img.src" v-bind:alt="close_img.alt" />
                 </button>
               </div>
               <div class="modal-body">
@@ -399,8 +407,7 @@ export default {
   props: ["show_order_detail_modal", "order_data"],
   data: function () {
     return {
-      modalHeader: "Auftrag im Detail",
-      closeImg: {
+      close_img: {
         src: "img/close_window.png",
         alt: "Fenster schließen",
       },

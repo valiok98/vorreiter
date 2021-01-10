@@ -28,7 +28,9 @@
                         <div class="row">
                           <div class="col-sm-12">
                             <div class="form-group">
-                              <label>Firmenname<span style="color:red;">&nbsp;*</span></label>
+                              <label
+                                >Firmenname<span style="color: red">&nbsp;*</span></label
+                              >
                               <input
                                 required
                                 type="text"
@@ -42,7 +44,7 @@
                         <div class="row">
                           <div class="col-sm-6">
                             <div>
-                              <label>Anrede<span style="color:red;">&nbsp;*</span></label>
+                              <label>Anrede<span style="color: red">&nbsp;*</span></label>
                             </div>
                             <div class="input-group mb-3">
                               <select v-model="salutation" class="custom-select">
@@ -53,14 +55,18 @@
                             </div>
                           </div>
                           <div class="col-sm-6">
-                            <div class="form-group">
+                            <div>
                               <label>Titel</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Titel ..."
-                                v-model="title"
-                              />
+                            </div>
+                            <div class="input-group mb-3">
+                              <select v-model="title" class="custom-select">
+                                <option value="-">-</option>
+                                <option value="dr">Dr.</option>
+                                <option value="dr_dr">Dr. Dr.</option>
+                                <option value="prof">Prof.</option>
+                                <option value="prof_dr">Prof. Dr.</option>
+                                <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                              </select>
                             </div>
                           </div>
                           <div class="col-sm-4"></div>
@@ -82,7 +88,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Vorname<span style="color:red;">&nbsp;*</span></label>
+                          <label>Vorname<span style="color: red">&nbsp;*</span></label>
                           <input
                             v-on:input="adjust_client_abv()"
                             required
@@ -95,7 +101,7 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Nachname<span style="color:red;">&nbsp;*</span></label>
+                          <label>Nachname<span style="color: red">&nbsp;*</span></label>
                           <input
                             v-on:input="adjust_client_abv()"
                             required
@@ -110,7 +116,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Telefon<span style="color:red;">&nbsp;*</span></label>
+                          <label>Telefon<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="tel"
@@ -122,7 +128,9 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>E-Mail Adresse<span style="color:red;">&nbsp;*</span></label>
+                          <label
+                            >E-Mail Adresse<span style="color: red">&nbsp;*</span></label
+                          >
                           <input
                             required
                             type="email"
@@ -136,7 +144,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Straße<span style="color:red;">&nbsp;*</span></label>
+                          <label>Straße<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="text"
@@ -148,7 +156,7 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Hausnummer<span style="color:red;">&nbsp;*</span></label>
+                          <label>Hausnummer<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="number"
@@ -163,7 +171,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>PLZ<span style="color:red;">&nbsp;*</span></label>
+                          <label>PLZ<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="number"
@@ -176,7 +184,7 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Ort<span style="color:red;">&nbsp;*</span></label>
+                          <label>Ort<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="text"
@@ -190,7 +198,11 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <div>
-                          <label>Wählen Sie ein Land aus<span style="color:red;">&nbsp;*</span></label>
+                          <label
+                            >Wählen Sie ein Land aus<span style="color: red"
+                              >&nbsp;*</span
+                            ></label
+                          >
                         </div>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
@@ -209,7 +221,11 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Zentrale Telefonnummer<span style="color:red;">&nbsp;*</span></label>
+                          <label
+                            >Zentrale Telefonnummer<span style="color: red"
+                              >&nbsp;*</span
+                            ></label
+                          >
                           <input
                             required
                             type="tel"
@@ -234,7 +250,7 @@
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>Mobil<span style="color:red;">&nbsp;*</span></label>
+                          <label>Mobil<span style="color: red">&nbsp;*</span></label>
                           <input
                             required
                             type="tel"

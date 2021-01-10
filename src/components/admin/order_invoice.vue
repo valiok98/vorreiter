@@ -4,11 +4,7 @@
       <img v-bind:src="imgLogo.src" v-bind:alt="imgLogo.alt" />
     </div>
     <div class="companyInfo1">
-      <span
-        >{{ client_data.company_name }} | {{ client_data.street }}&nbsp;{{
-          client_data.house_number
-        }}
-        | {{ client_data.postal_code }}&nbsp;{{ client_data.place }} |
+      <span>
         [LST-Siegen&nbsp;-&nbsp;Effertsurfer&nbsp;69&nbsp;-&nbsp;57072&nbsp;Siegen]</span
       >
       <br />

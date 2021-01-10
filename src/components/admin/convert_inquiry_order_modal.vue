@@ -12,490 +12,538 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form>
+                <div>
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="col-lg-6">
-                        <!-- Part for the pickup address. -->
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <h5>Abholadresse</h5>
-                          </div>
-                          <div class="col-sm-6" id="div_pickup_address">
-                            <input
-                              type="checkbox"
-                              value="0"
-                              v-model="from.same_address"
-                            />
-                            <div>
-                              <span>&nbsp;&nbsp;</span>
-                            </div>
-                            <h6>ist gleich dem Auftraggeber</h6>
-                          </div>
-                        </div>
-                        <div v-if="!from.same_address.length">
+                      <div class="col-lg-6 container-fluid">
+                        <form id="form_pickup_address" class="m-form">
+                          <!-- Part for the pickup address. -->
                           <div class="row">
                             <div class="col-sm-6">
-                              <span>
-                                <b>Firmenname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Firmenname ..."
-                                  required
-                                  v-model="from.company_name"
-                                />
+                              <h5>Abholadresse</h5>
+                            </div>
+                            <div class="col-sm-6" id="div_pickup_address">
+                              <input
+                                type="checkbox"
+                                value="0"
+                                v-model="from.same_address"
+                              />
+                              <div>
+                                <span>&nbsp;&nbsp;</span>
+                              </div>
+                              <h6>ist gleich dem Auftraggeber</h6>
+                            </div>
+                          </div>
+                          <div v-if="!from.same_address.length">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Firmenname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Firmenname ..."
+                                    required
+                                    v-model="from.company_name"
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <span>
-                                <b>Ansprechpartner</b>
-                              </span>
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <span>
+                                  <b>Ansprechpartner</b>
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                          <div class="row"><br /></div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Anrede<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <label class="input-group-text">Anrede</label>
-                                  </div>
+                            <div class="row"><br /></div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Anrede</label>
+                                    </div>
 
-                                  <select v-model="from.salutation" class="custom-select">
-                                    <option value="-">-</option>
-                                    <option value="herr">Herr</option>
-                                    <option value="frau">Frau</option>
-                                  </select>
+                                    <select
+                                      v-model="from.salutation"
+                                      class="custom-select"
+                                    >
+                                      <option value="-">-</option>
+                                      <option value="herr">Herr</option>
+                                      <option value="frau">Frau</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Titel</b>
+                                </span>
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
+                                    </div>
+                                    <select v-model="from.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Titel</b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Titel ..."
-                                  required
-                                  v-model="from.title"
-                                />
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Vorname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Vorname ..."
+                                    required
+                                    v-model="from.first_name"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Nachname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Nachname ..."
+                                    required
+                                    v-model="from.last_name"
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Vorname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Vorname ..."
-                                  required
-                                  v-model="from.first_name"
-                                />
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Telefon<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Telefon ..."
+                                    required
+                                    v-model="from.phone"
+                                  />
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Nachname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Nachname ..."
-                                  required
-                                  v-model="from.last_name"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Telefon<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Telefon ..."
-                                  required
-                                  v-model="from.phone"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b
-                                  >E-Mail Adresse<span style="color: red"
-                                    >&nbsp;*</span
-                                  ></b
-                                >
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Email ..."
-                                  required
-                                  v-model="from.email"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Staße<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Staße ..."
-                                  required
-                                  v-model="from.street"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Hausnummer ..."
-                                  required
-                                  v-model="from.house_number"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>PLZ<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="PLZ ..."
-                                  required
-                                  v-model="from.postal_code"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Ort<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Ort ..."
-                                  required
-                                  v-model="from.place"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <div>
-                                <label>
+                              <div class="col-sm-6">
+                                <span>
                                   <b
-                                    >Wählen Sie ein Land aus<span style="color: red"
+                                    >E-Mail Adresse<span style="color: red"
                                       >&nbsp;*</span
                                     ></b
                                   >
-                                </label>
-                              </div>
-                              <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                  <label class="input-group-text">Land</label>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Email ..."
+                                    required
+                                    v-model="from.email"
+                                  />
                                 </div>
-                                <select v-model="from.country" class="custom-select">
-                                  <option
-                                    v-bind:key="cntr"
-                                    v-for="cntr in countries_list"
-                                    v-bind:value="cntr"
-                                  >
-                                    {{ cntr }}
-                                  </option>
-                                </select>
                               </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <br />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <!-- Part for the delivery address. -->
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <h5>Lieferadresse</h5>
-                          </div>
-                          <div class="col-sm-6" id="div_delivery_address">
-                            <input type="checkbox" value="0" v-model="to.same_address" />
-                            <div>
-                              <span>&nbsp;&nbsp;</span>
-                            </div>
-                            <h6>ist gleich dem Auftraggeber</h6>
-                          </div>
-                        </div>
-                        <div v-if="!to.same_address.length">
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Firmenname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Firmenname ..."
-                                  required
-                                  v-model="to.company_name"
-                                />
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Staße<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Staße ..."
+                                    required
+                                    v-model="from.street"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Hausnummer ..."
+                                    required
+                                    v-model="from.house_number"
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <span>
-                                <b>Ansprechpartner</b>
-                              </span>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>PLZ<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="PLZ ..."
+                                    required
+                                    v-model="from.postal_code"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Ort<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Ort ..."
+                                    required
+                                    v-model="from.place"
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <br />
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Anrede<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div>
+                                  <label>
+                                    <b
+                                      >Wählen Sie ein Land aus<span style="color: red"
+                                        >&nbsp;*</span
+                                      ></b
+                                    >
+                                  </label>
+                                </div>
                                 <div class="input-group mb-3">
                                   <div class="input-group-prepend">
-                                    <label class="input-group-text">Anrede</label>
+                                    <label class="input-group-text">Land</label>
                                   </div>
-                                  <select v-model="to.salutation" class="custom-select">
-                                    <option value="-">-</option>
-                                    <option value="herr">Herr</option>
-                                    <option value="frau">Frau</option>
+                                  <select v-model="from.country" class="custom-select">
+                                    <option
+                                      v-bind:key="cntr"
+                                      v-for="cntr in countries_list"
+                                      v-bind:value="cntr"
+                                    >
+                                      {{ cntr }}
+                                    </option>
                                   </select>
                                 </div>
                               </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Titel</b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Titel ..."
-                                  required
-                                  v-model="to.title"
-                                />
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>
+                                    <b>Fax</b>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Fax ..."
+                                    v-model="from.fax"
+                                  />
+                                </div>
                               </div>
+                            </div>
+                            <div class="row">
+                              <br />
                             </div>
                           </div>
+                        </form>
+                      </div>
+
+                      <div class="col-lg-6 container-fluid">
+                        <form id="form_delivery_address" class="m-form">
+                          <!-- Part for the delivery address. -->
                           <div class="row">
                             <div class="col-sm-6">
-                              <span>
-                                <b>Vorname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Vorname ..."
-                                  required
-                                  v-model="to.first_name"
-                                />
-                              </div>
+                              <h5>Lieferadresse</h5>
                             </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Nachname<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Nachname ..."
-                                  required
-                                  v-model="to.last_name"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Telefon<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Telefon ..."
-                                  required
-                                  v-model="to.phone"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b
-                                  >E-Mail Adresse<span style="color: red"
-                                    >&nbsp;*</span
-                                  ></b
-                                >
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Email ..."
-                                  required
-                                  v-model="to.email"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Staße<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Staße ..."
-                                  required
-                                  v-model="to.street"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Hausnummer ..."
-                                  required
-                                  v-model="to.house_number"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <span>
-                                <b>PLZ<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="PLZ ..."
-                                  required
-                                  v-model="to.postal_code"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <span>
-                                <b>Ort<span style="color: red">&nbsp;*</span></b>
-                              </span>
-                              <br />
-                              <div class="form-group form-inline">
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Ort ..."
-                                  required
-                                  v-model="to.place"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" id="div_delivery_address">
+                              <input
+                                type="checkbox"
+                                value="0"
+                                v-model="to.same_address"
+                              />
                               <div>
-                                <label>
+                                <span>&nbsp;&nbsp;</span>
+                              </div>
+                              <h6>ist gleich dem Auftraggeber</h6>
+                            </div>
+                          </div>
+                          <div v-if="!to.same_address.length">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Firmenname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Firmenname ..."
+                                    required
+                                    v-model="to.company_name"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <span>
+                                  <b>Ansprechpartner</b>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <br />
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Anrede</label>
+                                    </div>
+                                    <select v-model="to.salutation" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="herr">Herr</option>
+                                      <option value="frau">Frau</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Titel</b>
+                                </span>
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
+                                    </div>
+                                    <select v-model="to.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Vorname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Vorname ..."
+                                    required
+                                    v-model="to.first_name"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Nachname<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Nachname ..."
+                                    required
+                                    v-model="to.last_name"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Telefon<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Telefon ..."
+                                    required
+                                    v-model="to.phone"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
                                   <b
-                                    >Wählen Sie ein Land aus<span style="color: red"
+                                    >E-Mail Adresse<span style="color: red"
                                       >&nbsp;*</span
                                     ></b
                                   >
-                                </label>
-                              </div>
-                              <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                  <label class="input-group-text">Land</label>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Email ..."
+                                    required
+                                    v-model="to.email"
+                                  />
                                 </div>
-                                <select v-model="to.country" class="custom-select">
-                                  <option
-                                    v-bind:key="cntr"
-                                    v-for="cntr in countries_list"
-                                    v-bind:value="cntr"
-                                  >
-                                    {{ cntr }}
-                                  </option>
-                                </select>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Staße<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Staße ..."
+                                    required
+                                    v-model="to.street"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Hausnummer ..."
+                                    required
+                                    v-model="to.house_number"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>PLZ<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="PLZ ..."
+                                    required
+                                    v-model="to.postal_code"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <span>
+                                  <b>Ort<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Ort ..."
+                                    required
+                                    v-model="to.place"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <div>
+                                  <label>
+                                    <b
+                                      >Wählen Sie ein Land aus<span style="color: red"
+                                        >&nbsp;*</span
+                                      ></b
+                                    >
+                                  </label>
+                                </div>
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <label class="input-group-text">Land</label>
+                                  </div>
+                                  <select v-model="to.country" class="custom-select">
+                                    <option
+                                      v-bind:key="cntr"
+                                      v-for="cntr in countries_list"
+                                      v-bind:value="cntr"
+                                    >
+                                      {{ cntr }}
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <div class="form-group">
+                                  <label>
+                                    <b>Fax</b>
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Fax ..."
+                                    v-model="to.fax"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </form>
                       </div>
                     </div>
                     <div id="div_inq_convert_to_order">
@@ -517,7 +565,7 @@
                       </b-button>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
@@ -550,6 +598,7 @@ export default {
         postal_code: "",
         place: "",
         country: "",
+        fax: "",
         same_address: [],
       },
       to: {
@@ -565,6 +614,7 @@ export default {
         postal_code: "",
         place: "",
         country: "",
+        fax: "",
         same_address: [],
       },
       default_pickup_address: false,
@@ -660,6 +710,8 @@ export default {
           if (res.success) {
             // Update the store by adding the newly created order.
             this.$store.commit("add_order", res.order);
+            // Remove the inquiry from the store.
+            this.$store.commit("remove_inquiry_by_id", this.inquiry_id);
 
             this.$refs.snackbar.info("Auftrag erflogreich erstellt.");
           } else {
@@ -681,6 +733,11 @@ export default {
 /* Component part. */
 #component_convert_inquiry_order_modal {
   color: black;
+}
+
+#component_convert_inquiry_order_modal #form_pickup_address input[type="text"],
+#component_convert_inquiry_order_modal #form_delivery_address input[type="text"] {
+  width: 100%;
 }
 
 #component_convert_inquiry_order_modal .modal-header {

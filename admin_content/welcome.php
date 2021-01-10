@@ -67,16 +67,16 @@ if (isset($_SESSION['username'])) {
 
 <body>
     <div id="admin">
-
         <div class="container-fluid">
             <div class="row">
                 <!-- sidenav component. -->
                 <sidenav></sidenav>
-                <div id="div_main-content" class="col-sm-11">
+                <div id="div_main_content" class="col-sm-11">
                     <!-- mainnav component. -->
                     <mainnav></mainnav>
                     <div class="tab-content">
                         <div class="tab-pane" id="tab_clients" data-tabs="tabs">
+                            <create_client_button></create_client_button>
                             <table id="table_clients" class="compact">
                                 <thead>
                                     <tr>
@@ -103,19 +103,20 @@ if (isset($_SESSION['username'])) {
                                         if ($stmt->execute()) {
                                             $result = $stmt->get_result();
                                             while ($row = $result->fetch_assoc()) {
-                                                echo '<tr>
-                                    <td>' . $row['company_name'] . '</td>
-                                    <td>' . $row['salutation'] . '</td>
-                                    <td>' . $row['contact_person'] . '</td>
-                                    <td>' . $row['email'] . '</td>
-                                    <td>' . $row['phone'] . '</td>
-                                    <td>' . $row['street'] . '</td>
-                                    <td>' . $row['house_number'] . '</td>
-                                    <td>' . $row['postal_code'] . '</td>
-                                    <td>' . $row['place'] . '</td>
-                                    <td>' . $row['country'] . '</td>
-                                    <td>' . $row['phone_central'] . '</td>
-                                    <td>' . $row['additional_text'] . '</td></tr>';
+                                                echo '<tr>' .
+                                                    '<td>' . $row['company_name'] . '</td>' .
+                                                    '<td>' . $row['salutation'] . '</td>' .
+                                                    '<td>' . $row['contact_person'] . '</td>' .
+                                                    '<td>' . $row['email'] . '</td>' .
+                                                    '<td>' . $row['phone'] . '</td>' .
+                                                    '<td>' . $row['street'] . '</td>' .
+                                                    '<td>' . $row['house_number'] . '</td>' .
+                                                    '<td>' . $row['postal_code'] . '</td>' .
+                                                    '<td>' . $row['place'] . '</td>' .
+                                                    '<td>' . $row['country'] . '</td>' .
+                                                    '<td>' . $row['phone_central'] . '</td>' .
+                                                    '<td>' . $row['additional_text'] . '</td>' .
+                                                    '</tr>';
                                             }
                                         }
                                     }
@@ -125,7 +126,7 @@ if (isset($_SESSION['username'])) {
                         </div>
                         <div class="tab-pane active container-fluid" id="tab_vorreiter" data-tabs="tabs">
                             <div class="row">
-                                <div class="col-sm-6 container-fluid">
+                                <div class="col-lg-6 container-fluid">
                                     <div class="row div_table_header">
                                         <h3>Anfragen</h3>
                                         <div>
@@ -137,7 +138,7 @@ if (isset($_SESSION['username'])) {
                                         <inquiry_table></inquiry_table>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 container-fluid">
+                                <div class="col-lg-6 container-fluid">
                                     <div class="row div_table_header">
                                         <h3>Aufträge</h3>
                                         <div>

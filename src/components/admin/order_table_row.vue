@@ -119,19 +119,34 @@ export default {
     apply_status_color: function () {
       switch (this.status) {
         case "offen":
-          this.status_color = "red";
+          this.status_color = "#f01e28";
           break;
         case "ausstehend":
-          this.status_color = "orange";
-          break;
-        case "abgelehnt":
-          this.status_color = "purple";
+          this.status_color = "#ff6e0f";
           break;
         case "beauftragt":
-          this.status_color = "green";
+          this.status_color = "#82ff00";
+          break;
+        case "in Auslieferung":
+          this.status_color = "#fac300";
+          break;
+        case "ausgeliefert":
+          this.status_color = "#0082ff";
           break;
         case "abgeschlossen":
-          this.status_color = "black";
+          this.status_color = "#008200";
+          break;
+        case "fakturiert":
+          this.status_color = "#0000ff";
+          break;
+        case "abgelehnt":
+          this.status_color = "#af00af";
+          break;
+        case "beschädigt":
+          this.status_color = "#707070";
+          break;
+        case "Retoure":
+          this.status_color = "#8c3c2d";
           break;
       }
       if (!this.show_status_select) {
@@ -148,7 +163,7 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 #component_order_table_row .td_actions img {
   cursor: pointer;

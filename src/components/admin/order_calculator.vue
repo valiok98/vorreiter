@@ -2,11 +2,11 @@
   <div class="container-fluid" id="component_order_calculator">
     <form v-on:submit="add_package($event)" id="form_ord_calculator" class="m-form">
       <div class="row">
-        <h4>Wann dürfen wir für Sie zustellen?</h4>
+        <h4>Wann soll zugestellt werden?</h4>
       </div>
       <div class="row">
-        <div class="col-sm-5 smaller">Zustellfenster:</div>
-        <div class="col-sm-7 form-group smaller">
+        <div class="col-lg-5 smaller">Zustellfenster:</div>
+        <div class="col-lg-7 form-group smaller">
           <div class="form-check">
             <input
               class="form-check-input"
@@ -74,13 +74,13 @@
             <label class="form-check-label">Fixtermin</label>
           </div>
         </div>
-        <div class="col-sm-5 smaller">Zustellung am:</div>
-        <div class="col-sm-7 form-group smaller">
+        <div class="col-lg-5 smaller">Zustellung am:</div>
+        <div class="col-lg-7 form-group smaller">
           <div class="form-check">
             <input
               class="form-check-input"
               type="radio"
-              value="Mo. – Fr. (am folgenen Werktag)"
+              value="Mo. – Fr. (am folgenden Werktag)"
               required
               name="input_delivery_day"
               v-model="delivery_day"
@@ -114,8 +114,10 @@
         </div>
       </div>
       <div class="row" id="div_ord_mass_weight">
-        <h4>Maße und Gewicht Ihrer Sendung:</h4>
+        <h4>Maße und Gewicht der Sendung:</h4>
         <br />
+      </div>
+      <div class="row">
         <h6>
           <i
             ><b
@@ -228,9 +230,9 @@
           <small>
             [Nachname, Empfangsbestätigung, ...]
             <br />
-            <a v-if="!show_service_selection" v-on:click="show_service_selection = true"
-              >Bitte klicken</a
-            >
+            <a v-if="!show_service_selection" v-on:click="show_service_selection = true">
+              <button id="button_expand_services">Bitte klicken</button>
+            </a>
             <a v-else v-on:click="show_service_selection = false">Ausklappen</a>
           </small>
         </h4>
@@ -408,7 +410,7 @@
           <h5>Pakete</h5>
         </div>
         <div class="row">
-          <div v-bind:key="package_.id" v-for="package_ in packages" class="col-sm-12">
+          <div v-bind:key="package_.id" v-for="package_ in packages" class="col-lg-12">
             <b-h3 v-on:click="collapse_accordion_item(package_.elemId)">
               <span>Paket {{ package_.id + 1 }}</span>
               <b-button
@@ -822,7 +824,7 @@ export default {
 </script>
 
 <style>
-#component_order_calculator .row .col-sm-6 {
+#component_order_calculator .row .col-lg-6 {
   padding: 0;
   text-align: left;
 }
@@ -849,7 +851,7 @@ export default {
   padding-left: 0;
 }
 
-#component_order_calculator .col-sm-7 {
+#component_order_calculator .col-lg-7 {
   font-size: 0.9em;
 }
 
@@ -872,6 +874,14 @@ export default {
 #component_order_calculator #div_ord_service_selection_wrapper {
   display: flex;
   flex-flow: column nowrap;
+}
+
+#component_order_calculator #button_expand_services {
+  background: #d0009f;
+  color: #fafe00;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
 }
 /* Accordion part. */
 #component_order_calculator #div_ord_packages {

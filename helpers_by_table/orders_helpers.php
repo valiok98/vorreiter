@@ -278,16 +278,34 @@ function get_order_row($order)
     $status_color = '';
     switch ($order['status']) {
         case "offen":
-            $status_color = 'red';
+            $status_color = '#f01e28';
             break;
         case "ausstehend":
-            $status_color = 'orange';
-            break;
-        case "abgelehnt":
-            $status_color = 'purple';
+            $status_color = '#ff6e0f';
             break;
         case "beauftragt":
-            $status_color = 'green';
+            $status_color = '#82ff00';
+            break;
+        case "in Auslieferung":
+            $status_color = '#fac300';
+            break;
+        case "ausgeliefert":
+            $status_color = '#0082ff';
+            break;
+        case "abgeschlossen":
+            $status_color = '#008200';
+            break;
+        case "fakturiert":
+            $status_color = '#0000ff';
+            break;
+        case "abgelehnt":
+            $status_color = '#af00af';
+            break;
+        case "beschädigt":
+            $status_color = '#707070';
+            break;
+        case "Retoure":
+            $status_color = '#8c3c2d';
             break;
     }
 
@@ -299,7 +317,7 @@ function get_order_row($order)
     $row_return['id'] = $order['id'];
     $row_return['client_data'] = $client_data;
     $row_return['packages'] = $packages;
-    $row_return['created_at'] = date_format(date_create($order['timestamp']), "H:i d/m/Y");
+    $row_return['created_at'] = date_format(date_create($order['timestamp']), "d/m/Y - H:i:s") . " Uhr";
     $row_return['pickup_postal_code'] = $pickup_address['postal_code'];
     $row_return['pickup_country'] = $countries_code[$pickup_address['country']];
     $row_return['delivery_postal_code'] = $lieferadresse['postal_code'];
