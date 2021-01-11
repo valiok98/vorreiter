@@ -63,29 +63,34 @@ export default {
       is_loading: true,
     };
   },
-  mounted: function () {
-    // Check if we already fetched the orders into the store.
+  mounted: async function () {
+    // Check if we already loaded the orders from the previous components.
     if (!this.$store.state.orders.length) {
-      fetch(mainUrl + "admin_content/ajax/find_orders.php", {
-        method: "POST",
-        dataType: "json",
-        mode: "cors",
-        credentials: "same-origin",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          this.is_loading = false;
-          if (res.success) {
-            this.$store.commit("set_orders", res.orders);
-          } else {
-            this.$store.commit("set_orders", []);
-            this.$refs.snackbar.error(res.msg);
-          }
-        })
-        .catch((err) => this.$refs.snackbar.error(err));
+      try {
+        let res = await fetch(mainUrl + "admin_content/ajax/find_orders.php", {
+          method: "POST",
+          dataType: "json",
+          mode: "cors",
+          credentials: "same-origin",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+
+        res = await res.json();
+        this.is_loading = false;
+        if (res.success) {
+          this.$store.commit("set_orders", res.orders);
+        } else {
+          this.$store.commit("set_orders", []);
+          this.$refs.snackbar.error(res.msg);
+        }
+      } catch (err) {
+        this.$refs.snackbar.error(err);
+      }
+    } else {
+      // If we already loaded the orders, then simply display them.
+      this.is_loading = false;
     }
   },
   methods: {

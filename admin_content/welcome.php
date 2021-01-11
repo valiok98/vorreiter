@@ -77,52 +77,7 @@ if (isset($_SESSION['username'])) {
                     <div class="tab-content">
                         <div class="tab-pane" id="tab_clients" data-tabs="tabs">
                             <create_client_button></create_client_button>
-                            <table id="table_clients" class="compact">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Firmenname</th>
-                                        <th scope="col">Anrede</th>
-                                        <th scope="col">Ansprechpartner</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Telefon</th>
-                                        <th scope="col">Straße</th>
-                                        <th scope="col">Hausnummer</th>
-                                        <th scope="col">PLZ</th>
-                                        <th scope="col">Ort</th>
-                                        <th scope="col">Land</th>
-                                        <th scope="col">Telefon(Zentrale)</th>
-                                        <th scope="col">Notizen</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Get the user package requests.
-                                    $sql = "SELECT * FROM vorreiter_clients";
-
-                                    if ($stmt = $mysqli->prepare($sql)) {
-                                        if ($stmt->execute()) {
-                                            $result = $stmt->get_result();
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo '<tr>' .
-                                                    '<td>' . $row['company_name'] . '</td>' .
-                                                    '<td>' . $row['salutation'] . '</td>' .
-                                                    '<td>' . $row['contact_person'] . '</td>' .
-                                                    '<td>' . $row['email'] . '</td>' .
-                                                    '<td>' . $row['phone'] . '</td>' .
-                                                    '<td>' . $row['street'] . '</td>' .
-                                                    '<td>' . $row['house_number'] . '</td>' .
-                                                    '<td>' . $row['postal_code'] . '</td>' .
-                                                    '<td>' . $row['place'] . '</td>' .
-                                                    '<td>' . $row['country'] . '</td>' .
-                                                    '<td>' . $row['phone_central'] . '</td>' .
-                                                    '<td>' . $row['additional_text'] . '</td>' .
-                                                    '</tr>';
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                            <client_table></client_table>
                         </div>
                         <div class="tab-pane active container-fluid" id="tab_vorreiter" data-tabs="tabs">
                             <div class="row">
@@ -156,10 +111,10 @@ if (isset($_SESSION['username'])) {
                             <inquiry_order_theader></inquiry_order_theader>
                             <div class="tab-content">
                                 <div id="div_inquiries" class="tab-pane active">
-                                    <inquiry_table></inquiry_table>
+                                    <inquiry_table v-if="this.$store.state.inquiries.length"></inquiry_table>
                                 </div>
                                 <div id="div_orders" class="tab-pane">
-                                    <order_table></order_table>
+                                    <order_table v-if="this.$store.state.orders.length"></order_table>
                                 </div>
                             </div>
                         </div>

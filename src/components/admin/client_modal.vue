@@ -437,7 +437,9 @@ export default {
             street: this.street,
             inform_client: this.inform_client,
           }),
-        }).then((res) => res.json());
+        });
+
+        res = await res.json();
       } catch (err) {
         this.$refs.snackbar.error(err);
         return;

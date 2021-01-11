@@ -63,29 +63,33 @@ export default {
       is_loading: true,
     };
   },
-  mounted: function () {
-    // Check if we already fetched the inquiries into the store.
+  mounted: async function () {
+    // Check if we already loaded the inquiries from the previous components. 
     if (!this.$store.state.inquiries.length) {
-      fetch(mainUrl + "admin_content/ajax/find_inquiries.php", {
-        method: "POST",
-        dataType: "json",
-        mode: "cors",
-        credentials: "same-origin",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          this.is_loading = false;
-          if (res.success) {
-            this.$store.commit("set_inquiries", res.inquiries);
-          } else {
-            this.$store.commit("set_inquiries", []);
-            this.$refs.snackbar.error(res.msg);
-          }
-        })
-        .catch((err) => this.$refs.snackbar.error(err));
+      try {
+        let res = await fetch(mainUrl + "admin_content/ajax/find_inquiries.php", {
+          method: "POST",
+          dataType: "json",
+          mode: "cors",
+          credentials: "same-origin",
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+        res = await res.json();
+        this.is_loading = false;
+        if (res.success) {
+          this.$store.commit("set_inquiries", res.inquiries);
+        } else {
+          this.$store.commit("set_inquiries", []);
+          this.$refs.snackbar.error(res.msg);
+        }
+      } catch (err) {
+        this.$refs.snackbar.error(err);
+      }
+    } else {
+      // If we already loaded the inquiries, then simply display them.
+      this.is_loading = false;
     }
   },
   methods: {
@@ -98,7 +102,7 @@ export default {
 </script>
 
 <style>
-#component_inquiry_table ,
+#component_inquiry_table,
 #component_inquiry_table table {
   width: 100%;
 }

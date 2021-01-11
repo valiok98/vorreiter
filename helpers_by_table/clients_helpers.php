@@ -241,5 +241,28 @@ function create_dummy_client()
         // Close statement
         $stmt->close();
     } else return $mysqli->error;
+}
 
+
+
+/**
+ * Get the data for all the clients.
+ * 
+ * @return{$clients} - all the clients.
+ */
+function get_table_clients()
+{
+    global $mysqli;
+    $sql = "SELECT * FROM vorreiter_clients ORDER BY created_at DESC";
+
+    if ($stmt = $mysqli->prepare($sql)) {
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $clients = [];
+            while ($row = $result->fetch_assoc()) {
+                array_push($clients, $row);
+            }
+            return $clients;
+        } else return $stmt->error;
+    } else return $mysqli->error;
 }

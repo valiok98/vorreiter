@@ -106,20 +106,6 @@ a[href="#div_orders"] {
 }
 
 
-/* Clients pane */
-
-#table_clients {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 15px;
-}
-
-#tablie_clients thead {
-    background-color: #00cf65;
-    text-align: center;
-}
-
-
 /* Order dialog. */
 
 #div_order_create_content>.row {
