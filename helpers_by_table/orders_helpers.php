@@ -85,7 +85,7 @@ function create_order($orderData)
             $pickupAddress['country'] = $clientData['country'];
         }
 
-        if (count($pickupAddress['same_address'])) {
+        if (count($deliveryAddress['same_address'])) {
             $deliveryAddress['company_name'] = $clientData['company_name'];
             $deliveryAddress['salutation'] = $clientData['salutation'];
             $deliveryAddress['title'] = $clientData['title'];;

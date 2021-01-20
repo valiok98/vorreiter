@@ -9,25 +9,34 @@ if (
     $client_data = json_decode(file_get_contents('php://input'), true);
     $response = create_client($client_data);
 
-    if ($response === true) {
-        // Check if we should inform the client by sending them their login email/id.
-        $inform_client = boolval($client_data["inform_client"]);
-        if ($inform_client) {
-            // Get the client with the specified email.
-            $client_data = get_client_by_email(trim(strval($client_data["email"])));
-            if (gettype($client_data) === 'string') {
-                echo_failure("Der Kunde konnte nicht abgespeichert werden.");
-            } else {
-                // Try sending the email.
-                $response = email_client($client_data);
-                if ($response === true) {
-                    echo json_encode(array("success" => true));
-                } else {
-                    echo_failure($response);
-                }
-            }
+    // Check if the response is correct, otherwise send the error message.
+    if (gettype($response) === 'integer') {
+        // Store the client id, retrieved from the creation of the client.
+        $client_id = $response;
+        // Get the client that we just created.
+        $client = get_client_by_id($client_id);
+        if (gettype($client) === 'string') {
+            echo_failure("Der Kunde konnte nicht gefunden werden.");
         } else {
-            echo json_encode(array("success" => true));
+            // Check if we should inform the client by sending them their login email/id.
+            $inform_client = boolval($client_data["inform_client"]);
+            if ($inform_client) {
+                // Get the client with the specified email.
+                $client_data = get_client_by_email(trim(strval($client_data["email"])));
+                if (gettype($client_data) === 'string') {
+                    echo_failure("Der Kunde konnte nicht abgespeichert werden.");
+                } else {
+                    // Try sending the email.
+                    $response = email_client($client_data);
+                    if ($response === true) {
+                        echo json_encode(array("success" => true, "client" => $client));
+                    } else {
+                        echo_failure($response);
+                    }
+                }
+            } else {
+                echo json_encode(array("success" => true, "client" => $client));
+            }
         }
     } else {
         echo_failure($response);

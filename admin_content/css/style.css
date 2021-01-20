@@ -19,10 +19,7 @@ body {
     width: 100%;
 }
 
-#div_main_content {
-    height: 100vh;
-    overflow-y: auto;
-}
+#div_main_content {}
 
 
 /* Vorreiter tab pane. */
@@ -41,23 +38,6 @@ body {
 
 .div_table_header h3 {
     margin: 0;
-}
-
-.div_inq_ord_table_data thead,
-tbody {
-    background: #f2f2f2;
-}
-
-.div_inq_ord_table_data tbody:before {
-    content: "-";
-    display: block;
-    line-height: 0.5em;
-    color: transparent;
-    background: white;
-}
-
-.div_inq_ord_table_data .col-sm-2 {
-    text-align: center;
 }
 
 .pagination li,

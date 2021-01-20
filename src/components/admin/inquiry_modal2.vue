@@ -232,6 +232,12 @@
                                     placeholder="Hausnummer ..."
                                     required
                                     v-model="from.house_number"
+                                    v-on:input="
+                                      from.house_number =
+                                        parseInt(from.house_number) >= 0
+                                          ? from.house_number
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -250,6 +256,12 @@
                                     placeholder="PLZ ..."
                                     required
                                     v-model="from.postal_code"
+                                    v-on:input="
+                                      from.postal_code =
+                                        parseInt(from.postal_code) >= 0
+                                          ? from.postal_code
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -489,6 +501,12 @@
                                     placeholder="Hausnummer ..."
                                     required
                                     v-model="to.house_number"
+                                    v-on:input="
+                                      to.house_number =
+                                        parseInt(to.house_number) >= 0
+                                          ? to.house_number
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -507,6 +525,10 @@
                                     placeholder="PLZ ..."
                                     required
                                     v-model="to.postal_code"
+                                    v-on:input="
+                                      to.postal_code =
+                                        parseInt(to.postal_code) >= 0 ? to.postal_code : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -599,15 +621,15 @@ export default {
     return {
       from: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
         email: "",
         street: "",
-        house_number: 0,
-        postal_code: 0,
+        house_number: "",
+        postal_code: "",
         place: "",
         country: "",
         fax: "",
@@ -615,15 +637,15 @@ export default {
       },
       to: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
         email: "",
         street: "",
-        house_number: 0,
-        postal_code: 0,
+        house_number: "",
+        postal_code: "",
         place: "",
         country: "",
         fax: "",
@@ -638,8 +660,21 @@ export default {
   },
   methods: {
     close: function () {
+      this.unset_properties();
       this.show_inquiry_modal2 = false;
       this.$emit("close_inquiry_modal2");
+    },
+    unset_properties: function () {
+      for (const prop in this.from) {
+        this.from[prop] = "";
+      }
+      this.from.salutation = "-";
+      this.from.title = "-";
+      for (const prop in this.to) {
+        this.to[prop] = "";
+      }
+      this.to.salutation = "-";
+      this.to.title = "-";
     },
   },
   components: {

@@ -8,7 +8,7 @@ if (
     $post_data = json_decode(file_get_contents('php://input'), true);
     $response = create_inquiry($post_data);
 
-    // Check if the response is true, otherwise send the error message.
+    // Check if the response is correct, otherwise send the error message.
     if (gettype($response) === 'integer') {
         // Get the newly created inquiry.
         $inquiry = get_inquiry_by_id($response);

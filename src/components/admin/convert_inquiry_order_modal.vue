@@ -587,8 +587,8 @@ export default {
     return {
       from: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
@@ -603,8 +603,8 @@ export default {
       },
       to: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
@@ -673,10 +673,23 @@ export default {
   },
   methods: {
     close: function () {
+      this.unset_properties();
       this.show_convert_inquiry_order_modal = false;
       this.$emit("close_convert_inquiry_order_modal");
     },
-    convert_to_order: function () {
+    unset_properties: function () {
+      for (const prop in this.from) {
+        this.from[prop] = "";
+      }
+      this.from.salutation = "-";
+      this.from.title = "-";
+      for (const prop in this.to) {
+        this.to[prop] = "";
+      }
+      this.to.salutation = "-";
+      this.to.title = "-";
+    },
+    convert_to_order: async function () {
       // Check if we're using the default pickup address.
       if (!this.default_pickup_address) {
         this.$refs.snackbar.error("Es fehlen erforderliche Daten über die Abholadresse.");
@@ -691,25 +704,47 @@ export default {
       }
       // Send the request for converting the inquiry to an order.
 
-      fetch(mainUrl + "admin_content/ajax/create_order_from_inquiry.php", {
-        method: "POST",
-        dataType: "json",
-        mode: "cors",
-        credentials: "same-origin",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          inquiry_id: this.inquiry_id,
-          from_address: this.from,
-          to_address: this.to,
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
+      try {
+        let res = await fetch(
+          mainUrl + "admin_content/ajax/create_order_from_inquiry.php",
+          {
+            method: "POST",
+            dataType: "json",
+            mode: "cors",
+            credentials: "same-origin",
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+              inquiry_id: this.inquiry_id,
+              from_address: this.from,
+              to_address: this.to,
+            }),
+          }
+        );
+
+        res = await res.json();
+        if (res.success) {
+          const order = res.order;
+          // Delete the inquiry that was converted to an order.
+          res = await fetch(mainUrl + "admin_content/ajax/delete_inquiry.php", {
+            method: "POST",
+            dataType: "json",
+            mode: "cors",
+            credentials: "same-origin",
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+              inquiry_id: this.inquiry_id,
+            }),
+          });
+
+          res = await res.json();
+
           if (res.success) {
             // Update the store by adding the newly created order.
-            this.$store.commit("add_order", res.order);
+            this.$store.commit("add_order", order);
             // Remove the inquiry from the store.
             this.$store.commit("remove_inquiry_by_id", this.inquiry_id);
 
@@ -717,10 +752,15 @@ export default {
           } else {
             this.$refs.snackbar.error(res.msg);
           }
-          return new Promise((resolve, reject) => setTimeout(resolve, 1000));
-        })
-        .then((res) => this.$emit("close_convert_inquiry_order_modal"))
-        .catch((err) => this.$refs.snackbar.error(err));
+        } else {
+          this.$refs.snackbar.error(res.msg);
+        }
+      } catch (err) {
+        this.$refs.snackbar.error(err);
+      }
+      await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+      console.log('closing...');
+      this.close();
     },
   },
   components: {

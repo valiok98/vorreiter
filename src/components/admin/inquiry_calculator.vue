@@ -719,6 +719,9 @@ export default {
         .then((res) => res.json())
         .then((res) => {
           if (res.success) {
+            // Update the store by adding the newly created order.
+            this.$store.commit("add_order", res.order);
+
             this.$refs.snackbar.info("Auftrag erflogreich erstellt.");
           } else {
             this.$refs.snackbar.error(res.msg);

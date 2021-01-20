@@ -42,7 +42,7 @@ export default {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          id: this.id,
+          inquiry_id: this.id,
         }),
       })
         .then((res) => res.json())

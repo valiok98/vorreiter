@@ -10,7 +10,7 @@ if (
 ) {
     $data = [];
     $post_data = json_decode(file_get_contents('php://input'), true);
-    $inquiry_id = intval($post_data['id']);
+    $inquiry_id = intval($post_data['inquiry_id']);
     $inquiry_data = get_inquiry_by_id($inquiry_id);
     if (gettype($inquiry_data) === 'string') {
         echo_failure("Die Daten zur Anfrage konnten nicht geladen werden.");

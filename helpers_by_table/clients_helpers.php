@@ -95,7 +95,7 @@ function get_client_by_email($clientEmail)
  * 
  * @param{$clientData} - the client data.
  * 
- * @return{boolean|string} - true if everything is ok, string containing the error.
+ * @return{integer|string} - client id if everything is ok, string containing the error.
  */
 function create_client($clientData)
 {
@@ -176,7 +176,9 @@ function create_client($clientData)
 
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
-            return true;
+            // Return the client id.
+            $clientId = $mysqli->insert_id;
+            return $clientId;
         } else return $stmt->error;
         // Close statement
         $stmt->close();

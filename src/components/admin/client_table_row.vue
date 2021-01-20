@@ -43,17 +43,6 @@ export default {
       },
     };
   },
-  mounted: function () {
-    this.apply_status_color();
-  },
-  updated: function () {
-    this.apply_status_color();
-  },
-  methods: {
-    apply_status_color: function () {
-      document.getElementById(this.status_id).style.color = this.status_color;
-    },
-  },
 };
 </script>
 

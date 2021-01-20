@@ -344,19 +344,19 @@ export default {
   data: function () {
     return {
       company_name: "",
-      salutation: "",
+      salutation: "-",
       additional_text: "",
       email: "",
       phone: "",
       first_name: "",
       last_name: "",
-      title: "",
+      title: "-",
       mobile_phone: "",
       fax: "",
       shorthand: "",
       place: "",
-      house_number: 0,
-      postal_code: 0,
+      house_number: "",
+      postal_code: "",
       country: "",
       phone_central: "",
       street: "",
@@ -377,8 +377,28 @@ export default {
   },
   methods: {
     close: function () {
+      this.unset_properties();
       this.show_client_modal = false;
       this.$emit("close_client_modal");
+    },
+    unset_properties: function () {
+      this.company_name = "";
+      this.salutation = "-";
+      this.additional_text = "";
+      this.email = "";
+      this.phone = "";
+      this.first_name = "";
+      this.last_name = "";
+      this.title = "-";
+      this.mobile_phone = "";
+      this.fax = "";
+      this.shorthand = "";
+      this.place = "";
+      this.house_number = "";
+      this.postal_code = "";
+      this.country = "";
+      this.phone_central = "";
+      this.street = "";
     },
     adjust_client_abv: function () {
       let firstChar = "";
@@ -445,46 +465,27 @@ export default {
         return;
       }
 
+      // Check again if the client was successfully retrieved.
       if (res.success) {
-        // Getting the data for the client.
-        try {
-          res = await fetch(mainUrl + "admin_content/ajax/find_client_by_email.php", {
-            method: "POST",
-            dataType: "json",
-            mode: "cors",
-            credentials: "same-origin",
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-              email: this.email,
-            }),
-          }).then((res) => res.json());
+        // Add the client to the store.
+        this.$store.commit("add_client", res.client);
 
-          // Check again if the client was successfully retrieved.
-          if (res.success) {
-            this.client_data = res.client_data;
-          } else {
-            this.$refs.snackbar.error(res.msg);
-          }
-        } catch (err) {
-          this.$refs.snackbar.error(err);
-          return;
-        }
-
-        // Creating a client for an inquiry.
-        if (this.client_type === "inquiry") {
-          this.close();
-          this.show_inquiry_modal2 = true;
-        } else if (this.client_type === "order") {
-          // Creating a client for an order.
-          this.close();
-          this.show_order_modal2 = true;
-        }
-        this.$refs.snackbar.info("Kunde erflogreich angelegt.");
+        this.client_data = res.client;
       } else {
         this.$refs.snackbar.error(res.msg);
+        return;
       }
+
+      // Creating a client for an inquiry.
+      if (this.client_type === "inquiry") {
+        this.close();
+        this.show_inquiry_modal2 = true;
+      } else if (this.client_type === "order") {
+        // Creating a client for an order.
+        this.close();
+        this.show_order_modal2 = true;
+      }
+      this.$refs.snackbar.info("Kunde erflogreich angelegt.");
     },
     close_inquiry_modal2: function () {
       this.show_inquiry_modal2 = false;

@@ -11,7 +11,8 @@
           <th scope="col">Aktionen</th>
         </tr>
       </thead>
-      <tbody v-if="!is_loading">
+      <!-- Only render the rows if we're done loading & we have data to display. -->
+      <tbody v-if="this.$store.state.inquiries.length && !is_loading">
         <inquiry_table_row
           v-bind:key="inquiry_row.id"
           v-for="inquiry_row in this.$store.state.inquiries"
@@ -27,7 +28,19 @@
           :status_color="inquiry_row.status_color"
         ></inquiry_table_row>
       </tbody>
-      <tbody v-else>
+      <!-- Render a 'no data available' message -->
+      <tbody v-else-if="!this.$store.state.inquiries.length && !is_loading">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Es gibt keine Anfragen</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody v-else-if="is_loading">
         <tr id="tr_loading">
           <td></td>
           <td></td>
@@ -64,7 +77,7 @@ export default {
     };
   },
   mounted: async function () {
-    // Check if we already loaded the inquiries from the previous components. 
+    // Check if we already loaded the inquiries from the previous components.
     if (!this.$store.state.inquiries.length) {
       try {
         let res = await fetch(mainUrl + "admin_content/ajax/find_inquiries.php", {
@@ -105,5 +118,14 @@ export default {
 #component_inquiry_table,
 #component_inquiry_table table {
   width: 100%;
+}
+
+#component_inquiry_table thead {
+  background: lightgrey;
+}
+
+#component_inquiry_table tbody {
+  margin-top: 15px;
+  background: lightgrey;
 }
 </style>

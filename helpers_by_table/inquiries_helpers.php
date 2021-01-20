@@ -241,6 +241,36 @@ function create_dummy_inquiry($inquiryData)
 }
 
 /**
+ * Delete an inquiry given its id.
+ * 
+ * @param{$inquiry_id} - the id belonging to the inquiry.
+ * 
+ * @return{$boolean|string} - true if everything is ok, string containing the error.
+ */
+function delete_inquiry_by_id($inquiry_id)
+{
+
+    global $mysqli;
+
+    $sql = "DELETE FROM vorreiter_inquiries WHERE id = ?";
+
+    if ($stmt = $mysqli->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param(
+            "i",
+            $mysqli->real_escape_string(intval($inquiry_id))
+        );
+
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()  && $mysqli->affected_rows === 1) {
+            return true;
+        } else return $stmt->error;
+    } else return $mysqli->error;
+}
+
+
+
+/**
  * Get the data for all the inquiries.
  * 
  * @return{$inquiries} - all the inquiries.

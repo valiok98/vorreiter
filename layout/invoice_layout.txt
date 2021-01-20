@@ -1,0 +1,23 @@
+Paket 1 
+Länge: 320cm, Breite:20 cm.......                                       Preis: 33,80
+Zusätzliche Serviceleistungen: Bereichszustellung, 2,3,....
+
+Paket 2
+Länge: 320cm, Breite:20 cm.......                                       Preis: 32,60
+Zusätzliche Serviceleistungen: Bereichszustellung, 2,3,....
+
+                                                        Gesamtpreis         56,40 Euro
+                                                        MwSt. 19%           10,72 Euro
+                                                        Gesampreis brutto:  67,12 Euro
+
+Wir bedanken uns für Ihren Auftrag.
+Bitte zahlen Sie den genannten Rechnungsbetrag in Höhe von 67,12 Euro an untenstehende Bankverbindung.
+
+Mit freundlichen Grüßen 
+Ihr Team von wirliefernsicher.de // LST Siegen
+
+
+
+LABEL
+Barcode-Zusammensetzung: Kundennummer-Sendungsnummer-Sendungsuhrzeit-
+Bsp: 257-4564-081700 -> Barcode: 456456456321

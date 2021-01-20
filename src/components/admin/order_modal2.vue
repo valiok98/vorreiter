@@ -90,53 +90,46 @@
                               <span>
                                 <b>Ansprechpartner</b>
                               </span>
-                              <div class="container-fluid">
-                                <div class="row">
-                                  <div class="col-lg-3">
-                                    <span>
-                                      <b>Anrede<span style="color: red">&nbsp;*</span></b>
-                                    </span>
-                                    <br />
-                                    <div class="form-group form-inline">
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <label class="input-group-text">Anrede</label>
-                                        </div>
-                                        <select
-                                          v-model="from.salutation"
-                                          class="custom-select"
-                                        >
-                                          <option value="-">-</option>
-                                          <option value="herr">Herr</option>
-                                          <option value="frau">Frau</option>
-                                        </select>
-                                      </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <span>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Anrede</label>
                                     </div>
+                                    <select
+                                      v-model="from.salutation"
+                                      class="custom-select"
+                                    >
+                                      <option value="-">-</option>
+                                      <option value="herr">Herr</option>
+                                      <option value="frau">Frau</option>
+                                    </select>
                                   </div>
-                                  <div class="col-lg-3">
-                                    <span>
-                                      <b>Titel</b>
-                                    </span>
-                                    <div class="form-group form-inline">
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <label class="input-group-text">Titel</label>
-                                        </div>
-                                        <select
-                                          v-model="from.title"
-                                          class="custom-select"
-                                        >
-                                          <option value="-">-</option>
-                                          <option value="dr">Dr.</option>
-                                          <option value="dr_dr">Dr. Dr.</option>
-                                          <option value="prof">Prof.</option>
-                                          <option value="prof_dr">Prof. Dr.</option>
-                                          <option value="prof_dr_dr">
-                                            Prof. Dr. Dr.
-                                          </option>
-                                        </select>
-                                      </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <span>
+                                  <b>Titel</b>
+                                </span>
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
                                     </div>
+                                    <select v-model="from.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
                                   </div>
                                 </div>
                               </div>
@@ -238,6 +231,12 @@
                                     placeholder="Hausnummer ..."
                                     required
                                     v-model="from.house_number"
+                                    v-on:input="
+                                      from.house_number =
+                                        parseInt(from.house_number) >= 0
+                                          ? from.house_number
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -256,6 +255,12 @@
                                     placeholder="PLZ ..."
                                     required
                                     v-model="from.postal_code"
+                                    v-on:input="
+                                      from.postal_code =
+                                        parseInt(from.postal_code) >= 0
+                                          ? from.postal_code
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -340,7 +345,7 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Firmenname</b>
+                                  <b>Firmenname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -358,49 +363,44 @@
                               <span>
                                 <b>Ansprechpartner</b>
                               </span>
-                              <div class="container-fluid">
-                                <div class="row">
-                                  <div class="col-lg-3">
-                                    <span>
-                                      <b>Anrede</b>
-                                    </span>
-                                    <br />
-                                    <div class="form-group form-inline">
-                                      <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                          <label class="input-group-text">Anrede</label>
-                                        </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <span>
+                                  <b>Anrede<span style="color: red">&nbsp;*</span></b>
+                                </span>
+                                <br />
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Anrede</label>
+                                    </div>
 
-                                        <select
-                                          v-model="to.salutation"
-                                          class="custom-select"
-                                        >
-                                          <option value="-">-</option>
-                                          <option value="herr">Herr</option>
-                                          <option value="frau">Frau</option>
-                                        </select>
-                                      </div>
-                                    </div>
+                                    <select v-model="to.salutation" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="herr">Herr</option>
+                                      <option value="frau">Frau</option>
+                                    </select>
                                   </div>
-                                  <div class="col-lg-3">
-                                    <span>
-                                      <b>Titel</b>
-                                    </span>
-                                    <div class="form-group form-inline">
-                                      <div class="input-group-prepend">
-                                        <label class="input-group-text">Titel</label>
-                                        <select v-model="to.title" class="custom-select">
-                                          <option value="-">-</option>
-                                          <option value="dr">Dr.</option>
-                                          <option value="dr_dr">Dr. Dr.</option>
-                                          <option value="prof">Prof.</option>
-                                          <option value="prof_dr">Prof. Dr.</option>
-                                          <option value="prof_dr_dr">
-                                            Prof. Dr. Dr.
-                                          </option>
-                                        </select>
-                                      </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                <span>
+                                  <b>Titel</b>
+                                </span>
+                                <div class="form-group form-inline">
+                                  <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <label class="input-group-text">Titel</label>
                                     </div>
+                                    <select v-model="to.title" class="custom-select">
+                                      <option value="-">-</option>
+                                      <option value="dr">Dr.</option>
+                                      <option value="dr_dr">Dr. Dr.</option>
+                                      <option value="prof">Prof.</option>
+                                      <option value="prof_dr">Prof. Dr.</option>
+                                      <option value="prof_dr_dr">Prof. Dr. Dr.</option>
+                                    </select>
                                   </div>
                                 </div>
                               </div>
@@ -408,7 +408,7 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Vorname</b>
+                                  <b>Vorname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -423,7 +423,7 @@
                               </div>
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Nachname</b>
+                                  <b>Nachname<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -440,7 +440,7 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Telefon</b>
+                                  <b>Telefon<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -455,7 +455,11 @@
                               </div>
                               <div class="col-lg-6">
                                 <span>
-                                  <b>E-Mail Adresse</b>
+                                  <b
+                                    >E-Mail Adresse<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -472,7 +476,7 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Staße</b>
+                                  <b>Staße<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -487,7 +491,7 @@
                               </div>
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Hausnummer</b>
+                                  <b>Hausnummer<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -498,6 +502,12 @@
                                     placeholder="Hausnummer ..."
                                     required
                                     v-model="to.house_number"
+                                    v-on:input="
+                                      to.house_number =
+                                        parseInt(to.house_number) >= 0
+                                          ? to.house_number
+                                          : 0
+                                    "
                                   />
                                 </div>
                               </div>
@@ -505,7 +515,7 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <span>
-                                  <b>PLZ</b>
+                                  <b>PLZ<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -516,12 +526,16 @@
                                     placeholder="PLZ ..."
                                     required
                                     v-model="to.postal_code"
+                                    v-on:input="
+                                      to.postal_code =
+                                        parseInt(to.postal_code) >= 0 ? to.postal_code : 0
+                                    "
                                   />
                                 </div>
                               </div>
                               <div class="col-lg-6">
                                 <span>
-                                  <b>Ort</b>
+                                  <b>Ort<span style="color: red">&nbsp;*</span></b>
                                 </span>
                                 <br />
                                 <div class="form-group form-inline">
@@ -538,7 +552,11 @@
                             <div class="row">
                               <div class="col-lg-6">
                                 <label>
-                                  <b>Wählen Sie ein Land aus</b>
+                                  <b
+                                    >Wählen Sie ein Land aus<span style="color: red"
+                                      >&nbsp;*</span
+                                    ></b
+                                  >
                                 </label>
                                 <br />
                                 <div class="input-group mb-3">
@@ -604,15 +622,15 @@ export default {
     return {
       from: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
         email: "",
         street: "",
-        house_number: 0,
-        postal_code: 0,
+        house_number: "",
+        postal_code: "",
         place: "",
         country: "",
         fax: "",
@@ -620,15 +638,15 @@ export default {
       },
       to: {
         company_name: "",
-        salutation: "",
-        title: "",
+        salutation: "-",
+        title: "-",
         first_name: "",
         last_name: "",
         phone: "",
         email: "",
         street: "",
-        house_number: 0,
-        postal_code: 0,
+        house_number: "",
+        postal_code: "",
         place: "",
         country: "",
         fax: "",
@@ -647,8 +665,22 @@ export default {
   },
   methods: {
     close: function () {
+      this.unset_properties();
       this.show_order_modal2 = false;
       this.$emit("close_order_modal2");
+    },
+    unset_properties: function () {
+      for (const prop in this.from) {
+        this.from[prop] = "";
+      }
+      this.from.salutation = "-";
+      this.from.title = "-";
+
+      for (const prop in this.to) {
+        this.to[prop] = "";
+      }
+      this.to.salutation = "-";
+      this.to.title = "-";
     },
   },
   components: {
