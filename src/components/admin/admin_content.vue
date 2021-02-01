@@ -253,8 +253,9 @@ export default {
     },
   },
   mounted: function () {
-    this.$el.querySelector("tabs>div:nth-of-type(1)").classList.add("col-lg-1");
-    this.$el.querySelector("tabs>div:nth-of-type(2)").classList.add("col-lg-11");
+    this.$el.querySelector(".tabs>div:nth-of-type(1)").className = "col-lg-1";
+    this.$el.querySelector(".tabs>div:nth-of-type(2)").className =
+      "tab-content col-lg-11";
   },
   components: {
     sidenav_components,
@@ -270,8 +271,21 @@ export default {
   flex-flow: column nowrap;
   justify-content: space-between;
 }
-#component_admin_content a.nav-link {
+#component_admin_content .nav li.nav-item {
+  max-height: 12.5%;
+  flex: 1 1 0;
+}
+
+#component_admin_content .nav a.nav-link {
   padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#component_admin_content .nav img {
+  height: 50%;
 }
 
 @media only screen and (max-width: 1013px) {
